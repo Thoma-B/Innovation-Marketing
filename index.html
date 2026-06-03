@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM d'entraînement — Innovation · Business Model · Stratégie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF6EF; --bg-soft:#F2EBDE; --card:#FFFFFF;
+    --ink:#2C2824; --ink-soft:#736A5F; --line:#E7DDCD;
+    --innov:#CE6849; --bm:#2C8273; --strat:#42618B;
+    --primary:#42618B; --primary-d:#34527a;
+    --ok:#2E8B6F; --ok-soft:#E4F2EC; --bad:#C0492F; --bad-soft:#FBE9E3;
+    --shadow:0 1px 2px rgba(44,40,36,.04), 0 10px 30px rgba(44,40,36,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink); min-height:100vh;
+    font-family:"Figtree",sans-serif; font-size:16.5px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 10% -10%, rgba(206,104,73,.05), transparent 38%),
+                     radial-gradient(circle at 92% 0%, rgba(66,97,139,.06), transparent 42%);
+  }
+  header{text-align:center; padding:34px 20px 8px}
+  .kicker{font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); font-weight:600}
+  h1{font-family:"Fraunces",serif; font-weight:600; font-size:clamp(23px,4.4vw,32px); margin:4px 0; letter-spacing:-.01em}
+  .sub{color:var(--ink-soft); font-size:15px}
+  main{max-width:680px; margin:0 auto; padding:18px 20px 80px}
+
+  .anim{animation:fade .4s ease both}
+  @keyframes fade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+
+  /* ---------- start ---------- */
+  .start-card{background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:26px 24px}
+  .start-card p.lead{color:var(--ink-soft); margin-bottom:20px}
+  .modes{display:grid; gap:12px}
+  .mode{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    width:100%; text-align:left; cursor:pointer; border:1.5px solid var(--line);
+    background:var(--bg); border-radius:14px; padding:16px 18px;
+    font-family:"Figtree"; font-size:16.5px; font-weight:600; color:var(--ink);
+    transition:transform .12s, border-color .15s, background .15s;
+  }
+  .mode:hover{transform:translateY(-2px); border-color:var(--accent, var(--primary)); background:#fff}
+  .mode .label{display:flex; align-items:center; gap:11px}
+  .dot{width:11px; height:11px; border-radius:50%; background:var(--accent, var(--primary)); flex:0 0 auto}
+  .mode .count{font-size:13px; font-weight:600; color:var(--ink-soft); background:var(--bg-soft); padding:4px 10px; border-radius:999px}
+  .mode .go{color:var(--accent, var(--primary)); font-weight:700}
+  .m-all{--accent:var(--primary)} .m-innov{--accent:var(--innov)} .m-bm{--accent:var(--bm)} .m-strat{--accent:var(--strat)}
+
+  /* ---------- quiz ---------- */
+  .bar-wrap{height:7px; background:var(--bg-soft); border-radius:99px; overflow:hidden; margin-bottom:8px}
+  .bar{height:100%; width:0; background:var(--primary); border-radius:99px; transition:width .35s ease}
+  .meta{display:flex; justify-content:space-between; align-items:center; font-size:13.5px; color:var(--ink-soft); margin-bottom:18px; font-weight:600}
+  .qcard{background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:24px 24px 22px}
+  .pill{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 12px; border-radius:999px; margin-bottom:14px}
+  .pill.Innovation{background:#FBEDE6; color:var(--innov)}
+  .pill[data-t="Business Model"]{background:#E5F1EE; color:var(--bm)}
+  .pill[data-t="Stratégie"]{background:#E9EEF5; color:var(--strat)}
+  .qtext{font-family:"Fraunces",serif; font-weight:600; font-size:21px; line-height:1.28; margin-bottom:18px; letter-spacing:-.01em}
+  .opts{display:grid; gap:10px}
+  .opt{
+    display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left; cursor:pointer;
+    border:1.5px solid var(--line); background:var(--bg); border-radius:13px; padding:13px 15px;
+    font-family:"Figtree"; font-size:16px; color:var(--ink); transition:border-color .12s, background .12s, transform .1s;
+  }
+  .opt:hover:not(:disabled){border-color:var(--primary); transform:translateY(-1px)}
+  .opt:disabled{cursor:default}
+  .opt .key{flex:0 0 auto; width:25px; height:25px; border-radius:7px; background:#fff; border:1.5px solid var(--line);
+            display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13.5px; color:var(--ink-soft)}
+  .opt.correct{background:var(--ok-soft); border-color:var(--ok)}
+  .opt.correct .key{background:var(--ok); border-color:var(--ok); color:#fff}
+  .opt.wrong{background:var(--bad-soft); border-color:var(--bad)}
+  .opt.wrong .key{background:var(--bad); border-color:var(--bad); color:#fff}
+
+  .explain{margin-top:16px; border-radius:13px; padding:14px 16px; font-size:15px; display:none}
+  .explain.show{display:block; animation:fade .3s ease both}
+  .explain.ok{background:var(--ok-soft); border:1px solid color-mix(in srgb,var(--ok) 30%,transparent)}
+  .explain.bad{background:var(--bad-soft); border:1px solid color-mix(in srgb,var(--bad) 30%,transparent)}
+  .explain .verdict{font-weight:700; margin-bottom:3px}
+  .explain.ok .verdict{color:var(--ok)} .explain.bad .verdict{color:var(--bad)}
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; border:none;
+       font-family:"Figtree"; font-weight:600; font-size:16px; border-radius:12px; padding:13px 22px; transition:transform .12s, background .15s}
+  .btn-primary{background:var(--primary); color:#fff}
+  .btn-primary:hover{background:var(--primary-d); transform:translateY(-1px)}
+  .btn-ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line)}
+  .btn-ghost:hover{color:var(--ink); border-color:var(--ink-soft)}
+  .next-row{margin-top:18px; display:none; justify-content:flex-end}
+  .next-row.show{display:flex}
+
+  /* ---------- results ---------- */
+  .score-card{background:var(--card); border-radius:18px; box-shadow:var(--shadow); padding:30px 26px; text-align:center}
+  .ring{width:150px; height:150px; margin:6px auto 14px}
+  .score-num{font-family:"Fraunces",serif; font-weight:600; font-size:40px; line-height:1}
+  .score-pct{font-size:14px; color:var(--ink-soft); font-weight:600}
+  .verdict-big{font-family:"Fraunces",serif; font-size:22px; font-weight:600; margin:6px 0 4px}
+  .msg{color:var(--ink-soft); margin-bottom:22px}
+  .res-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .review-title{font-family:"Fraunces",serif; font-weight:600; font-size:18px; margin:30px 0 12px; color:var(--bad)}
+  .rev-item{background:var(--card); border-radius:13px; box-shadow:var(--shadow); padding:15px 17px; margin-bottom:11px; border-left:4px solid var(--bad); text-align:left}
+  .rev-item .rq{font-weight:600; margin-bottom:7px}
+  .rev-item .ra{font-size:14.5px; margin-bottom:3px}
+  .rev-item .ra b{color:var(--ok)}
+  .rev-item .yours{font-size:14px; color:var(--bad)}
+  .rev-item .rex{font-size:14px; color:var(--ink-soft); margin-top:6px; font-style:italic}
+
+  .foot{text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:26px}
+  @media(max-width:560px){ main{padding:14px 15px 70px} .qcard,.start-card,.score-card{padding:20px 18px} }
+  /* ---------- lexique (bouton flottant + modale) ---------- */
+  .lex-fab{position:fixed; top:16px; right:16px; z-index:50; cursor:pointer; border:1.5px solid #E2D2E8;
+    background:#fff; color:#7E5A86; font-family:"Figtree"; font-weight:700; font-size:14px;
+    padding:9px 14px; border-radius:999px; box-shadow:0 4px 14px rgba(44,40,36,.12); transition:transform .12s, background .15s}
+  .lex-fab:hover{transform:translateY(-1px); background:#F4EDF6}
+  .lex-overlay{position:fixed; inset:0; z-index:60; background:rgba(44,40,36,.42); backdrop-filter:blur(4px);
+    display:none; align-items:flex-start; justify-content:center; padding:5vh 16px}
+  .lex-overlay.open{display:flex; animation:fade .25s ease both}
+  .lex-modal{--accent:#7E5A86; background:var(--card); border-radius:18px; width:100%; max-width:620px; max-height:88vh;
+    display:flex; flex-direction:column; overflow:hidden; box-shadow:0 24px 60px rgba(44,40,36,.32); animation:pop .28s cubic-bezier(.2,.8,.3,1.1) both}
+  @keyframes pop{from{opacity:0; transform:translateY(14px) scale(.98)} to{opacity:1; transform:none}}
+  .lex-modal-head{position:relative; padding:18px 18px 14px; border-bottom:1px solid var(--line)}
+  .lex-modal-title{font-family:"Fraunces",serif; font-weight:600; font-size:20px; color:var(--accent); margin-bottom:12px}
+  .lex-close{position:absolute; top:14px; right:14px; width:34px; height:34px; border:none; background:var(--bg-soft); color:var(--ink-soft);
+    border-radius:10px; font-size:22px; line-height:1; cursor:pointer; transition:background .15s}
+  .lex-close:hover{background:#ECE3D4; color:var(--ink)}
+  .lex-search{width:100%; font-family:"Figtree"; font-size:16px; color:var(--ink); padding:12px 15px 12px 42px;
+    border:1.5px solid var(--line); border-radius:12px; background-color:var(--bg); outline:none;
+    background-repeat:no-repeat; background-position:14px center;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 24 24' fill='none' stroke='%237E5A86' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E")}
+  .lex-search:focus{border-color:var(--accent)}
+  .lex-list{overflow-y:auto; padding:6px 18px 18px}
+  .lex-none{display:none; text-align:center; color:var(--ink-soft); padding:24px; font-style:italic}
+  .lex-item{padding:13px 2px; border-bottom:1px solid var(--line)}
+  .lex-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:3px}
+  .lex-term{font-family:"Fraunces",serif; font-weight:600; font-size:16.5px; color:var(--accent)}
+  .lex-en{font-size:12.5px; color:var(--ink-soft); font-style:italic}
+  .lex-tag{font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:3px 8px; border-radius:999px}
+  .t-innov{background:#FBEDE6;color:var(--innov)} .t-bm{background:#E5F1EE;color:var(--bm)} .t-strat{background:#E9EEF5;color:var(--strat)} .t-trans{background:var(--bg-soft);color:var(--ink-soft)}
+  .lex-def{font-size:15px; line-height:1.5; color:var(--ink)}
+  .lex-item.flag{background:#F4EDF6; border:1px solid #E2D2E8; border-left:4px solid var(--accent); border-radius:11px; padding:13px 15px; margin:8px 0}
+  .lex-item.flag::after{content:"★ un des mots qui te bloquaient"; display:block; margin-top:5px; font-size:11px; font-weight:700; color:var(--accent)}
+  @media(max-width:560px){ .lex-fab{top:12px; right:12px; padding:8px 12px; font-size:13px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">Entraînement · Révisions</div>
+  <h1>QCM d'entraînement</h1>
+  <div class="sub">Innovation · Business Model · Stratégie &amp; Marketing</div>
+</header>
+<main id="app"></main>
+
+<button id="lexFab" class="lex-fab" aria-label="Ouvrir le lexique">📖 Lexique</button>
+<div id="lexModal" class="lex-overlay" aria-hidden="true">
+  <div class="lex-modal" role="dialog" aria-label="Lexique des termes">
+    <div class="lex-modal-head">
+      <div class="lex-modal-title">📖 Lexique</div>
+      <button id="lexClose" class="lex-close" aria-label="Fermer">×</button>
+      <input id="lexSearch" class="lex-search" type="text" placeholder="Rechercher un terme (incumbent, reframing, SWOT…)" autocomplete="off">
+    </div>
+    <div id="lexList" class="lex-list"></div>
+    <div id="lexNone" class="lex-none">Aucun terme ne correspond.</div>
+  </div>
+</div>
+
+<script>
+/* ============================ BANQUE DE QUESTIONS ============================ */
+const BANK = [
+  /* ---------- INNOVATION ---------- */
+  {t:"Innovation", q:"Selon le cours, l'innovation se définit comme :", o:["Une invention brevetée","La création d'une nouvelle offre viable","Une découverte scientifique","Une amélioration technologique majeure"], a:1, e:"Innovation = création d'une nouvelle offre VIABLE (viable = qui doit rapporter de l'argent). L'invention, elle, relève de la recherche."},
+  {t:"Innovation", q:"Combien de spin-offs Fairchild a-t-elle générés, et en combien de temps ?", o:["12 en 31 ans","8 en 10 ans","31 en 12 ans","21 en 12 ans"], a:2, e:"Fairchild = 31 entreprises essaimées en seulement 12 ans (Intel, Zilog…)."},
+  {t:"Innovation", q:"Qui a empoché le plus d'argent pendant la ruée vers l'or de 1848 ?", o:["Les mineurs les plus rapides","Samuel Brannan (il vendait les outils)","L'État de Californie","Les banques de San Francisco"], a:1, e:"Samuel Brannan s'est enrichi en vendant pelles et fournitures — pas en creusant. « Vends les outils, ne creuse pas. »"},
+  {t:"Innovation", q:"Quel élément juridique a favorisé la Silicon Valley ?", o:["Des brevets très protecteurs","L'absence de clause de non-concurrence (on peut changer d'employeur)","Une fiscalité nulle sur les startups","L'interdiction des fusions"], a:1, e:"La loi californienne (§16600) interdit les clauses de non-concurrence : les talents circulent librement d'une entreprise à l'autre."},
+  {t:"Innovation", q:"Les « traitorous eight » ont quitté quelle entreprise pour fonder Fairchild ?", o:["Intel","Shockley","Zilog","Xerox"], a:1, e:"Ils ont quitté Shockley (leader des semi-conducteurs) en 1957 pour créer Fairchild."},
+  {t:"Innovation", q:"Dans l'effectuation, « raisonner en perte acceptable » correspond au mot-clé :", o:["GOOD ENOUGH","KILL FAST","SERENDIPITY","FOCUS"], a:1, e:"Perte acceptable → KILL FAST : on limite la mise et on arrête vite ce qui ne marche pas."},
+  {t:"Innovation", q:"Selon Shih & Christensen, que font les acteurs en place (incumbents) ?", o:["Ils reframent le marché","Ils maintiennent le statu quo (sustaining)","Ils créent un nouveau paradigme","Ils baissent leurs prix"], a:1, e:"Les incumbents courent après leurs concurrents et font du SUSTAINING (→ performance overshoot). Les nouveaux entrants, eux, REFRAMENT."},
+  {t:"Innovation", q:"« Pas d'adoption sans adaptation » (Callon) signifie que :", o:["L'innovation s'impose par ses qualités","L'innovation finale ne correspond jamais au projet initial","La R&D suffit à diffuser une innovation","Le marketing est inutile"], a:1, e:"La diffusion passe par des adaptations successives : le produit final diffère toujours du projet de départ."},
+  {t:"Innovation", q:"Les « 10 visages de l'innovation » sont l'œuvre de :", o:["Clayton Christensen","Tom Kelley (IDEO)","Simon Sinek","Henry Chesbrough"], a:1, e:"Tom Kelley (IDEO) : 3 familles — les Apprenants, les Organisateurs, les Bâtisseurs."},
+  {t:"Innovation", q:"Le « pollinisateur croisé » se caractérise par :", o:["Des compétences en T (transposer d'autres secteurs)","La gestion du budget","Le contournement de la bureaucratie","La narration d'histoires"], a:0, e:"Le Cross-Pollinator explore le « vuja de » et transpose d'autres univers : compétences en T."},
+  {t:"Innovation", q:"La méthode des « 6 chapeaux » a été créée par :", o:["Edward de Bono","Eric Ries","Dave McClure","Michael Porter"], a:0, e:"Edward de Bono : Processus, Faits, Émotions, Créativité, Bénéfices, Prudence."},
+  {t:"Innovation", q:"Que signifie l'acronyme AARRR (Dave McClure) ?", o:["Analyse, Achat, Revenu, Rétention, Référence","Acquisition, Activation, Rétention, Revenue, Referral","Audit, Acquisition, Revenu, Reach, Retour","Acquisition, Adoption, Rétention, Revenu, Recommandation"], a:1, e:"Les « Pirate Metrics » : Acquisition → Activation → Rétention → Revenue → Referral."},
+  {t:"Innovation", q:"La courbe d'adoption de l'innovation (innovateurs, adopteurs précoces…) vient de :", o:["Everett Rogers","Geoffrey Moore","Clayton Christensen","Saras Sarasvathy"], a:0, e:"Everett Rogers, Diffusion of Innovations (1962). Le « gouffre » (chasm) est, lui, dû à Geoffrey Moore."},
+  {t:"Innovation", q:"La boucle du Lean Startup (Eric Ries) est :", o:["Penser → Faire → Vendre","Build → Measure → Learn","Plan → Do → Check → Act","Idée → Prototype → Lancement"], a:1, e:"Build → Measure → Learn (Construire → Mesurer → Apprendre), au cœur du Lean Startup."},
+  {t:"Innovation", q:"Le Jugaad (innovation frugale) repose sur trois piliers :", o:["Rapidité, Qualité, Prix","Frugalité, Flexibilité, Inclusif","Recherche, Design, Marketing","Coût, Différenciation, Niche"], a:1, e:"Jugaad = Frugalité + Flexibilité + Inclusif (« faire plus avec moins »). Ex. Dacia, Haier, Tata Nano."},
+  {t:"Innovation", q:"Dans l'Open Innovation (Chesbrough), le mode « inside-out » correspond à :", o:["Le scouting (sourcing externe)","Le spin-off (essaimage vers l'extérieur)","La coopétition","La R&D fermée"], a:1, e:"Inside-out = spin-off. Outside-in = scouting. Hybride = coopétition."},
+  {t:"Innovation", q:"Quelle est « la bataille » de la 4ᵉ révolution industrielle selon le cours ?", o:["La technologie","La data","Le marketing","Le brevet"], a:1, e:"La DATA est l'enjeu central ; les 4 « enablers » sont IA, Cloud, IoT et Data."},
+  {t:"Innovation", q:"Le « E » de SONCAS(E) correspond à :", o:["Économie","Efficacité","Environnement","Émotion"], a:2, e:"SONCAS(E) : Sécurité, Orgueil, Nouveauté, Confort, Argent, Sympathie, Environnement."},
+  {t:"Innovation", q:"Quelle est la 1ʳᵉ étape du Design Thinking ?", o:["Prototype","Empathize (Empathie)","Test","Ideate"], a:1, e:"Empathize → Define → Ideate → Prototype → Test."},
+  {t:"Innovation", q:"De quoi Gutenberg s'est-il inspiré pour son imprimerie (1455) ?", o:["D'un moulin à eau","D'un pressoir à vin","D'une roue de potier","D'une horloge"], a:1, e:"L'idée est née de l'observation d'un pressoir à vin ; il « résonnait » avec la demande de livres de son époque."},
+
+  /* ---------- BUSINESS MODEL ---------- */
+  {t:"Business Model", q:"Un business model décrit avant tout :", o:["Le plan marketing annuel","Comment l'entreprise crée ET capte de la valeur","L'organigramme de l'entreprise","La liste des produits"], a:1, e:"Le BM = la façon dont l'entreprise crée de la valeur et génère/capte des revenus."},
+  {t:"Business Model", q:"Le Business Model Canvas comporte combien de blocs ?", o:["5","7","9","12"], a:2, e:"9 blocs : Partenaires, Activités, Ressources, Proposition de valeur, Relations, Canaux, Segments, Coûts, Revenus."},
+  {t:"Business Model", q:"Nespresso et Gillette illustrent quel modèle ?", o:["L'abonnement","Le freemium","Le modèle « de l'imprimante »","Le commissionnement"], a:2, e:"Modèle « de l'imprimante » : produit de base abordable, mais consommables coûteux et captifs."},
+  {t:"Business Model", q:"Proton Mail est un exemple de modèle :", o:["Freemium","Low-cost","Cashback","Affiliation"], a:0, e:"Freemium : base gratuite, fonctionnalités avancées payantes."},
+  {t:"Business Model", q:"Le concept de « Job-To-Be-Done » a été développé par :", o:["Alexander Osterwalder","Simon Sinek","Clayton Christensen & Michael Raynor","Eric Ries"], a:2, e:"Christensen & Raynor (2003, The Innovator's Solution) : les clients « embauchent » une solution pour accomplir une tâche."},
+  {t:"Business Model", q:"Dans le cas du Milkshake, qu'a fait McDonald's ?", o:["Le rendre plus sucré","Le rendre plus épais (pas plus sucré)","Baisser le prix","Le vendre seulement l'après-midi"], a:1, e:"Le « job » = occuper un long trajet et caler jusqu'au déjeuner → milkshake plus ÉPAIS, pour qu'il dure."},
+  {t:"Business Model", q:"Dans le Value Proposition Canvas, les « pains » et « gains » se trouvent :", o:["Côté proposition de valeur (gauche)","Côté profil client (droite)","Dans la structure de coûts","Dans les canaux"], a:1, e:"Profil client (droite) = Jobs + Pains + Gains. La proposition de valeur (gauche) = produits + pain relievers + gain creators."},
+  {t:"Business Model", q:"Les « réducteurs de douleurs » (pain relievers) appartiennent :", o:["Au profil client","À la proposition de valeur","Aux segments de clientèle","Aux partenaires clés"], a:1, e:"Pain relievers et gain creators sont du côté PROPOSITION DE VALEUR ; ils répondent aux pains/gains du client."},
+  {t:"Business Model", q:"Les « customer jobs » peuvent être :", o:["Uniquement fonctionnels","Fonctionnels, sociaux ou émotionnels","Uniquement financiers","Uniquement techniques"], a:1, e:"Les tâches du client sont fonctionnelles, sociales OU émotionnelles."},
+  {t:"Business Model", q:"En quelle année Netflix a-t-il pivoté vers le streaming ?", o:["1997","2007","2013","2021"], a:1, e:"Création en 1997 (DVD par la poste), pivot streaming en 2007, contenus originaux en 2013."},
+  {t:"Business Model", q:"Quel est l'exemple type d'un BM qui n'a pas su évoluer ?", o:["Netflix","Kodak (faillite 2012)","Spotify","Airbnb"], a:1, e:"Kodak a raté sa transition numérique malgré ses brevets → faillite en 2012."},
+  {t:"Business Model", q:"Le Golden Circle de Simon Sinek se lit, pour inspirer, dans l'ordre :", o:["Quoi → Comment → Pourquoi","Pourquoi → Comment → Quoi","Comment → Quoi → Pourquoi","Quoi → Pourquoi → Comment"], a:1, e:"De l'intérieur vers l'extérieur : POURQUOI → COMMENT → QUOI. « Les gens achètent le pourquoi. »"},
+  {t:"Business Model", q:"Selon le cours, la principale erreur d'une start-up est :", o:["De mal recruter","De proposer quelque chose dont personne ne veut","De dépenser trop en marketing","De lever trop d'argent"], a:1, e:"Erreur n°1 = proposer un produit sans besoin réel (cf. le cas Juicero)."},
+  {t:"Business Model", q:"Pour comprendre le client, il faut surtout :", o:["Lui demander ce qu'il veut","Observer ce qu'il fait réellement","Copier les concurrents","Lancer un sondage massif"], a:1, e:"On observe les ACTES, pas les déclarations (ex. BlaBlaCar : « tous les trains pleins, toutes les voitures vides »)."},
+
+  /* ---------- STRATÉGIE ---------- */
+  {t:"Stratégie", q:"Le modèle des 5 forces de Porter a été élaboré en :", o:["1962","1979","1992","2003"], a:1, e:"Michael Porter, 1979. Outil fondamental de l'analyse de l'environnement concurrentiel."},
+  {t:"Stratégie", q:"Quelle est la « 6ᵉ force » ajoutée au modèle de Porter (5+1) ?", o:["Les salariés","Le rôle de l'État / pouvoirs publics","Les actionnaires","Les médias"], a:1, e:"Le rôle de l'État n'est pas une des 5 forces d'origine → c'est le « +1 »."},
+  {t:"Stratégie", q:"Les produits de substitution se caractérisent par :", o:["Une élasticité croisée positive","Une élasticité nulle","Un prix toujours plus bas","Une marque forte"], a:0, e:"Élasticité croisée positive : si le prix de l'un monte, la quantité vendue de l'autre augmente."},
+  {t:"Stratégie", q:"Que recouvre l'acronyme PESTEL ?", o:["Politique, Économique, Social, Technologique, Écologique, Légal","Produit, Prix, Échange, Service, Étude, Logistique","Politique, Économie, Stratégie, Technologie, Éthique, Loi","Performance, Échelle, Synergie, Talent, Énergie, Levier"], a:0, e:"PESTEL = liste de contrôle des influences de l'environnement (6 catégories)."},
+  {t:"Stratégie", q:"Dans le SWOT, les Forces et Faiblesses relèvent de l'analyse :", o:["Externe","Interne","Concurrentielle","Financière uniquement"], a:1, e:"Forces/Faiblesses = INTERNE ; Opportunités/Menaces = EXTERNE (piège classique inversé !)."},
+  {t:"Stratégie", q:"Le modèle SWOT (modèle LCAG) a été développé par :", o:["Kaplan & Norton","Learned, Christensen, Andrews & Guth (Harvard)","Michael Porter","Boston Consulting Group"], a:1, e:"Quatre professeurs de Harvard dans les années 1960 → « modèle de Harvard » ou LCAG."},
+  {t:"Stratégie", q:"Dans la matrice BCG, forte croissance + faible part de marché =", o:["Vedette","Dilemme","Vache à lait","Poids mort"], a:1, e:"Forte croissance + PdM faible = DILEMME (?). À fort potentiel mais position fragile."},
+  {t:"Stratégie", q:"Dans la matrice BCG, faible croissance + forte part de marché =", o:["Vedette","Dilemme","Vache à lait","Poids mort"], a:2, e:"Faible croissance + PdM forte = VACHE À LAIT (génère du cash)."},
+  {t:"Stratégie", q:"La chaîne de valeur de Porter comporte :", o:["4 activités de base + 5 de soutien","5 activités de base + 4 de soutien (9 pôles)","3 activités de base + 3 de soutien","9 activités de base"], a:1, e:"9 pôles = 5 activités de base + 4 activités de soutien."},
+  {t:"Stratégie", q:"Dans les SIG, on obtient l'EBE à partir de la VA en :", o:["Ajoutant les impôts","Retranchant les charges de personnel et les impôts/taxes","Ajoutant le résultat financier","Retranchant les dotations aux amortissements"], a:1, e:"EBE = VA + subventions d'exploitation − charges de personnel − impôts & taxes."},
+  {t:"Stratégie", q:"La « stratégie de niche » correspond à quelle stratégie générique ?", o:["Domination par les coûts","Différenciation","Focalisation / concentration","Intégration verticale"], a:2, e:"La focalisation (concentration sur un ou quelques segments) = stratégie de niche."},
+  {t:"Stratégie", q:"La stratégie de domination par les coûts vise :", o:["Une cible étroite et haut de gamme","Un coût unitaire inférieur sur une cible large (économies d'échelle)","La différenciation par la marque","L'intégration des fournisseurs"], a:1, e:"Coût inférieur à qualité égale, sur une CIBLE LARGE, grâce aux économies d'échelle."},
+  {t:"Stratégie", q:"BMW et Apple illustrent une différenciation par :", o:["Limitation (épuration)","Sophistication","Domination par les coûts","Focalisation"], a:1, e:"Sophistication = offre plus élaborée et plus chère (BMW, Apple). Limitation/épuration = easyJet, Dacia."},
+  {t:"Stratégie", q:"Une stratégie d'alliance, c'est une collaboration :", o:["Entre client et fournisseur","Entre entreprises concurrentes","Avec l'État","Au sein d'une même entreprise"], a:1, e:"Alliance = entre concurrents (≠ partenariat/impartition, qui est une relation client-fournisseur)."},
+  {t:"Stratégie", q:"Le mix marketing classique (4P) comprend :", o:["Produit, Prix, Place, Promotion","Permission, Partenariat, Prix, Produit","Produit, Profit, Place, Public","Prix, Promotion, Public, Process"], a:0, e:"Les 4P : Produit, Prix, Place (distribution), Promotion (communication)."},
+  {t:"Stratégie", q:"Le concept de « Vache Mauve » (Purple Cow) est de :", o:["Philip Kotler","Seth Godin","Michael Porter","W. Chan Kim"], a:1, e:"Seth Godin : être remarquable pour se démarquer. Fait partie du « nouveau mix »."},
+  {t:"Stratégie", q:"Le Balanced Scorecard (Kaplan & Norton, 1992) repose sur 4 perspectives :", o:["Politique, Économique, Social, Technologique","Apprentissage, Processus, Clients, Finances","Forces, Faiblesses, Opportunités, Menaces","Acquisition, Activation, Rétention, Revenu"], a:1, e:"Les 4 axes du tableau de bord prospectif : Apprentissage, Processus, Clients, Finances."},
+  {t:"Stratégie", q:"Les 5 étapes de la méthode Six Sigma (DMAIC) sont :", o:["Define, Measure, Analyse, Improve, Control","Design, Make, Apply, Iterate, Close","Define, Manage, Adapt, Innovate, Check","Discover, Map, Act, Improve, Conclude"], a:0, e:"DMAIC : Define (VOC/CTQ), Measure, Analyse, Improve, Control. Méthode née chez Motorola."},
+  {t:"Stratégie", q:"Comment estime-t-on le potentiel d'un marché neuf ?", o:["Cible × % d'intention d'achat × prix théorique","Chiffre d'affaires × marge","Nombre de concurrents × prix moyen","Part de marché × croissance"], a:0, e:"Potentiel = (nb de personnes de la cible) × (% d'intention d'achat) × (prix théorique)."},
+  {t:"Stratégie", q:"Les trois variables du « métier » de l'entreprise sont :", o:["Produit, Prix, Marché","Identité, Mission, Savoir-faire","Forces, Faiblesses, Ressources","Vision, Valeurs, Culture"], a:1, e:"Le métier se décrit par : Identité, Mission, Savoir-faire."}
+];
+
+/* ============================ LOGIQUE ============================ */
+const app = document.getElementById('app');
+const TOPICS = ["Innovation","Business Model","Stratégie"];
+let pool = [], idx = 0, score = 0, wrong = [], answered = false;
+
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+function renderStart(){
+  const count = t => t==='all' ? BANK.length : BANK.filter(x=>x.t===t).length;
+  app.innerHTML = `
+    <div class="start-card anim">
+      <p class="lead">Choisis un thème pour t'entraîner. Tu as la <b>correction immédiate</b> et l'explication après chaque réponse. 👇</p>
+      <div class="modes">
+        <button class="mode m-all"  data-topic="all"><span class="label"><span class="dot"></span>Tous les thèmes</span><span class="count">${count('all')} questions</span></button>
+        <button class="mode m-innov" data-topic="Innovation"><span class="label"><span class="dot"></span>Innovation</span><span class="count">${count('Innovation')} questions</span></button>
+        <button class="mode m-bm" data-topic="Business Model"><span class="label"><span class="dot"></span>Business Model</span><span class="count">${count('Business Model')} questions</span></button>
+        <button class="mode m-strat" data-topic="Stratégie"><span class="label"><span class="dot"></span>Stratégie &amp; Marketing</span><span class="count">${count('Stratégie')} questions</span></button>
+      </div>
+    </div>
+    <p class="foot">Astuce : sur ordinateur, tu peux répondre avec les touches A · B · C · D, et passer avec ↵ Entrée.</p>`;
+  app.querySelectorAll('.mode').forEach(b=> b.onclick = ()=> startQuiz(b.dataset.topic));
+}
+
+function startQuiz(topic){
+  const src = topic==='all' ? BANK : BANK.filter(x=>x.t===topic);
+  pool = shuffle(src.map(q=>{
+    const opts = shuffle(q.o.map((text,i)=>({text, correct:i===q.a})));
+    return {t:q.t, q:q.q, e:q.e, opts};
+  }));
+  idx=0; score=0; wrong=[]; renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const item = pool[idx];
+  const prog = Math.round((idx/pool.length)*100);
+  app.innerHTML = `
+    <div class="anim">
+      <div class="bar-wrap"><div class="bar" style="width:${prog}%"></div></div>
+      <div class="meta"><span>Question ${idx+1} / ${pool.length}</span><span>Score : ${score}</span></div>
+      <div class="qcard">
+        <span class="pill ${item.t==='Innovation'?'Innovation':''}" data-t="${item.t}">${item.t}</span>
+        <div class="qtext">${item.q}</div>
+        <div class="opts" id="opts">
+          ${item.opts.map((op,i)=>`<button class="opt" data-i="${i}"><span class="key">${'ABCD'[i]}</span><span>${op.text}</span></button>`).join('')}
+        </div>
+        <div class="explain" id="explain"></div>
+        <div class="next-row" id="nextRow">
+          <button class="btn btn-primary" id="nextBtn">${idx+1===pool.length?'Voir les résultats →':'Question suivante →'}</button>
+        </div>
+      </div>
+    </div>`;
+  app.querySelectorAll('.opt').forEach(b=> b.onclick = ()=> answer(parseInt(b.dataset.i)));
+  document.getElementById('nextBtn').onclick = nextQuestion;
+}
+
+function answer(i){
+  if(answered) return; answered=true;
+  const item = pool[idx];
+  const btns = app.querySelectorAll('.opt');
+  const isCorrect = item.opts[i].correct;
+  btns.forEach((b,j)=>{
+    b.disabled = true;
+    if(item.opts[j].correct) b.classList.add('correct');
+    if(j===i && !isCorrect) b.classList.add('wrong');
+  });
+  if(isCorrect) score++;
+  else wrong.push({q:item.q, correct:item.opts.find(o=>o.correct).text, yours:item.opts[i].text, e:item.e, t:item.t});
+  const ex = document.getElementById('explain');
+  ex.className = 'explain show ' + (isCorrect?'ok':'bad');
+  ex.innerHTML = `<div class="verdict">${isCorrect?'✓ Correct !':'✗ Raté'}</div>${item.e}`;
+  document.getElementById('nextRow').classList.add('show');
+}
+
+function nextQuestion(){
+  idx++;
+  if(idx < pool.length) renderQuestion();
+  else renderResults();
+}
+
+function renderResults(){
+  const total = pool.length, pct = Math.round((score/total)*100);
+  let verdict, msg, col;
+  if(pct>=85){verdict="Excellent ! 🎉"; msg="Tu maîtrises. Relis juste tes erreurs et la section Pièges."; col="var(--ok)";}
+  else if(pct>=65){verdict="Bien joué 👍"; msg="Bonne base. Cible les points ratés ci-dessous pour sécuriser ta note."; col="var(--primary)";}
+  else if(pct>=45){verdict="En bonne voie 💪"; msg="Encore quelques notions à ancrer — révise tes erreurs et recommence.";col="var(--gold,#AD7E2C)";}
+  else {verdict="On s'accroche !"; msg="Pas de panique : revois la fiche, puis refais le QCM. Ça rentrera vite.";col="var(--bad)";}
+  const C=2*Math.PI*52, off=C*(1-score/total);
+  const revHtml = wrong.length ? `
+    <div class="review-title">À revoir (${wrong.length})</div>
+    ${wrong.map(w=>`<div class="rev-item">
+        <div class="rq">${w.q}</div>
+        <div class="ra">Bonne réponse : <b>${w.correct}</b></div>
+        <div class="yours">Ta réponse : ${w.yours}</div>
+        <div class="rex">${w.e}</div>
+      </div>`).join('')}` : `<p style="text-align:center;color:var(--ok);font-weight:600;margin-top:24px">Sans-faute, bravo ! 🏆</p>`;
+  app.innerHTML = `
+    <div class="score-card anim">
+      <svg class="ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--bg-soft)" stroke-width="12"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="${col}" stroke-width="12" stroke-linecap="round"
+          stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1s ease"/>
+        <text x="60" y="58" text-anchor="middle" class="score-num" fill="var(--ink)" font-family="Fraunces">${score}/${total}</text>
+        <text x="60" y="76" text-anchor="middle" class="score-pct" fill="var(--ink-soft)">${pct}%</text>
+      </svg>
+      <div class="verdict-big">${verdict}</div>
+      <div class="msg">${msg}</div>
+      <div class="res-actions">
+        <button class="btn btn-primary" id="again">↺ Recommencer</button>
+        ${wrong.length?'<button class="btn btn-ghost" id="revWrong">Réviser mes erreurs</button>':''}
+        <button class="btn btn-ghost" id="home">Changer de thème</button>
+      </div>
+    </div>
+    ${revHtml}
+    <p class="foot">Reviens autant de fois que tu veux : les questions et les réponses sont mélangées à chaque essai.</p>`;
+  document.getElementById('again').onclick = ()=>{ pool=shuffle(pool.map(p=>({...p,opts:shuffle([...p.opts])}))); idx=0;score=0;wrong=[]; renderQuestion(); };
+  document.getElementById('home').onclick = renderStart;
+  const rw = document.getElementById('revWrong');
+  if(rw) rw.onclick = ()=>{
+    const set = wrong.map(w=>{ const base = BANK.find(b=>b.q===w.q); const opts = shuffle(base.o.map((text,i)=>({text,correct:i===base.a}))); return {t:base.t,q:base.q,e:base.e,opts}; });
+    pool = shuffle(set); idx=0;score=0;wrong=[]; renderQuestion();
+  };
+}
+
+/* clavier */
+document.addEventListener('keydown', e=>{
+  if(document.body.classList.contains('lex-open') || e.target.tagName==='INPUT') return;
+  const opts = app.querySelectorAll('.opt');
+  if(opts.length && !answered){
+    const k = e.key.toLowerCase();
+    const map = {a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3};
+    if(k in map && opts[map[k]]) { answer(map[k]); }
+  }
+  if((e.key==='Enter'||e.key==='ArrowRight') && answered){ const n=document.getElementById('nextBtn'); if(n) n.click(); }
+});
+
+/* ============================ LEXIQUE ============================ */
+const GLOSSARY = [
+  {term:"AARRR", en:"« Pirate Metrics »", cat:"innov", def:"Cadre pour suivre la croissance d'un produit en 5 étapes : Acquisition (on te trouve), Activation (1ʳᵉ bonne expérience), Rétention (tu reviens), Revenue (tu paies), Referral (tu en parles)."},
+  {term:"AFOM / MOFF", en:"", cat:"strat", def:"Les noms français du SWOT : Atouts-Faiblesses-Opportunités-Menaces."},
+  {term:"Affiliation", en:"", cat:"bm", def:"On touche une commission quand on amène un client à un partenaire (via un lien de recommandation)."},
+  {term:"ARPU", en:"Average Revenue Per User", cat:"innov", def:"Le revenu moyen généré par utilisateur. Sert à estimer le chiffre d'affaires (revenus = nb d'utilisateurs × ARPU)."},
+  {term:"ATAWAD", en:"Any Time, Any Where, Any Device", cat:"innov", def:"Accéder à un service n'importe quand, n'importe où, depuis n'importe quel appareil (un atout du Cloud)."},
+  {term:"Avantage concurrentiel", en:"", cat:"strat", def:"Ce qui permet à une entreprise de faire durablement mieux que ses concurrents (coût plus bas, produit unique, etc.)."},
+  {term:"Benchmarking", en:"étalonnage", cat:"strat", def:"Se comparer à ses concurrents (prix, performance, pratiques) pour se situer et progresser."},
+  {term:"Business Model", en:"modèle économique", cat:"bm", def:"La façon dont une entreprise crée de la valeur et gagne de l'argent."},
+  {term:"Business Model Canvas (BMC)", en:"", cat:"bm", def:"Un tableau visuel en 9 cases pour décrire un business model d'un seul coup d'œil (outil d'Osterwalder)."},
+  {term:"BCG (matrice)", en:"", cat:"strat", def:"Classe les activités selon 2 axes (croissance du marché × part de marché) en 4 cases : Vedettes, Vaches à lait, Dilemmes, Poids morts."},
+  {term:"BSC", en:"Balanced Scorecard / tableau de bord prospectif", cat:"strat", def:"Tableau de pilotage qui mesure la performance sur 4 angles : apprentissage, processus, clients, finances (Kaplan & Norton, 1992)."},
+  {term:"Bundling", en:"", cat:"innov", def:"Vendre plusieurs produits/services regroupés en une seule offre (ex. la suite Office plutôt que des logiciels séparés)."},
+  {term:"Cashback", en:"", cat:"bm", def:"Une partie de la somme dépensée est rendue au client (une remise différée)."},
+  {term:"Chaîne de valeur", en:"", cat:"strat", def:"Découpe l'entreprise en activités (5 de base + 4 de soutien) pour voir lesquelles créent de la valeur (concept de Porter)."},
+  {term:"Churn", en:"taux d'attrition", cat:"innov", def:"La proportion de clients qui partent / se désabonnent sur une période. Un churn élevé = mauvaise rétention."},
+  {term:"Commissionnement", en:"", cat:"bm", def:"La plateforme prend une commission sur chaque transaction entre particuliers (ex. Airbnb, BlaBlaCar)."},
+  {term:"Coopétition", en:"", cat:"innov", def:"Coopérer avec un concurrent tout en restant rivaux (le mode « hybride » de l'open innovation)."},
+  {term:"Crowdfunding", en:"financement participatif", cat:"bm", def:"Lever des fonds auprès du grand public, souvent via une plateforme en ligne."},
+  {term:"DAS", en:"Domaine d'Activité Stratégique", cat:"strat", def:"Un sous-ensemble homogène de l'entreprise (un métier / marché précis) qu'on analyse séparément."},
+  {term:"Désintermédiation", en:"", cat:"innov", def:"Supprimer les intermédiaires en reliant directement l'offre et le client (ex. Uber au lieu des centrales de taxis)."},
+  {term:"Design Thinking", en:"", cat:"innov", def:"Méthode de conception centrée sur l'utilisateur, en 5 étapes : Empathize → Define → Ideate → Prototype → Test."},
+  {term:"Différenciation", en:"", cat:"strat", def:"Stratégie où l'on se distingue par autre chose que le prix : qualité, marque, design, technologie."},
+  {term:"Dilemme", en:"matrice BCG", cat:"strat", def:"Activité sur un marché en forte croissance mais où l'on a une faible part de marché : fort potentiel mais position incertaine."},
+  {term:"Disruption", en:"", cat:"innov", def:"Une innovation qui change les règles du jeu d'un marché et bouscule les acteurs en place (souvent grâce à un nouveau business model)."},
+  {term:"DMAIC", en:"", cat:"strat", def:"Les 5 étapes de Six Sigma : Define, Measure, Analyse, Improve, Control."},
+  {term:"Domination par les coûts", en:"", cat:"strat", def:"Stratégie : avoir le coût le plus bas (à qualité égale) sur une cible large, grâce au volume et aux économies d'échelle."},
+  {term:"EBE", en:"Excédent Brut d'Exploitation", cat:"strat", def:"Ce que l'entreprise gagne avec son activité courante, avant amortissements, financements et impôts. Un indicateur de rentabilité."},
+  {term:"Économies d'échelle", en:"", cat:"strat", def:"Quand produire en grande quantité fait baisser le coût de chaque unité."},
+  {term:"Effectuation", en:"", cat:"innov", def:"Logique entrepreneuriale : partir de ce qu'on a et agir malgré l'incertitude, au lieu de tout planifier vers un but fixe."},
+  {term:"Élasticité croisée", en:"", cat:"strat", def:"Mesure comment la demande d'un produit change quand le prix d'un autre change. Si elle est positive, ce sont des produits de substitution."},
+  {term:"Carte d'empathie", en:"Empathy Map", cat:"innov", def:"Outil pour comprendre un utilisateur selon ce qu'il dit, fait, pense et ressent (Say / Do / Think / Feel)."},
+  {term:"Facteurs Clés de Succès (FCS)", en:"", cat:"strat", def:"Les éléments qu'il faut absolument maîtriser pour réussir sur un marché donné."},
+  {term:"Focalisation (concentration)", en:"", cat:"strat", def:"Stratégie de niche : se concentrer sur un petit segment plutôt que viser tout le marché."},
+  {term:"Freemium", en:"", cat:"bm", def:"Une base gratuite + des options payantes (ex. Proton Mail, Spotify). Contraction de « free » + « premium »."},
+  {term:"Frugalité", en:"", cat:"innov", def:"Faire mieux avec moins de ressources (un des piliers du Jugaad)."},
+  {term:"Gain creators", en:"créateurs de gains", cat:"bm", def:"Côté offre (Value Proposition Canvas) : ce qui apporte au client les bénéfices qu'il espère."},
+  {term:"Golden Circle", en:"", cat:"bm", def:"Modèle de Simon Sinek : communiquer en partant du Pourquoi → Comment → Quoi pour inspirer."},
+  {term:"Growth hacking", en:"", cat:"innov", def:"Des techniques malines et peu coûteuses pour faire grossir très vite le nombre d'utilisateurs (ex. Airbnb via Craigslist)."},
+  {term:"Incumbent", en:"acteur en place", cat:"innov", flag:true, def:"L'entreprise déjà installée et dominante sur un marché — celle que les nouveaux entrants viennent défier. (Ex. les taxis face à Uber.)"},
+  {term:"Intégration verticale", en:"", cat:"strat", def:"Racheter des maillons en amont (fournisseurs) ou en aval (distribution) pour contrôler toute la filière."},
+  {term:"ISO 9001", en:"", cat:"strat", def:"Une norme internationale de management de la qualité, centrée sur la satisfaction du client."},
+  {term:"Job-To-Be-Done (JTBD)", en:"", cat:"bm", def:"L'idée que le client « embauche » un produit pour accomplir une tâche précise (ex. le milkshake « embauché » pour occuper un trajet)."},
+  {term:"Jugaad", en:"", cat:"innov", def:"Innovation frugale : « faire plus avec moins » (Frugalité + Flexibilité + Inclusif). Mot d'origine hindi."},
+  {term:"KPI", en:"Key Performance Indicator", cat:"trans", def:"Un indicateur chiffré qui mesure la performance (ex. taux de conversion, churn, chiffre d'affaires par client)."},
+  {term:"Lean Startup", en:"", cat:"innov", def:"Méthode pour lancer un projet en testant vite et pas cher : boucle Build-Measure-Learn, MVP, pivots (Eric Ries)."},
+  {term:"Love money", en:"", cat:"bm", def:"L'argent prêté ou investi par les proches (famille, amis) au lancement de l'entreprise."},
+  {term:"Low-cost", en:"", cat:"strat", def:"Une offre épurée (on enlève le superflu) vendue moins cher (ex. Ryanair, Dacia)."},
+  {term:"MVP", en:"Minimum Viable Product", cat:"innov", def:"La version minimale d'un produit, juste assez aboutie pour la tester auprès de vrais clients."},
+  {term:"Open Innovation", en:"", cat:"innov", def:"Innover en s'ouvrant à l'extérieur (partenaires, clients, startups) au lieu de tout faire en interne (Chesbrough)."},
+  {term:"Pain relievers", en:"réducteurs de douleurs", cat:"bm", def:"Côté offre : ce qui soulage les difficultés (les « pains ») du client."},
+  {term:"Pains", en:"douleurs", cat:"bm", def:"Les difficultés, freins et frustrations vécus par le client."},
+  {term:"Pareto (loi de)", en:"", cat:"strat", def:"La règle du « 80/20 » : souvent ~80 % du chiffre d'affaires vient de ~20 % des clients."},
+  {term:"Performance overshoot", en:"surperformance", cat:"innov", flag:true, def:"Quand un produit devient meilleur que ce dont le client a réellement besoin : les nouvelles améliorations ne servent plus à grand-chose. C'est la faille que les nouveaux entrants exploitent."},
+  {term:"PESTEL", en:"", cat:"strat", def:"Grille pour analyser l'environnement d'une entreprise : Politique, Économique, Social, Technologique, Écologique, Légal."},
+  {term:"Pivot", en:"", cat:"innov", def:"Changer de cap (de cible, de produit ou de modèle) quand la 1ʳᵉ idée ne marche pas (ex. Netflix : DVD → streaming)."},
+  {term:"Poids mort", en:"matrice BCG", cat:"strat", def:"Activité à faible croissance et faible part de marché : peu ou pas rentable."},
+  {term:"5 forces de Porter", en:"", cat:"strat", def:"Un modèle (Michael Porter, 1979) qui analyse la concurrence d'un secteur via 5 forces (+ le rôle de l'État)."},
+  {term:"Proposition de valeur", en:"", cat:"bm", def:"La promesse claire du bénéfice qu'on apporte au client : pourquoi acheter chez moi plutôt qu'ailleurs ?"},
+  {term:"Purple Cow / Vache Mauve", en:"", cat:"strat", def:"Idée de Seth Godin : être remarquable, sortir du lot, pour qu'on parle de toi."},
+  {term:"RCAI", en:"Résultat Courant Avant Impôt", cat:"strat", def:"Le résultat d'exploitation + le résultat financier, avant de payer les impôts."},
+  {term:"Reframing", en:"recadrage", cat:"innov", flag:true, def:"Quand un nouvel entrant redéfinit les règles d'un marché avec une approche totalement nouvelle — au lieu de simplement améliorer l'existant. C'est le moteur de la disruption."},
+  {term:"Rétention", en:"", cat:"innov", def:"La capacité à garder ses utilisateurs / clients dans le temps (l'inverse du churn)."},
+  {term:"Sérendipité", en:"", cat:"innov", def:"Découvrir par hasard quelque chose d'utile qu'on ne cherchait pas (et savoir en tirer parti)."},
+  {term:"Six Sigma", en:"", cat:"strat", def:"Une méthode d'amélioration de la qualité des processus (étapes DMAIC), née chez Motorola."},
+  {term:"SIG", en:"Soldes Intermédiaires de Gestion", cat:"strat", def:"Une suite de calculs (marge, valeur ajoutée, EBE, résultats…) pour analyser comment l'entreprise gagne — ou perd — de l'argent."},
+  {term:"SLA", en:"Service Level Agreement", cat:"strat", def:"Un contrat qui fixe le niveau de service promis (délais, disponibilité, qualité)."},
+  {term:"SONCAS(E)", en:"", cat:"innov", def:"Les 7 motivations d'achat d'un client : Sécurité, Orgueil, Nouveauté, Confort, Argent, Sympathie, Environnement."},
+  {term:"Spin-off", en:"essaimage", cat:"innov", def:"Une nouvelle entreprise qui naît en se détachant d'une autre (ex. Intel, issu de Fairchild)."},
+  {term:"Sustaining", en:"innovation de continuité", cat:"innov", flag:true, def:"Améliorer un produit existant sans changer les règles du jeu (c'est ce que font les acteurs en place / incumbents). C'est l'opposé du reframing."},
+  {term:"SWOT", en:"tu l'écrivais « SWOFT » 😉", cat:"strat", flag:true, def:"Un tableau qui croise <b>Forces / Faiblesses</b> (interne) et <b>Opportunités / Menaces</b> (externe) pour décider d'une stratégie. (Strengths, Weaknesses, Opportunities, Threats.)"},
+  {term:"T-shaped", en:"compétences en T", cat:"innov", def:"Avoir une expertise pointue dans un domaine (la barre verticale du T) + une ouverture large à d'autres disciplines (la barre horizontale)."},
+  {term:"Value Proposition Canvas", en:"", cat:"bm", def:"Un outil pour vérifier que l'offre (produits, pain relievers, gain creators) colle bien aux besoins du client (jobs, pains, gains)."},
+  {term:"Veille stratégique", en:"", cat:"strat", def:"Surveiller en continu son environnement (concurrents, technologies, marché) pour anticiper et mieux décider."},
+  {term:"VOC", en:"Voice of Customer / Voix du Client", cat:"strat", def:"Recueillir et exploiter ce que disent et attendent les clients pour ajuster l'offre."},
+  {term:"Vuja de", en:"", cat:"innov", def:"L'inverse du « déjà-vu » : regarder une chose familière comme si on la découvrait, pour avoir des idées neuves."}
+];
+const LEXTAG = {innov:["t-innov","Innovation"], bm:["t-bm","Business Model"], strat:["t-strat","Stratégie"], trans:["t-trans","Transversal"]};
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const lexFab=document.getElementById('lexFab'), lexModal=document.getElementById('lexModal'),
+      lexClose=document.getElementById('lexClose'), lexSearch=document.getElementById('lexSearch'),
+      lexList=document.getElementById('lexList'), lexNone=document.getElementById('lexNone');
+
+lexList.innerHTML = GLOSSARY.map(g=>{
+  const [cls,label]=LEXTAG[g.cat];
+  const key = norm(g.term+' '+(g.en||'')+' '+g.def.replace(/<[^>]+>/g,''));
+  return `<div class="lex-item${g.flag?' flag':''}" data-k="${key}">
+    <div class="lex-head"><span class="lex-term">${g.term}</span>${g.en?`<span class="lex-en">${g.en}</span>`:''}<span class="lex-tag ${cls}">${label}</span></div>
+    <div class="lex-def">${g.def}</div></div>`;
+}).join('');
+const lexItems = Array.from(lexList.querySelectorAll('.lex-item'));
+
+function filterLex(){
+  const q = norm(lexSearch.value.trim()); let n=0;
+  lexItems.forEach(it=>{ const show=!q||it.dataset.k.includes(q); it.style.display=show?'':'none'; if(show)n++; });
+  lexNone.style.display = n?'none':'block';
+}
+function openLex(){ document.body.classList.add('lex-open'); lexModal.classList.add('open'); lexModal.setAttribute('aria-hidden','false'); setTimeout(()=>lexSearch.focus(),50); }
+function closeLex(){ document.body.classList.remove('lex-open'); lexModal.classList.remove('open'); lexModal.setAttribute('aria-hidden','true'); }
+lexFab.onclick = openLex;
+lexClose.onclick = closeLex;
+lexModal.addEventListener('click', e=>{ if(e.target===lexModal) closeLex(); });
+lexSearch.addEventListener('input', filterLex);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.body.classList.contains('lex-open')) closeLex(); });
+
+renderStart();
+</script>
+</body>
+</html>
