@@ -2,553 +2,1207 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>CloudArchitect — Build &amp; Defend</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CyberQuête — Révisions ST2GID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#020617; --surface:#0f172a; --surface2:#1e293b; --border:#334155; --border2:#475569;
-  --text:#f1f5f9; --muted:#94a3b8; --faint:#64748b; --faint2:#475569;
-  --teal:#2dd4bf; --teal3:#5eead4; --teal5:#14b8a6;
-  --amber:#fbbf24; --amber3:#fcd34d;
-  --rose:#f43f5e; --rose3:#fda4af; --rose4:#fb7185;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --bg-0:#160F2E; --bg-1:#1E1640; --bg-2:#281D52;
+  --surface:#2C2358; --surface-2:#372C6E; --surface-3:#463A86;
+  --line:#4A3E8C;
+  --ink:#F5F2FF; --ink-soft:#CDC4F0; --ink-mute:#9A8ED0;
+  --gold:#FFC93C; --gold-deep:#EDA826;
+  --mint:#3DDC97; --mint-deep:#1FB97A;
+  --coral:#FF7A7A; --coral-deep:#E84C4C;
+  --cyan:#46D0C8; --violet:#AB8CFB; --sky:#56CCF2;
+  --z1:#46D0C8; --z2:#AB8CFB; --z3:#FF7A7A; --z4:#FFC93C; --boss:#FF9E3D;
+  --ring:#7CE0FF;
+  --r:16px; --r-lg:24px; --r-xl:30px; --pill:999px;
+  --font-d:'Fredoka', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --font-b:'Nunito', ui-rounded, system-ui, sans-serif;
+  --font-m:'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --sh:0 10px 30px rgba(0,0,0,.35);
+  --sh-btn:0 5px 0 0 rgba(0,0,0,.28);
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--bg); color:var(--text); font-family:var(--sans); -webkit-font-smoothing:antialiased; line-height:1.5;}
-#app{max-width:760px; margin:0 auto; padding:24px 16px 64px;}
-#app > * + *{margin-top:16px;}
-.ico{width:1em; height:1em; flex:none; vertical-align:-0.125em;}
-button{font-family:inherit; cursor:pointer; color:inherit;}
-button:focus-visible,.level-row:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
-.card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px;}
-.eyebrow{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--teal3); display:inline-flex; align-items:center; gap:6px;}
-.eyebrow.rose{color:var(--rose4); letter-spacing:.2em;}
-.muted{color:var(--muted); font-size:14px; margin:6px 0 0;}
-.mono{font-family:var(--mono);}
-.faint{color:var(--faint);} .faint2{color:var(--faint2);} .teal{color:var(--teal);}
-.h1{font-size:34px; font-weight:800; letter-spacing:-.02em; margin:6px 0 0; line-height:1.05;}
-.h2{font-size:20px; font-weight:700; letter-spacing:-.01em; margin:4px 0 0;}
-.btn{display:inline-flex; align-items:center; gap:8px; border-radius:10px; padding:10px 16px; font-size:14px; font-weight:600; border:1px solid transparent; transition:background .15s,color .15s,border-color .15s;}
-.btn .ico{font-size:16px;}
-.btn-primary{background:var(--teal5); color:#03201d;}
-.btn-primary:hover{background:var(--teal);}
-.btn-primary[disabled]{background:var(--surface2); color:var(--faint); cursor:not-allowed;}
-.btn-ghost{background:transparent; border-color:var(--border2); color:var(--text);}
-.btn-ghost:hover{background:var(--surface2);}
-.iconbtn{display:inline-flex; padding:4px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:16px;}
-.iconbtn:hover{background:var(--surface2);}
-.linkbtn{margin-top:12px; background:none; border:none; padding:0; font-family:var(--mono); font-size:12px; color:var(--faint);}
-.linkbtn:hover{color:var(--muted);}
-.hero{padding:24px;}
-.hero-sub{max-width:520px;}
-.hero-stats{display:flex; align-items:center; gap:16px; margin-top:16px; flex-wrap:wrap;}
-.stat{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:var(--surface2); border-radius:10px; padding:8px 12px; font-size:14px;}
-.amber-ico{color:var(--amber); font-size:16px;} .teal-ico{color:var(--teal);} .rose-ico{color:var(--rose4);} .heart-ico{color:var(--rose4); font-size:13px;}
-.levels{display:flex; flex-direction:column; gap:12px;}
-.level-row{display:flex; align-items:center; gap:16px; width:100%; text-align:left; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:16px; transition:border-color .15s;}
-.level-row:hover{border-color:var(--teal5);}
-.level-num{width:44px; height:44px; flex:none; display:flex; align-items:center; justify-content:center; border:1px solid var(--border2); background:var(--surface); border-radius:10px; font-size:18px; font-weight:700; color:var(--teal3);}
-.level-mid{min-width:0; flex:1;}
-.level-title{font-size:14px; font-weight:600; color:var(--text); margin:2px 0;}
-.level-go{color:var(--faint); font-size:18px;}
-.hq-tip{text-align:center; color:var(--faint2); font-size:12px;}
-.stars{display:inline-flex; align-items:center; gap:2px; margin-top:2px;}
-.star{font-size:14px;} .star-on{color:var(--amber);} .star-off{color:var(--border);}
-.brief-top{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
-.hp-head{display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:12px; margin-bottom:8px;}
-.hp-head .lbl{color:var(--faint); display:inline-flex; align-items:center; gap:6px;}
-.hpwrap{height:10px; background:var(--surface2); border-radius:999px; overflow:hidden;}
-.hpfill{height:100%; border-radius:999px; transition:width .5s ease, background .3s;}
-.hp-ok{background:var(--teal);} .hp-mid{background:var(--amber);} .hp-low{background:var(--rose);}
-.hp-ok-text{color:var(--teal3);} .hp-mid-text{color:var(--amber3);} .hp-low-text{color:var(--rose3);}
-.board{display:grid; grid-template-columns:1fr; gap:12px;}
-@media(min-width:560px){ .board{grid-template-columns:1fr 1fr;} }
-.bay{display:flex; flex-direction:column; background:var(--surface2); border:1px solid var(--border); border-radius:10px;}
-.bay.held{border-color:var(--teal5);} .bay.breach{border-color:var(--rose);}
-.bay-body{padding:12px;}
-.bay-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;}
-.bay-role{font-size:14px; font-weight:600; color:var(--text);}
-.need{font-size:12px; color:var(--faint); margin:0 0 8px; line-height:1.45;}
-.slot{display:flex; align-items:center; gap:8px; width:100%; text-align:left; border:1px dashed var(--border); background:var(--surface); border-radius:8px; padding:8px 10px; font-size:14px; color:var(--faint); transition:border-color .15s,color .15s;}
-.slot .ico{font-size:16px;}
-.slot.armed{border-color:var(--teal); color:var(--teal3);}
-.slot.filled{border-style:solid; border-color:var(--border2); color:var(--text);}
-.slot[disabled]{cursor:default;}
-.slot-x{margin-left:auto; color:var(--faint); font-size:14px;}
-.verdict{border-top:1px solid var(--border); padding:8px 12px;}
-.bay.held .verdict{border-color:var(--teal5);} .bay.breach .verdict{border-color:var(--rose);}
-.verdict-head{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:12px; font-weight:700;}
-.verdict.held .verdict-head{color:var(--teal3);} .verdict.breach .verdict-head{color:var(--rose3);}
-.verdict-why{font-size:12px; color:var(--muted); margin:4px 0 0; line-height:1.5;}
-.palette-label{font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;}
-.cards-grid{display:grid; grid-template-columns:1fr; gap:8px;}
-@media(min-width:560px){ .cards-grid{grid-template-columns:1fr 1fr 1fr;} }
-.chip{display:flex; align-items:center; gap:8px; text-align:left; border:1px solid var(--border); background:var(--surface2); border-radius:8px; padding:8px 10px; color:var(--text); transition:background .15s,border-color .15s;}
-.chip .ico{font-size:16px; flex:none;}
-.chip:hover{background:var(--border);}
-.chip.sel{background:var(--teal5); border-color:var(--teal); color:#03201d;}
-.chip.used{background:var(--surface); border-color:var(--border); color:var(--faint2); cursor:default;}
-.chip-txt{min-width:0; display:flex; flex-direction:column;}
-.chip-label{font-size:13px; line-height:1.2;}
-.chip-sub{font-size:11px; line-height:1.2; color:var(--faint);}
-.chip.sel .chip-sub{color:#0a3d36;} .chip.used .chip-sub{color:var(--faint2);}
-.deploy-row{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
-.audit-line{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--muted);}
-.debrief{text-align:center; padding:20px;}
-.debrief-stars{display:flex; justify-content:center; margin-bottom:4px;}
-.debrief-stars .star{font-size:22px;}
-.debrief-msg{max-width:440px; margin:8px auto 0;}
-.debrief-actions{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:16px;}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-b); color:var(--ink);
+  background:
+    radial-gradient(1100px 700px at 18% -8%, #2A1F5E 0%, transparent 55%),
+    radial-gradient(900px 600px at 110% 12%, #20264f 0%, transparent 50%),
+    linear-gradient(165deg, var(--bg-0), var(--bg-1) 55%, var(--bg-2));
+  min-height:100vh; min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.blob{position:fixed;border-radius:50%;filter:blur(60px);opacity:.32;z-index:0;pointer-events:none;animation:float 16s ease-in-out infinite}
+.blob.b1{width:260px;height:260px;background:var(--violet);top:-60px;left:-70px}
+.blob.b2{width:230px;height:230px;background:var(--cyan);bottom:8%;right:-80px;animation-delay:-5s}
+.blob.b3{width:200px;height:200px;background:var(--gold);top:42%;left:-90px;animation-delay:-9s;opacity:.22}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(26px)}}
+
+#app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+
+/* ---- Top bar ---- */
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 14px calc(10px);
+  background:linear-gradient(180deg, rgba(22,15,46,.92), rgba(22,15,46,.55) 70%, transparent);
+  backdrop-filter:blur(6px)}
+.lvlbadge{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--pill);padding:6px 10px 6px 6px;box-shadow:var(--sh)}
+.lvlbadge .num{font-family:var(--font-d);font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+  color:#3a2a00;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:15px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+.lvlbadge .lab{font-size:11px;color:var(--ink-mute);font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.xpwrap{flex:1;min-width:0}
+.xpmeta{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);font-weight:800;margin:0 2px 4px}
+.xpbar{height:12px;background:#1b1440;border:1px solid var(--line);border-radius:var(--pill);overflow:hidden;position:relative}
+.xpfill{height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--cyan));border-radius:var(--pill);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.iconbtn{flex:none;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  font-size:17px;cursor:pointer;display:grid;place-items:center;box-shadow:var(--sh);transition:transform .12s}
+.iconbtn:active{transform:scale(.92)}
+
+/* ---- Views ---- */
+.view{flex:1;padding:6px 16px 110px;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.screentitle{font-family:var(--font-d);font-weight:700;font-size:24px;margin:8px 2px 2px}
+.screensub{color:var(--ink-mute);font-weight:700;font-size:13px;margin:0 2px 16px}
+
+/* ---- Welcome card ---- */
+.welcome{background:linear-gradient(135deg,var(--surface-3),var(--surface));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:16px;margin:6px 0 18px;display:flex;gap:14px;align-items:center;box-shadow:var(--sh);position:relative}
+.welcome .x{position:absolute;top:8px;right:10px;color:var(--ink-mute);background:none;border:none;font-size:18px;cursor:pointer}
+.welcome h3{font-family:var(--font-d);font-weight:700;margin:0 0 4px;font-size:17px}
+.welcome p{margin:0;font-size:13px;color:var(--ink-soft);font-weight:600;line-height:1.45}
+
+/* ---- Mascot ---- */
+.mascot{flex:none}
+.mascot.sm{width:54px;height:54px}
+.mascot.lg{width:120px;height:120px}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+.mascot.anim{animation:bob 3s ease-in-out infinite}
+
+/* ---- Quest map ---- */
+.map{position:relative;padding-top:6px}
+.zonebanner{display:flex;align-items:center;gap:10px;margin:22px 0 6px;padding:9px 14px;border-radius:var(--pill);
+  font-family:var(--font-d);font-weight:600;font-size:14px;border:1px solid;position:relative}
+.zonebanner .dot{width:12px;height:12px;border-radius:50%}
+.zonebanner small{font-weight:800;font-size:11px;opacity:.85;font-family:var(--font-b);text-transform:uppercase;letter-spacing:.05em}
+.nodes{display:flex;flex-direction:column;align-items:center;position:relative}
+.noderow{width:100%;display:flex;justify-content:center;padding:7px 0;position:relative}
+.noderow.off-l{justify-content:flex-start;padding-left:16%}
+.noderow.off-r{justify-content:flex-end;padding-right:16%}
+.node{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;width:96px}
+.node .disc{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;font-size:30px;position:relative;
+  box-shadow:var(--sh-btn);transition:transform .14s}
+.node:active .disc{transform:translateY(3px);box-shadow:0 2px 0 0 rgba(0,0,0,.28)}
+.node .cap{font-size:11.5px;font-weight:800;color:var(--ink-soft);text-align:center;line-height:1.2;max-width:104px}
+.node .stars{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);display:flex;gap:1px;font-size:13px;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.node.locked{cursor:not-allowed}
+.node.locked .disc{background:#241c4d;border:2px dashed var(--line);color:var(--ink-mute);box-shadow:none}
+.node.locked .cap{color:var(--ink-mute);opacity:.7}
+.node.avail .disc{background:linear-gradient(160deg,var(--surface-3),var(--surface));border:2px solid var(--line)}
+.node.done .disc{border:2px solid rgba(255,255,255,.5)}
+.node.current::before{content:"";position:absolute;top:-9px;left:-9px;right:-9px;width:auto;height:92px;border-radius:50%;
+  border:3px solid var(--ring);opacity:.0;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+.node .pin{position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-size:22px;animation:bob 2.2s ease-in-out infinite}
+.connector{position:absolute;width:4px;background:repeating-linear-gradient(var(--line) 0 8px, transparent 8px 16px);
+  left:50%;transform:translateX(-50%);top:0;bottom:0;z-index:-1}
+.bossnode{margin:18px auto 4px;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:none;cursor:pointer}
+.bossnode .disc{width:104px;height:104px;border-radius:26px;display:grid;place-items:center;font-size:46px;
+  background:linear-gradient(160deg,#ff9e3d,#ff5d5d);box-shadow:0 8px 0 0 rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.4);transition:transform .14s}
+.bossnode:active .disc{transform:translateY(4px);box-shadow:0 4px 0 0 rgba(0,0,0,.3)}
+.bossnode.locked .disc{background:#241c4d;border:2px dashed var(--line);box-shadow:none;color:var(--ink-mute);filter:grayscale(1)}
+.bossnode .cap{font-family:var(--font-d);font-weight:700;font-size:16px}
+.bossnode .sub{font-size:11px;color:var(--ink-soft);font-weight:800;margin-top:-4px}
+
+/* ---- Practice / lists ---- */
+.modgroup{margin-bottom:18px}
+.modhead{display:flex;align-items:center;gap:9px;margin:4px 2px 10px;font-family:var(--font-d);font-weight:600;font-size:16px}
+.modhead .dot{width:12px;height:12px;border-radius:50%}
+.lvlcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:12px;margin-bottom:9px;cursor:pointer;box-shadow:var(--sh);transition:transform .12s,border-color .12s}
+.lvlcard:active{transform:scale(.985)}
+.lvlcard .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:22px;flex:none}
+.lvlcard .body{flex:1;min-width:0}
+.lvlcard .t{font-weight:800;font-size:14.5px}
+.lvlcard .m{font-size:12px;color:var(--ink-mute);font-weight:700;margin-top:2px;display:flex;gap:8px;align-items:center}
+.lvlcard .chev{color:var(--ink-mute);font-size:20px}
+.mini-mast{height:6px;width:62px;background:#1b1440;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.mini-mast i{display:block;height:100%;background:var(--mint)}
+
+/* ---- Quiz ---- */
+.quiz{padding:14px 16px 28px;animation:fade .3s ease}
+.qtop{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.qtop .back{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;flex:none}
+.qprog{flex:1;height:12px;background:#1b1440;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.qprog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--coral));transition:width .35s}
+.hearts{display:flex;gap:2px;font-size:17px;flex:none}
+.heart.lost{filter:grayscale(1);opacity:.35}
+.streakchip{display:inline-flex;align-items:center;gap:4px;font-weight:900;font-size:12px;color:var(--gold);
+  background:rgba(255,201,60,.12);border:1px solid rgba(255,201,60,.3);padding:3px 9px;border-radius:99px;margin-bottom:10px}
+.qtag{display:inline-block;font-size:10.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:99px;margin-bottom:10px}
+.qtext{font-family:var(--font-d);font-weight:500;font-size:20px;line-height:1.3;margin:2px 0 8px}
+.qcode{font-family:var(--font-m);font-size:12.5px;background:#120c2c;border:1px solid var(--line);color:#9fe9c8;
+  padding:10px 12px;border-radius:12px;margin:10px 0 4px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.opts{display:flex;flex-direction:column;gap:11px;margin-top:14px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:2px solid var(--line);
+  border-radius:var(--r);padding:14px;font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer;
+  box-shadow:0 4px 0 0 rgba(0,0,0,.22);transition:transform .1s,border-color .12s,background .12s}
+.opt:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 0 rgba(0,0,0,.22)}
+.opt .key{width:26px;height:26px;border-radius:8px;background:#1b1440;border:1px solid var(--line);display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;font-size:13px;flex:none;color:var(--ink-soft)}
+.opt.good{background:rgba(61,220,151,.16);border-color:var(--mint);box-shadow:0 4px 0 0 var(--mint-deep)}
+.opt.good .key{background:var(--mint);color:#053a26;border-color:var(--mint)}
+.opt.bad{background:rgba(255,122,122,.14);border-color:var(--coral);box-shadow:0 4px 0 0 var(--coral-deep)}
+.opt.bad .key{background:var(--coral);color:#4a0e0e;border-color:var(--coral)}
+.opt:disabled{cursor:default}
+.shake{animation:shk .4s}
+@keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+
+/* ---- Explain / footer ---- */
+.explain{margin-top:16px;border-radius:var(--r-lg);padding:16px;border:1px solid;animation:slideup .3s ease}
+@keyframes slideup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.explain.ok{background:rgba(61,220,151,.12);border-color:rgba(61,220,151,.4)}
+.explain.no{background:rgba(255,122,122,.1);border-color:rgba(255,122,122,.4)}
+.explain .h{font-family:var(--font-d);font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.explain p{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-soft);font-weight:600}
+.cta{display:block;width:100%;margin-top:16px;border:none;border-radius:var(--r);padding:16px;font-family:var(--font-d);
+  font-weight:600;font-size:17px;cursor:pointer;box-shadow:0 5px 0 0 rgba(0,0,0,.3);transition:transform .1s}
+.cta:active{transform:translateY(4px);box-shadow:0 1px 0 0 rgba(0,0,0,.3)}
+.cta.green{background:linear-gradient(180deg,var(--mint),var(--mint-deep));color:#053a26}
+.cta.gold{background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#3a2a00}
+.cta.ghost{background:var(--surface);color:var(--ink);box-shadow:0 5px 0 0 rgba(0,0,0,.25);border:1px solid var(--line)}
+.xppop{position:fixed;left:50%;top:40%;transform:translateX(-50%);font-family:var(--font-d);font-weight:700;font-size:30px;
+  color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,.5);pointer-events:none;z-index:60;animation:xpf 1s ease forwards}
+@keyframes xpf{0%{opacity:0;transform:translate(-50%,10px) scale(.8)}25%{opacity:1;transform:translate(-50%,-10px) scale(1.1)}100%{opacity:0;transform:translate(-50%,-70px) scale(1)}}
+
+/* ---- Result ---- */
+.result{padding:28px 18px;text-align:center;animation:fade .4s ease;min-height:70vh;display:flex;flex-direction:column;justify-content:center}
+.result h2{font-family:var(--font-d);font-weight:700;font-size:30px;margin:8px 0 4px}
+.result .rsub{color:var(--ink-soft);font-weight:700;margin:0 0 20px;font-size:14px}
+.rstars{display:flex;justify-content:center;gap:10px;margin:6px 0 18px}
+.rstars .s{font-size:48px;opacity:.25;transform:scale(.7);transition:all .4s}
+.rstars .s.on{opacity:1;transform:scale(1);filter:drop-shadow(0 4px 10px rgba(255,201,60,.5))}
+.rstats{display:flex;gap:10px;justify-content:center;margin:4px 0 22px;flex-wrap:wrap}
+.rstat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;min-width:96px}
+.rstat .v{font-family:var(--font-d);font-weight:700;font-size:24px}
+.rstat .l{font-size:11px;color:var(--ink-mute);font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+
+/* ---- Stats screen ---- */
+.bigstat{background:linear-gradient(135deg,var(--surface-3),var(--surface));border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:18px;margin-bottom:14px;display:flex;align-items:center;gap:16px;box-shadow:var(--sh)}
+.bigstat .ring{width:84px;height:84px;flex:none;position:relative;display:grid;place-items:center}
+.bigstat .ring .lv{font-family:var(--font-d);font-weight:700;font-size:30px;line-height:1}
+.bigstat .ring .lvl{font-size:10px;font-weight:900;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em}
+.bigstat .info{flex:1}
+.bigstat .info .xpmeta{margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.kpi .v{font-family:var(--font-d);font-weight:700;font-size:26px}
+.kpi .l{font-size:11.5px;color:var(--ink-mute);font-weight:800;margin-top:2px}
+.kpi .v small{font-size:14px;color:var(--ink-mute)}
+.sectlab{font-family:var(--font-d);font-weight:600;font-size:15px;margin:18px 2px 10px}
+.mastrow{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.mastrow .nm{flex:1;font-size:13px;font-weight:800}
+.mastrow .nm small{display:block;color:var(--ink-mute);font-weight:700;font-size:11px}
+.mastrow .bar{flex:1.4;height:14px;background:#1b1440;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.mastrow .bar i{display:block;height:100%;border-radius:99px;transition:width .6s}
+.mastrow .pct{width:42px;text-align:right;font-weight:900;font-size:13px;font-variant-numeric:tabular-nums}
+.notebox{font-size:12px;color:var(--ink-mute);font-weight:700;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:12px;margin:14px 0;line-height:1.45}
+.dangerbtn{width:100%;margin-top:8px;background:none;border:1px solid var(--coral);color:var(--coral);border-radius:var(--r);
+  padding:13px;font-weight:800;font-size:13px;cursor:pointer}
+
+/* ---- Empty state ---- */
+.empty{text-align:center;padding:34px 18px;color:var(--ink-soft)}
+.empty .big{font-size:54px;margin-bottom:8px}
+.empty h3{font-family:var(--font-d);font-weight:700;margin:0 0 6px;font-size:19px}
+.empty p{font-size:13.5px;font-weight:600;color:var(--ink-mute);line-height:1.5;max-width:300px;margin:0 auto 16px}
+
+/* ---- Tab bar ---- */
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:center;
+  pointer-events:none;padding:0 0 max(8px,env(safe-area-inset-bottom))}
+.tabinner{pointer-events:auto;display:flex;gap:4px;background:rgba(28,21,64,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:22px;padding:7px;box-shadow:0 -6px 26px rgba(0,0,0,.4);max-width:460px;width:calc(100% - 24px)}
+.tab{flex:1;background:none;border:none;color:var(--ink-mute);cursor:pointer;border-radius:16px;padding:8px 4px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:800;font-size:10.5px;transition:color .15s,background .15s}
+.tab .e{font-size:21px;line-height:1}
+.tab.active{color:var(--ink);background:var(--surface-3)}
+.tab .badge{position:absolute;top:2px;right:18%;background:var(--coral);color:#fff;font-size:9px;font-weight:900;
+  min-width:16px;height:16px;border-radius:99px;display:grid;place-items:center;padding:0 4px}
+.tabwrap{position:relative;flex:1;display:flex}
+
+/* confetti */
+.confetti{position:fixed;top:-10px;width:9px;height:14px;z-index:55;pointer-events:none;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:8px}
+@media (max-width:360px){.node{width:84px}.node .disc{width:66px;height:66px;font-size:26px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important}.blob{display:none}}
+/* ---- Glossaire ---- */
+.gloss-tools{display:flex;gap:8px;margin:2px 0 12px;flex-wrap:wrap}
+.gloss-search{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--line);color:var(--ink);
+  border-radius:14px;padding:12px 14px;font-size:15px;font-family:var(--font-b);outline:none}
+.gloss-search::placeholder{color:var(--ink-mute)}
+.gloss-search:focus{border-color:var(--mint)}
+.gflash{background:var(--surface);border:1px solid var(--line);color:var(--ink-mute);border-radius:14px;
+  padding:0 14px;font-weight:800;font-size:13px;font-family:var(--font-d);cursor:pointer;white-space:nowrap;transition:.15s}
+.gflash.on{background:linear-gradient(160deg,var(--mint),#2bb583);color:#06231a;border-color:transparent}
+.gloss-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.gchip{background:var(--surface);border:1px solid var(--line);color:var(--ink-mute);border-radius:99px;
+  padding:7px 13px;font-weight:800;font-size:12.5px;font-family:var(--font-d);cursor:pointer;transition:.15s;display:inline-flex;gap:5px;align-items:center}
+.gchip small{opacity:.7;font-weight:700}
+.gchip.on{color:#11102a;background:var(--gc);border-color:transparent}
+.gchip.on small{opacity:.85}
+.gloss-hint{background:rgba(61,220,151,.1);border:1px solid rgba(61,220,151,.3);color:var(--ink);
+  border-radius:12px;padding:10px 13px;font-size:13px;margin-bottom:12px}
+.gloss-sec{margin-bottom:18px}
+.gloss-secHead{display:flex;align-items:center;gap:8px;font-family:var(--font-d);font-weight:700;font-size:14px;
+  text-transform:uppercase;letter-spacing:.04em;margin:0 2px 9px}
+.gloss-secHead .dot{width:10px;height:10px;border-radius:50%}
+.gloss-secHead small{margin-left:auto;color:var(--ink-mute);font-weight:700;letter-spacing:0;text-transform:none}
+.gcard{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--gc);
+  border-radius:13px;padding:12px 14px;margin-bottom:9px}
+.gcard .gt{font-family:var(--font-d);font-weight:700;color:var(--ink);font-size:15px;margin-bottom:4px}
+.gcard .gd{color:var(--ink-soft);font-size:14px;line-height:1.5}
+.gcard.flash{cursor:pointer;position:relative;transition:border-color .15s}
+.gcard.flash:hover{border-color:var(--gc)}
+.gcard.flash .gd{filter:blur(7px);user-select:none;transition:filter .18s;min-height:1.2em}
+.gcard.flash .greveal{position:absolute;right:14px;top:12px;font-size:11px;font-weight:800;font-family:var(--font-d);
+  color:var(--gc);border:1px solid var(--gc);border-radius:99px;padding:3px 9px;opacity:.9}
+.gcard.flash.revealed .gd{filter:none;user-select:text}
+.gcard.flash.revealed .greveal{display:none}
+.gloss-empty{text-align:center;color:var(--ink-mute);padding:30px 10px;font-size:14px}
 </style>
+<style>.tab{font-size:9.5px !important;padding:8px 2px !important}.tab .e{font-size:19px !important}</style>
 </head>
 <body>
-<div id="app"></div>
-<script>
-const CARDS = {
-  route53:      { label: "Route 53", sub: "DNS", icon: "globe" },
-  cloudfront:   { label: "CloudFront", sub: "CDN", icon: "globe" },
-  waf:          { label: "AWS WAF", sub: "pare-feu L7", icon: "shield" },
-  apigw:        { label: "API Gateway", sub: "porte des API", icon: "network" },
-  cognito:      { label: "Cognito", sub: "identité des users", icon: "users" },
-  alb:          { label: "Application LB", sub: "répartiteur L7", icon: "network" },
-  lambda:       { label: "Lambda", sub: "FaaS", icon: "zap" },
-  ec2:          { label: "EC2", sub: "machine virtuelle", icon: "server" },
-  asg:          { label: "Auto Scaling Group", sub: "EC2 élastique", icon: "activity" },
-  container:    { label: "Conteneurs", sub: "portables", icon: "cpu" },
-  faaslock:     { label: "FaaS partout", sub: "propriétaire", icon: "zap" },
-  iamrole:      { label: "Rôle IAM", sub: "creds temporaires", icon: "key" },
-  accesskey:    { label: "Clé d'accès en dur", sub: "secret dans le code", icon: "key" },
-  iamuser:      { label: "Compte IAM dédié", sub: "1 user = 1 compte", icon: "users" },
-  root:         { label: "Compte root", sub: "passe-partout", icon: "key" },
-  iamgroup:     { label: "Groupes + policy", sub: "droits par groupe", icon: "users" },
-  mfa:          { label: "MFA", sub: "double vérification", icon: "lock" },
-  leastpriv:    { label: "Moindre privilège", sub: "droits minimaux", icon: "shield" },
-  adminall:     { label: "Droits admin partout", sub: "tout autorisé", icon: "key" },
-  subnetpriv:   { label: "Subnet privé", sub: "caché", icon: "lock" },
-  subnetpub:    { label: "Subnet public", sub: "ouvert sur internet", icon: "globe" },
-  sg:           { label: "Security Group", sub: "pare-feu d'instance", icon: "shield" },
-  nacl:         { label: "Network ACL", sub: "filtre de subnet", icon: "shield" },
-  nat:          { label: "NAT Gateway", sub: "sortie des privés", icon: "network" },
-  igw:          { label: "Internet Gateway", sub: "porte internet", icon: "globe" },
-  bastion:      { label: "Bastion / SSM", sub: "accès admin contrôlé", icon: "server" },
-  vpcendpoint:  { label: "VPC endpoint", sub: "accès privé aux services", icon: "lock" },
-  peering:      { label: "VPC Peering", sub: "lien entre 2 VPC", icon: "network" },
-  portsopen:    { label: "Tous les ports ouverts", sub: "0.0.0.0/0", icon: "shieldalert" },
-  vpn:          { label: "VPN site-to-site", sub: "tunnel chiffré", icon: "network" },
-  directconnect:{ label: "Direct Connect", sub: "lien dédié", icon: "network" },
-  ebs:          { label: "EBS", sub: "disque d'une VM", icon: "server" },
-  efs:          { label: "EFS", sub: "fichiers partagés", icon: "server" },
-  s3priv:       { label: "S3 (privé)", sub: "objet, bucket fermé", icon: "database" },
-  s3pub:        { label: "Bucket S3 public", sub: "ouvert sur internet", icon: "database" },
-  glacier:      { label: "S3 Glacier", sub: "archive bas coût", icon: "database" },
-  instancestore:{ label: "Instance store", sub: "local, éphémère", icon: "server" },
-  storagegw:    { label: "Storage Gateway", sub: "pont hybride", icon: "server" },
-  fsx:          { label: "FSx", sub: "fichiers spécialisés", icon: "server" },
-  rds:          { label: "RDS", sub: "SQL managé", icon: "database" },
-  aurora:       { label: "Aurora", sub: "SQL haute perf", icon: "database" },
-  rdsmaz:       { label: "RDS Multi-AZ", sub: "réplica de bascule", icon: "database" },
-  rdssingle:    { label: "RDS single-AZ", sub: "une seule zone", icon: "database" },
-  readreplica:  { label: "Read Replica", sub: "décharge la lecture", icon: "database" },
-  dynamodb:     { label: "DynamoDB", sub: "NoSQL serverless", icon: "database" },
-  cache:        { label: "ElastiCache", sub: "cache en mémoire", icon: "gauge" },
-  timestream:   { label: "Timestream", sub: "séries temporelles", icon: "database" },
-  sqs:          { label: "File SQS", sub: "tampon de messages", icon: "message" },
-  dlq:          { label: "Dead-Letter Queue", sub: "messages en échec", icon: "inbox" },
-  sns:          { label: "SNS", sub: "pub/sub", icon: "send" },
-  retry:        { label: "Retry + backoff", sub: "réessai des pannes brèves", icon: "rotate" },
-  circuitbreaker:{ label: "Circuit Breaker", sub: "coupe-circuit", icon: "shieldalert" },
-  bulkhead:     { label: "Bulkhead", sub: "cloisonnement", icon: "puzzle" },
-  throttle:     { label: "Throttling", sub: "limite de débit", icon: "gauge" },
-  monitoring:   { label: "CloudWatch", sub: "monitoring + alarmes", icon: "activity" },
-  ignoreerr:    { label: "Ignorer l'erreur", sub: "ne rien faire", icon: "x" },
-  loadleveling: { label: "Queue-Based Load Leveling", sub: "file tampon", icon: "puzzle" },
-  pubsub:       { label: "Publish-Subscribe", sub: "diffusion aux abonnés", icon: "send" },
-  cqrs:         { label: "CQRS", sub: "lecture / écriture séparées", icon: "puzzle" },
-  valetkey:     { label: "Valet Key", sub: "accès temporaire restreint", icon: "key" },
-  strangler:    { label: "Strangler Fig", sub: "migration progressive", icon: "puzzle" },
-  competing:    { label: "Competing Consumers", sub: "workers parallèles", icon: "puzzle" },
-  gatekeeper:   { label: "Gatekeeper", sub: "point de contrôle", icon: "shield" },
-  cacheaside:   { label: "Cache-Aside", sub: "cache à la demande", icon: "gauge" },
-  sidecar:      { label: "Sidecar", sub: "composant adjacent", icon: "puzzle" },
-  idp:          { label: "IdP centralisé", sub: "identité unifiée", icon: "users" },
-  iac:          { label: "Infrastructure as Code", sub: "infra reproductible", icon: "code" },
-  egressdesign: { label: "Design anti-egress", sub: "limite les transferts", icon: "gauge" },
-  dnsfwd:       { label: "DNS / forwarders", sub: "résolution hybride", icon: "globe" },
-};
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div id="app">
+  <div class="topbar">
+    <div class="lvlbadge"><span class="num" id="tbLvl">1</span>
+      <div><div class="lab">Niveau</div></div>
+    </div>
+    <div class="xpwrap">
+      <div class="xpmeta"><span>XP</span><span id="tbXp">0 / 100</span></div>
+      <div class="xpbar"><div class="xpfill" id="tbXpFill"></div></div>
+    </div>
+    <button class="iconbtn" id="muteBtn" title="Son" aria-label="Activer/couper le son">🔊</button>
+  </div>
+  <div id="view" class="view"></div>
+</div>
 
-const LEVELS = [
-  {
-    theme: "Compute & serverless",
-    title: "Lancer une appli web serverless",
-    brief: "Une startup veut exposer au public une API de suivi de jobs. Monte la chaîne d'entrée et l'exécution — l'audit de sécurité passe dans un instant.",
-    palette: ["cloudfront", "waf", "apigw", "lambda", "iamrole", "ec2", "accesskey", "dynamodb", "s3pub"],
-    bays: [
-      { id: "diff", role: "Diffusion / entrée", need: "Servir le contenu vite et encaisser le trafic de masse", correct: "cloudfront",
-        threat: { name: "Attaque DDoS", icon: "swords", breach: "Une vague de DDoS frappe ton entrée nue : le service s'effondre.", held: "CloudFront met en cache au plus près des users et, avec Shield, absorbe le DDoS au edge." } },
-      { id: "wall", role: "Bouclier applicatif", need: "Filtrer les requêtes malveillantes (injections, bots)", correct: "waf",
-        threat: { name: "Injection SQL", icon: "skull", breach: "Une requête piégée (SQLi) passe sans filtre et atteint ton appli.", held: "Le WAF filtre en L7 (règles OWASP, rate limit, bots) et la bloque en bordure." } },
-      { id: "door", role: "Point d'entrée des API", need: "Encadrer l'accès : authentification, quotas, débit", correct: "apigw",
-        threat: { name: "Abus de l'API", icon: "gauge", breach: "Sans contrôle de débit, un client matraque l'API jusqu'à la saturer.", held: "L'API Gateway applique quotas et throttling, vérifie le jeton et route proprement." } },
-      { id: "run", role: "Exécution de la logique", need: "Lancer le code à la demande, sans gérer de serveur", correct: "lambda",
-        threat: { name: "Coût de serveur inutile", icon: "server", breach: "Tu paies une VM allumée 24/7 pour du code qui ne tourne que par à-coups.", held: "Lambda (FaaS) s'exécute sur événement, scale tout seul et se facture à l'appel." } },
-      { id: "perm", role: "Permissions du compute", need: "Donner des droits à la Lambda sans secret qui traîne", correct: "iamrole",
-        threat: { name: "Fuite de secret", icon: "lock", breach: "Une clé d'accès en dur fuit dans un commit GitHub : le compte est compromis.", held: "Un rôle IAM fournit des identifiants temporaires via STS : rien à fuiter, rotation auto." } },
-    ],
-  },
-  {
-    theme: "Fiabilité & haute dispo",
-    title: "Tenir la charge en 3-tiers",
-    brief: "Une appli web classique sur serveurs doit rester debout pendant une panne de zone et un pic de trafic. Construis une architecture résiliente.",
-    palette: ["cloudfront", "alb", "asg", "rdsmaz", "cache", "lambda", "rdssingle", "ec2", "s3pub"],
-    bays: [
-      { id: "edge", role: "Diffusion / entrée", need: "Rapprocher le contenu et absorber les pics au edge", correct: "cloudfront",
-        threat: { name: "Latence & pic d'entrée", icon: "globe", breach: "Tout le monde tape directement l'origine, qui rame sous la distance et la charge.", held: "CloudFront cache au plus près et décharge l'origine." } },
-      { id: "lb", role: "Répartition de charge", need: "Distribuer le trafic entre plusieurs serveurs sains", correct: "alb",
-        threat: { name: "Serveur saturé", icon: "network", breach: "Tout le trafic tombe sur une seule instance, qui s'écroule.", held: "L'Application LB répartit la charge et écarte les instances en mauvaise santé." } },
-      { id: "scale", role: "Compute élastique", need: "Encaisser les pics et remplacer les instances mortes", correct: "asg",
-        threat: { name: "Pic de trafic", icon: "activity", breach: "Le pic dépasse la capacité fixe : le site ralentit puis tombe.", held: "L'Auto Scaling Group ajoute des instances à la demande et répare les unhealthy (self-heal)." } },
-      { id: "db", role: "Base de données résiliente", need: "Survivre à la panne d'une zone de disponibilité (AZ)", correct: "rdsmaz",
-        threat: { name: "Panne d'une AZ", icon: "shieldalert", breach: "L'AZ tombe : ta base mono-zone est injoignable, toute l'appli est morte.", held: "RDS Multi-AZ bascule sur le réplica d'une autre AZ en quelques minutes." } },
-      { id: "cache", role: "Accélérer les lectures", need: "Soulager la base des lectures répétées", correct: "cache",
-        threat: { name: "Base saturée en lecture", icon: "gauge", breach: "Les mêmes lectures matraquent la base, qui sature.", held: "ElastiCache garde les données chaudes en mémoire et répond à leur place." } },
-    ],
-  },
-  {
-    theme: "Découplage & event-driven",
-    title: "Encaisser un flux asynchrone",
-    brief: "Des milliers d'événements arrivent par à-coups. Découple le traitement pour que rien ne s'effondre sous le pic.",
-    palette: ["apigw", "sqs", "dlq", "sns", "dynamodb", "lambda", "rds", "ec2", "s3pub"],
-    bays: [
-      { id: "in", role: "Point d'entrée des API", need: "Recevoir les demandes avec auth et contrôle de débit", correct: "apigw",
-        threat: { name: "Abus de l'API", icon: "gauge", breach: "Sans porte d'entrée, l'API est matraquée sans limite.", held: "L'API Gateway encadre l'accès : auth, quotas, throttling." } },
-      { id: "buf", role: "Tampon / découplage", need: "Absorber les pics et découpler producteur et workers", correct: "sqs",
-        threat: { name: "Pic de messages", icon: "activity", breach: "Le pic submerge les workers branchés en direct, qui s'effondrent.", held: "La file SQS fait tampon (queue-based load leveling) : les workers tirent à leur rythme." } },
-      { id: "fail", role: "Gestion des échecs", need: "Isoler les messages qui échouent en boucle", correct: "dlq",
-        threat: { name: "Message empoisonné", icon: "skull", breach: "Un message qui échoue sans fin bloque toute la file.", held: "La Dead-Letter Queue met de côté les messages en échec, sans bloquer le reste." } },
-      { id: "evt", role: "Diffusion d'événements", need: "Prévenir plusieurs abonnés d'un même événement", correct: "sns",
-        threat: { name: "Couplage point-à-point", icon: "network", breach: "Tu câbles chaque destinataire à la main : ça casse au moindre changement.", held: "SNS (pub/sub) diffuse l'événement à tous les abonnés d'un coup." } },
-      { id: "store", role: "Stockage de l'état", need: "Stocker l'état des jobs avec un fort débit clé-valeur", correct: "dynamodb",
-        threat: { name: "Base inadaptée", icon: "database", breach: "Une base relationnelle lourde scale mal pour ce besoin clé-valeur à fort débit.", held: "DynamoDB (NoSQL serverless) encaisse le débit clé-valeur et scale tout seul." } },
-    ],
-  },
-  {
-    theme: "Réseau & VPC",
-    title: "Bâtir un réseau privé sûr",
-    brief: "Tu poses le réseau d'une appli sensible dans un VPC. Rien d'inutile ne doit être joignable depuis internet.",
-    palette: ["subnetpriv", "nat", "sg", "bastion", "vpcendpoint", "subnetpub", "igw", "portsopen", "peering"],
-    bays: [
-      { id: "iso", role: "Isolation des ressources sensibles", need: "Mettre base et back hors d'atteinte d'internet", correct: "subnetpriv",
-        threat: { name: "Ressource exposée", icon: "globe", breach: "Tu places la base dans un subnet public : elle est joignable depuis internet.", held: "Un subnet privé n'a pas de route directe vers l'IGW : invisible depuis dehors." } },
-      { id: "out", role: "Sortie internet des privés", need: "Laisser les privés se mettre à jour sans être joignables", correct: "nat",
-        threat: { name: "Privé bloqué ou exposé", icon: "network", breach: "Soit le privé ne peut plus sortir (pas de patchs), soit tu l'exposes via l'IGW.", held: "La NAT Gateway laisse SORTIR le privé vers internet sans le rendre joignable depuis dehors." } },
-      { id: "fw", role: "Pare-feu de l'instance", need: "N'autoriser que les flux strictement nécessaires", correct: "sg",
-        threat: { name: "Tous les ports ouverts", icon: "shieldalert", breach: "Sans filtrage, tous les flux entrent : surface d'attaque maximale.", held: "Le Security Group n'autorise que les flux utiles (stateful, default deny)." } },
-      { id: "admin", role: "Accès admin aux instances privées", need: "Un seul point d'entrée d'administration contrôlé", correct: "bastion",
-        threat: { name: "SSH ouvert au monde", icon: "lock", breach: "Tu ouvres SSH sur internet pour chaque instance : porte grande ouverte.", held: "Un bastion (ou SSM) est le seul accès admin, tracé et restreint." } },
-      { id: "priv", role: "Accès privé aux services AWS", need: "Joindre S3 sans passer par l'internet public", correct: "vpcendpoint",
-        threat: { name: "Trafic interne sur internet", icon: "globe", breach: "Tes appels à S3 sortent sur l'internet public (exposition, frais NAT).", held: "Un VPC endpoint garde le trafic privé, sans passer par internet." } },
-    ],
-  },
-  {
-    theme: "Stockage",
-    title: "Choisir le bon stockage",
-    brief: "Plusieurs besoins de stockage très différents. À chaque rôle, le bon service — et surtout pas le piège.",
-    palette: ["ebs", "efs", "s3priv", "glacier", "storagegw", "instancestore", "s3pub", "fsx", "rds"],
-    bays: [
-      { id: "disk", role: "Disque d'une VM", need: "Un disque rapide attaché à une seule instance", correct: "ebs",
-        threat: { name: "Mauvais type de stockage", icon: "server", breach: "Tu mets un partage réseau là où il faut un disque local persistant.", held: "EBS = stockage bloc, attaché à une seule instance, comme un disque dur." } },
-      { id: "share", role: "Partage de fichiers multi-serveurs", need: "Plusieurs serveurs lisent/écrivent les mêmes fichiers", correct: "efs",
-        threat: { name: "Stockage non partageable", icon: "server", breach: "Un disque mono-instance ne se partage pas entre plusieurs serveurs.", held: "EFS = système de fichiers partagé (NFS) monté par plusieurs instances à la fois." } },
-      { id: "mass", role: "Stockage de masse (images, backups)", need: "Beaucoup de fichiers via API, sans tout exposer", correct: "s3priv",
-        threat: { name: "Fuite de données", icon: "skull", breach: "Un bucket public expose tes fichiers au monde entier : la fuite n°1.", held: "S3 privé + chiffrement + policies d'accès ; jamais public par défaut." } },
-      { id: "arch", role: "Archivage long terme", need: "Garder des données froides au coût le plus bas", correct: "glacier",
-        threat: { name: "Coût de stockage", icon: "gauge", breach: "Tu gardes des archives froides en Standard : tu paies plein tarif pour rien.", held: "S3 Glacier archive à très bas coût (récupération lente acceptée)." } },
-      { id: "hyb", role: "Pont avec le on-premise", need: "Relier le stockage local au cloud (hybride)", correct: "storagegw",
-        threat: { name: "Migration hybride bancale", icon: "network", breach: "Aucun pont entre on-prem et cloud : transfert manuel et fragile.", held: "Storage Gateway présente le cloud comme un partage local et synchronise les données." } },
-    ],
-  },
-  {
-    theme: "Bases de données",
-    title: "La bonne base, résiliente",
-    brief: "Chaque besoin de données réclame une famille de base précise — et une stratégie de résilience adaptée.",
-    palette: ["rds", "dynamodb", "rdsmaz", "readreplica", "cache", "rdssingle", "aurora", "timestream", "s3priv"],
-    bays: [
-      { id: "rel", role: "Données liées + transactions", need: "Commandes, clients, intégrité ACID", correct: "rds",
-        threat: { name: "Mauvais modèle de données", icon: "database", breach: "Tu mets du transactionnel relationnel dans une base clé-valeur : intégrité perdue.", held: "Une base SQL (RDS/Aurora) gère les données liées et les transactions ACID." } },
-      { id: "kv", role: "Panier / session, fort débit", need: "Lectures/écritures clé-valeur très scalables", correct: "dynamodb",
-        threat: { name: "Scaling qui plafonne", icon: "gauge", breach: "Une base SQL scale mal pour ce débit clé-valeur massif.", held: "DynamoDB (NoSQL serverless) encaisse le débit et scale horizontalement." } },
-      { id: "ha", role: "Survivre à une panne d'AZ", need: "La base doit rester disponible si une zone tombe", correct: "rdsmaz",
-        threat: { name: "Panne d'une AZ", icon: "shieldalert", breach: "Base mono-zone : l'AZ tombe, l'appli entière est morte.", held: "RDS Multi-AZ bascule sur le réplica d'une autre AZ (= disponibilité)." } },
-      { id: "read", role: "Absorber un pic de lecture", need: "Décharger la lecture sans toucher l'écriture", correct: "readreplica",
-        threat: { name: "Base saturée en lecture", icon: "activity", breach: "Les lectures massives saturent la base d'écriture.", held: "Une read replica encaisse la charge de LECTURE (≠ Multi-AZ qui sert la dispo)." } },
-      { id: "hot", role: "Réponses ultra-rapides répétées", need: "Éviter de relire sans cesse la même donnée", correct: "cache",
-        threat: { name: "Lectures redondantes", icon: "gauge", breach: "Les mêmes requêtes matraquent la base à chaque appel.", held: "ElastiCache garde les données chaudes en mémoire et répond instantanément." } },
-    ],
-  },
-  {
-    theme: "Edge & exposition",
-    title: "Verrouiller l'entrée web",
-    brief: "Reconstitue, dans l'ordre, toute la chaîne d'entrée d'une appli web publique — du nom de domaine à l'API.",
-    palette: ["route53", "cloudfront", "waf", "cognito", "apigw", "alb", "s3priv", "iamrole", "nat"],
-    bays: [
-      { id: "dns", role: "Résolution du nom de domaine", need: "Traduire le nom de domaine en adresse", correct: "route53",
-        threat: { name: "Nom introuvable", icon: "globe", breach: "Sans DNS, personne ne trouve l'adresse du service.", held: "Route 53 (DNS) traduit le nom en adresse — consulté une seule fois au départ." } },
-      { id: "cdn", role: "Cache + proximité + anti-DDoS", need: "Servir vite et absorber les attaques de masse", correct: "cloudfront",
-        threat: { name: "Lenteur & DDoS", icon: "swords", breach: "L'origine encaisse tout, loin des users, et tombe sous le DDoS.", held: "CloudFront cache au edge et, avec Shield, absorbe le DDoS." } },
-      { id: "filter", role: "Filtrage des requêtes", need: "Bloquer injections, scripts, robots", correct: "waf",
-        threat: { name: "Requête malveillante", icon: "skull", breach: "Une attaque applicative (SQLi/XSS) atteint le cœur.", held: "Le WAF filtre en L7 (OWASP, rate limit, bots)." } },
-      { id: "auth", role: "Authentification des users", need: "Vérifier qui est l'utilisateur", correct: "cognito",
-        threat: { name: "Accès non authentifié", icon: "lock", breach: "N'importe qui accède aux ressources protégées.", held: "Cognito gère la connexion, le jeton et la MFA des utilisateurs." } },
-      { id: "api", role: "Porte des API", need: "Quotas, débit, routage vers le back", correct: "apigw",
-        threat: { name: "API sans garde-fou", icon: "gauge", breach: "Pas de quotas ni de routage : abus et désordre.", held: "L'API Gateway applique quotas, throttling et route vers le bon service." } },
-    ],
-  },
-  {
-    theme: "Patterns de fiabilité",
-    title: "Rendre un service résilient",
-    brief: "Ton service dépend d'autres services qui, eux, tombent en panne. Arme-le avec les bons patterns de résilience.",
-    palette: ["retry", "circuitbreaker", "bulkhead", "throttle", "monitoring", "cache", "asg", "alb", "ignoreerr"],
-    bays: [
-      { id: "trans", role: "Pannes temporaires", need: "Encaisser les hoquets réseau passagers", correct: "retry",
-        threat: { name: "Panne transitoire", icon: "rotate", breach: "Un hoquet réseau fait échouer définitivement l'opération.", held: "Retry avec backoff + jitter réessaie proprement les pannes brèves." } },
-      { id: "casc", role: "Dépendance défaillante", need: "Empêcher une panne de se propager en chaîne", correct: "circuitbreaker",
-        threat: { name: "Panne en cascade", icon: "shieldalert", breach: "Tu continues d'appeler un service mort : tout s'effondre en chaîne.", held: "Le Circuit Breaker coupe (fail fast) et passe en mode dégradé." } },
-      { id: "cont", role: "Confinement des pannes", need: "Qu'une panne n'emporte pas tout le système", correct: "bulkhead",
-        threat: { name: "Contagion de la panne", icon: "skull", breach: "Un pool partagé fait tomber tout le système d'un coup.", held: "Le Bulkhead cloisonne les ressources en compartiments isolés." } },
-      { id: "flood", role: "Protection contre l'afflux", need: "Préserver le service sous une charge excessive", correct: "throttle",
-        threat: { name: "Surcharge de requêtes", icon: "gauge", breach: "Trop de requêtes d'un coup saturent et font tomber le service.", held: "Le Throttling limite le débit pour préserver la disponibilité." } },
-      { id: "obs", role: "Visibilité de l'état", need: "Détecter une panne avant les utilisateurs", correct: "monitoring",
-        threat: { name: "Panne invisible", icon: "activity", breach: "Tu découvres la panne quand les users se plaignent : trop tard.", held: "Monitoring + alarmes (CloudWatch) surveillent latence, erreurs, saturation." } },
-    ],
-  },
-  {
-    theme: "Design patterns",
-    title: "Atelier des patterns",
-    brief: "Cinq problèmes d'architecture classiques. À chacun, le pattern du cours qui le résout — pas un autre.",
-    palette: ["loadleveling", "pubsub", "cqrs", "valetkey", "strangler", "competing", "gatekeeper", "cacheaside", "sidecar"],
-    bays: [
-      { id: "peak", role: "Pics de charge vers un backend", need: "Lisser un afflux soudain de travail", correct: "loadleveling",
-        threat: { name: "Backend submergé", icon: "activity", breach: "Le pic frappe le backend en direct, qui s'écroule.", held: "Queue-Based Load Leveling : une file tampon lisse les pics, le backend traite à son rythme." } },
-      { id: "fanout", role: "Un événement, plusieurs abonnés", need: "Prévenir d'un coup tous les intéressés", correct: "pubsub",
-        threat: { name: "Couplage rigide", icon: "send", breach: "Tu relies chaque destinataire à la main : fragile et figé.", held: "Publish-Subscribe diffuse l'événement à tous les abonnés (fan-out)." } },
-      { id: "rw", role: "Lecture et écriture qui se gênent", need: "Scaler lecture et écriture séparément", correct: "cqrs",
-        threat: { name: "Modèle saturé", icon: "database", breach: "Un seul modèle pour tout : la lecture massive étouffe l'écriture.", held: "CQRS sépare le modèle de lecture du modèle d'écriture." } },
-      { id: "access", role: "Accès direct restreint à une ressource", need: "Laisser un client accéder à un fichier S3 précis, temporairement", correct: "valetkey",
-        threat: { name: "Droits trop larges", icon: "key", breach: "Tu donnes un accès large et permanent là où il faut du ciblé et bref.", held: "Valet Key : un accès direct, restreint et temporaire à une ressource précise." } },
-      { id: "legacy", role: "Migrer un vieux monolithe", need: "Remplacer l'ancien système sans tout casser", correct: "strangler",
-        threat: { name: "Big bang raté", icon: "skull", breach: "Tu réécris tout d'un coup : migration risquée qui casse la prod.", held: "Strangler Fig remplace le monolithe morceau par morceau, en douceur." } },
-    ],
-  },
-  {
-    theme: "Multicloud & lock-in",
-    title: "Tenir sur plusieurs clouds",
-    brief: "Ton entreprise s'étale sur deux clouds et du on-premise. Évite les pièges du multicloud : identité, coûts, portabilité.",
-    palette: ["idp", "container", "iac", "egressdesign", "dnsfwd", "faaslock", "accesskey", "vpn", "directconnect"],
-    bays: [
-      { id: "ident", role: "Identité sur plusieurs clouds", need: "Une seule identité, des droits cohérents partout", correct: "idp",
-        threat: { name: "Identités éparpillées", icon: "users", breach: "Des comptes séparés et des clés partagées de partout : ingérable et risqué.", held: "Un IdP central (Entra ID/Okta) unifie l'identité, avec des policies cohérentes." } },
-      { id: "port", role: "Portabilité du compute", need: "Pouvoir redéployer ailleurs sans tout réécrire", correct: "container",
-        threat: { name: "Enfermement (lock-in)", icon: "zap", breach: "Tout en FaaS propriétaire : migrer = tout réécrire.", held: "Les conteneurs sont portables d'un cloud à l'autre, presque tels quels." } },
-      { id: "repro", role: "Infra reproductible partout", need: "Recréer la même infra à l'identique sur chaque cloud", correct: "iac",
-        threat: { name: "Config non reproductible", icon: "database", breach: "Config faite à la main : impossible à reproduire fidèlement ailleurs.", held: "L'Infrastructure as Code (Terraform) décrit l'infra en code, reproductible." } },
-      { id: "bill", role: "Maîtrise des coûts inter-cloud", need: "Éviter que la facture explose", correct: "egressdesign",
-        threat: { name: "Facture d'egress", icon: "gauge", breach: "Des données transitent sans cesse entre clouds : l'egress facturé explose.", held: "Limiter les transferts inter-cloud : l'egress est le coût caché n°1 du multicloud." } },
-      { id: "hyb", role: "Faire marcher l'hybride", need: "Que les noms se résolvent entre on-prem et cloud", correct: "dnsfwd",
-        threat: { name: "Hybride cassé", icon: "globe", breach: "La résolution de noms casse entre on-prem et cloud : tout tombe.", held: "Prévoir le DNS (forwarders, zones privées) — ça casse plus souvent que la connectivité." } },
-    ],
-  },
-  {
-    theme: "Identité & accès (IAM)",
-    title: "Bâtir le modèle d'accès",
-    brief: "Tu mets en place la gestion des accès d'un compte cloud. Chaque décision réduit (ou ouvre) la surface d'attaque.",
-    palette: ["iamuser", "mfa", "iamgroup", "iamrole", "leastpriv", "root", "accesskey", "adminall", "policy"],
-    bays: [
-      { id: "daily", role: "Accès au quotidien", need: "Travailler sans utiliser le compte tout-puissant", correct: "iamuser",
-        threat: { name: "Root compromis", icon: "key", breach: "Tu utilises le compte root tous les jours : la clé du royaume s'expose.", held: "Un compte IAM dédié au quotidien ; le root reste rangé, presque jamais utilisé." } },
-      { id: "human", role: "Protéger les comptes humains", need: "Empêcher qu'un mot de passe volé suffise", correct: "mfa",
-        threat: { name: "Mot de passe volé", icon: "lock", breach: "Un mot de passe seul suffit à entrer dans le compte.", held: "La MFA ajoute une 2e preuve (code/téléphone) : le mot de passe seul ne suffit plus." } },
-      { id: "many", role: "Gérer les droits de 50 personnes", need: "Attribuer les permissions sans chaos ni perte d'audit", correct: "iamgroup",
-        threat: { name: "Droits ingérables", icon: "users", breach: "Tu donnes les droits un par un : chaos, incohérences, aucun audit possible.", held: "On donne les permissions à des groupes, pas à chaque utilisateur." } },
-      { id: "svc", role: "Droits d'un service (Lambda, EC2)", need: "Donner des droits à un service sans secret en dur", correct: "iamrole",
-        threat: { name: "Secret dans le code", icon: "key", breach: "Une clé d'accès en dur fuit (commit GitHub) : compte compromis.", held: "Un rôle IAM = identifiants temporaires via STS : rien à fuiter, rotation auto." } },
-      { id: "scope", role: "Étendue des droits accordés", need: "Limiter les dégâts en cas de fuite", correct: "leastpriv",
-        threat: { name: "Blast radius énorme", icon: "shieldalert", breach: "Des droits admin partout : une seule fuite compromet tout le compte.", held: "Le moindre privilège (least privilege) limite chaque identité au strict nécessaire." } },
-    ],
-  },
+<div class="tabbar"><div class="tabinner" id="tabbar"></div></div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CyberQuête — moteur de révision à rappel actif (ST2GID)
+   Contenu issu des 4 modules : IAM, Implémentation, Risques, Crypto/Certificats
+   ========================================================= */
+
+/* ---------- Mascotte (SVG) ---------- */
+function mascot(cls){
+  return '<svg class="mascot '+cls+'" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+   +'<path d="M50 4 L88 18 V52 C88 80 70 98 50 106 C30 98 12 80 12 52 V18 Z" fill="#46D0C8" stroke="#1d9e96" stroke-width="3"/>'
+   +'<path d="M50 12 L80 23 V52 C80 74 66 89 50 96 C34 89 20 74 20 52 V23 Z" fill="#2C2358"/>'
+   +'<circle cx="38" cy="48" r="9" fill="#fff"/><circle cx="62" cy="48" r="9" fill="#fff"/>'
+   +'<circle cx="40" cy="50" r="4.5" fill="#160F2E"/><circle cx="60" cy="50" r="4.5" fill="#160F2E"/>'
+   +'<circle cx="42" cy="48" r="1.5" fill="#fff"/><circle cx="62" cy="48" r="1.5" fill="#fff"/>'
+   +'<path d="M40 66 Q50 74 60 66" stroke="#FFC93C" stroke-width="4" fill="none" stroke-linecap="round"/>'
+   +'<rect x="44" y="28" width="12" height="10" rx="3" fill="#FFC93C"/>'
+   +'<path d="M46 28 v-4 a4 4 0 0 1 8 0 v4" fill="none" stroke="#FFC93C" stroke-width="2.5"/>'
+   +'</svg>';
+}
+
+/* ====================================================================
+   BANQUE DE QUESTIONS — ST2GID (couverture exhaustive des 4 modules)
+   Format: {id,type:'qcm'|'vf',q,(opts),(code),correct,why}
+   VF: correct=0 -> Vrai, correct=1 -> Faux
+   ==================================================================== */
+const MODULES = [
+
+/* ============================ MODULE 1 ============================ */
+{ id:'m1', name:'Notions fondamentales IAM', sub:'Identités, accès, gouvernance', col:'var(--z1)', levels:[
+
+  { id:'m1l1', name:'Identité & cycle de vie', icon:'🧬', q:[
+    {id:'m1l1q1',type:'qcm',q:"De quoi se compose une identité numérique ?",opts:["Identifiants + Attributs + Credentials","Login + mot de passe uniquement","Certificat + clé privée","Rôles + Permissions"],correct:0,why:"Identité numérique = identifiants (qui), attributs (caractéristiques) et credentials (preuves d'identité)."},
+    {id:'m1l1q2',type:'qcm',q:"Dans une identité numérique, les « credentials » désignent…",opts:["Les preuves d'identité (mot de passe, certificat, biométrie)","Le nom et le service","Les permissions accordées","L'adresse e-mail"],correct:0,why:"Les credentials sont les moyens de PROUVER l'identité ; les attributs en sont les caractéristiques."},
+    {id:'m1l1q3',type:'qcm',q:"Quelles sont les phases du cycle de vie d'une identité ?",opts:["Joiner → Mover → Leaver (+ Suspension)","Création → Modification → Suppression","Inscription → Validation → Archivage","Onboarding → Audit → Offboarding"],correct:0,why:"Le cycle JML : Joiner (arrivée), Mover (mobilité), Leaver (départ), avec la Suspension en cas de congé/enquête."},
+    {id:'m1l1q4',type:'qcm',q:"L'étape déclenchée par un changement de poste s'appelle…",opts:["Mover","Joiner","Leaver","Suspension"],correct:0,why:"Joiner = arrivée, Mover = mobilité interne, Leaver = départ, Suspension = congé/enquête."},
+    {id:'m1l1q5',type:'vf',q:"Lors d'un Mover, on attribue d'abord les nouveaux droits, puis on révoque les anciens.",correct:1,why:"Faux : on révoque AVANT d'attribuer, sinon les droits s'accumulent (sur-privilège / 'privilege creep')."},
+    {id:'m1l1q6',type:'qcm',q:"À la fin d'un contrat (Leaver), que fait-on des accès ?",opts:["On révoque TOUS les accès, puis désactivation et archivage","On les garde actifs 6 mois","On supprime le compte sans archivage","On les transfère au manager"],correct:0,why:"Leaver = révocation de tous les accès + désactivation + archivage (conservation pour audit)."},
+    {id:'m1l1q7',type:'qcm',q:"La phase « Suspension » est déclenchée par…",opts:["Un congé ou une enquête (désactivation, conservation pour audit)","La signature du contrat","Un changement de service","La fin définitive du contrat"],correct:0,why:"Suspension = désactivation temporaire (congé/enquête) ; le compte est conservé pour audit, pas supprimé."},
+    {id:'m1l1q8',type:'qcm',q:"À la phase Joiner, quel principe applique-t-on dès la création du compte ?",opts:["Le moindre privilège (droits initiaux minimaux)","Les droits maximaux par défaut","La copie des droits d'un collègue","Aucun droit jusqu'à la première connexion"],correct:0,why:"Dès le Joiner, on applique le moindre privilège : seulement les droits initiaux strictement nécessaires."},
+  ]},
+
+  { id:'m1l2', name:'Modèles de contrôle d\'accès', icon:'🚪', q:[
+    {id:'m1l2q1',type:'qcm',q:"Dans le modèle DAC, qui décide des permissions ?",opts:["Le propriétaire de la ressource","L'administrateur central via des labels","Un moteur de règles sur attributs","Le rôle attribué à l'utilisateur"],correct:0,why:"DAC (Discretionary Access Control) : le propriétaire de la ressource décide. Exemple : permissions NTFS."},
+    {id:'m1l2q2',type:'qcm',q:"Le modèle MAC repose sur…",opts:["Des labels de classification imposés (ex : SELinux, militaire)","Le choix du propriétaire","Des rôles prédéfinis","Les relations entre entités"],correct:0,why:"MAC (Mandatory Access Control) : labels de classification imposés par le système. Exemples : SELinux, contexte militaire."},
+    {id:'m1l2q3',type:'qcm',q:"RBAC attribue les permissions via…",opts:["des rôles (Utilisateurs → Rôles → Permissions)","des attributs dynamiques","le propriétaire de la ressource","des labels de classification"],correct:0,why:"RBAC = Role-Based : on relie les utilisateurs à des rôles qui portent les permissions. Exemple : groupes AD."},
+    {id:'m1l2q4',type:'qcm',q:"Quel modèle décide selon des règles sur attributs (sujet, ressource, action, contexte) ?",opts:["ABAC","RBAC","DAC","MAC"],correct:0,why:"ABAC = Attribute-Based : décision selon des attributs et le contexte (ex : si dept=Finance ET heure ouvrée)."},
+    {id:'m1l2q5',type:'qcm',q:"Le partage Google Drive (owner / editor / viewer) illustre quel modèle ?",opts:["ReBAC (Relationship-Based)","RBAC","MAC","DAC"],correct:0,why:"ReBAC = Relationship-Based : l'accès dépend de la relation entre l'utilisateur et la ressource (propriétaire/éditeur)."},
+    {id:'m1l2q6',type:'qcm',q:"Les permissions NTFS où le propriétaire d'un fichier accorde l'accès relèvent de…",opts:["DAC","MAC","ABAC","ReBAC"],correct:0,why:"DAC : c'est le propriétaire (discrétionnaire) qui décide, comme avec les permissions de fichiers NTFS."},
+    {id:'m1l2q7',type:'vf',q:"SELinux et les classifications militaires sont des exemples de contrôle d'accès MAC.",correct:0,why:"Vrai : MAC impose des labels de classification non modifiables par l'utilisateur (SELinux, militaire)."},
+    {id:'m1l2q8',type:'qcm',q:"Quel modèle est le plus adapté à une décision contextuelle « si service=Finance ET heure ouvrée » ?",opts:["ABAC","RBAC","DAC","MAC"],correct:0,why:"ABAC évalue des attributs et le contexte en temps réel — idéal pour des règles conditionnelles fines."},
+  ]},
+
+  { id:'m1l3', name:'RBAC, ABAC & moindre privilège', icon:'⚖️', q:[
+    {id:'m1l3q1',type:'qcm',q:"Quelle est la chaîne logique de RBAC ?",opts:["Utilisateurs → Rôles → Permissions","Utilisateurs → Permissions directes","Attributs → Règles → Décision","Propriétaire → Ressource → Accès"],correct:0,why:"RBAC relie les utilisateurs à des rôles, et les rôles portent les permissions."},
+    {id:'m1l3q2',type:'qcm',q:"Un avantage majeur de RBAC est…",opts:["Simple à comprendre, facile à auditer, standardisé (ANSI)","Une granularité contextuelle maximale","L'absence de gestion des rôles","Une adaptation native aux cas dynamiques"],correct:0,why:"RBAC est simple, auditable, aligné sur l'organisation et standardisé (ANSI)."},
+    {id:'m1l3q3',type:'qcm',q:"Le principal inconvénient de RBAC est…",opts:["L'explosion du nombre de rôles","Des décisions trop lentes","L'impossibilité d'auditer","Le manque de standard"],correct:0,why:"RBAC souffre de l'explosion des rôles et d'une rigidité (pas de contexte), difficile à grande échelle."},
+    {id:'m1l3q4',type:'qcm',q:"Comparé à RBAC, ABAC offre…",opts:["Une flexibilité élevée mais une complexité accrue","Une flexibilité faible et une grande simplicité","Des performances toujours supérieures","Aucune prise en compte du contexte"],correct:0,why:"ABAC = flexibilité et granularité élevées, au prix d'une complexité (règles) et de performances variables (temps réel)."},
+    {id:'m1l3q5',type:'qcm',q:"Côté performance, comment se comparent RBAC et ABAC ?",opts:["RBAC est élevé (pré-calculé), ABAC variable (évalué en temps réel)","ABAC est toujours plus rapide","Les deux sont identiques","RBAC est plus lent car contextuel"],correct:0,why:"RBAC pré-calcule les droits (rapide) ; ABAC évalue des règles à la volée (performance variable)."},
+    {id:'m1l3q6',type:'qcm',q:"Le principe du moindre privilège consiste à accorder…",opts:["Les droits minimaux, pour la durée minimale, idéalement en JIT","Tous les droits potentiellement utiles","Les droits d'un collègue du même service","Des droits permanents pour éviter les demandes"],correct:0,why:"Moindre privilège = droits strictement nécessaires, durée minimale, attribution juste-à-temps (JIT)."},
+    {id:'m1l3q7',type:'qcm',q:"Dans le contexte des accès, « JIT » signifie…",opts:["Just-In-Time (droits accordés juste à temps, temporaires)","Java Identity Token","Joiner Information Tracking","Just Internal Transfer"],correct:0,why:"JIT = Just-In-Time : on accorde un droit au moment du besoin, pour une durée limitée, puis on le retire."},
+    {id:'m1l3q8',type:'qcm',q:"Quel modèle hybride est recommandé en pratique ?",opts:["RBAC pour les permissions de base + ABAC pour les contraintes contextuelles","DAC + MAC","Uniquement ABAC","Uniquement RBAC"],correct:0,why:"On combine souvent RBAC (socle de permissions) et ABAC (contraintes contextuelles) pour l'équilibre."},
+  ]},
+
+  { id:'m1l4', name:'SoD, 4A & Zero Trust', icon:'🛡️', q:[
+    {id:'m1l4q1',type:'qcm',q:"Le principe de séparation des responsabilités (SoD) énonce que…",opts:["Aucun individu ne doit avoir le contrôle complet d'une transaction critique","Chaque utilisateur doit avoir un rôle unique","Les droits doivent être permanents","Un seul administrateur gère tout"],correct:0,why:"SoD : diviser les responsabilités pour prévenir fraude et erreurs ; personne ne contrôle seul une transaction sensible."},
+    {id:'m1l4q2',type:'qcm',q:"Quelle est la différence entre SoD statique et dynamique ?",opts:["Statique = interdiction permanente de cumul ; Dynamique = interdiction dans une même transaction","Statique = sur le cloud ; Dynamique = sur site","Statique = pour les admins ; Dynamique = pour les utilisateurs","Aucune, ce sont des synonymes"],correct:0,why:"SoD statique interdit en permanence de cumuler des rôles ; SoD dynamique interdit de les exercer dans une même transaction."},
+    {id:'m1l4q3',type:'qcm',q:"L'objectif principal de la SoD est…",opts:["Prévenir la fraude et les erreurs","Accélérer les autorisations","Réduire le nombre de comptes","Centraliser les mots de passe"],correct:0,why:"En divisant les responsabilités (ex : créer ≠ approuver ≠ payer), on empêche qu'une seule personne fraude."},
+    {id:'m1l4q4',type:'qcm',q:"Quelle est la devise du modèle Zero Trust ?",opts:["« Never trust, always verify »","« Trust but verify »","« Defense in depth »","« Least privilege first »"],correct:0,why:"Zero Trust : ne jamais faire confiance par défaut, toujours vérifier (chaque accès est ré-authentifié/ré-autorisé)."},
+    {id:'m1l4q5',type:'vf',q:"Le modèle Zero Trust repose sur 5 piliers.",correct:0,why:"Vrai : Zero Trust s'articule autour de 5 piliers (identité, appareils, réseau, applications, données)."},
+    {id:'m1l4q6',type:'qcm',q:"Quel est l'ordre correct des 4 piliers de l'IAM (4A) ?",opts:["Identification → Authentification → Autorisation → Audit","Authentification → Identification → Audit → Autorisation","Autorisation → Authentification → Audit → Identification","Audit → Identification → Authentification → Autorisation"],correct:0,why:"4A : Identification (qui ?) → Authentification (prouvez-le) → Autorisation (avez-vous le droit ?) → Audit (qu'avez-vous fait ?)."},
+    {id:'m1l4q7',type:'qcm',q:"Dans les 4A, l'étape « Audit » correspond à…",opts:["La traçabilité (logs, SIEM)","La vérification du mot de passe","L'attribution des rôles","La déclaration d'identité"],correct:0,why:"Audit = traçabilité des actions (logs, SIEM) : 'qu'avez-vous fait ?'."},
+    {id:'m1l4q8',type:'qcm',q:"Le concept de « Defense in Depth » consiste à…",opts:["Empiler plusieurs couches de sécurité indépendantes","Concentrer la sécurité sur un seul pare-feu","Faire confiance au réseau interne","Supprimer les contrôles redondants"],correct:0,why:"Defense in Depth = multiplier les couches de défense pour qu'une faille unique ne compromette pas tout."},
+  ]},
+
+  { id:'m1l5', name:'Gouvernance (IGA) & conformité', icon:'📋', q:[
+    {id:'m1l5q1',type:'qcm',q:"Que désigne l'IGA (Identity Governance and Administration) ?",opts:["Les processus/technologies pour gérer les identités de façon conforme et auditable","Un protocole d'authentification","Un type de certificat","Un algorithme de chiffrement"],correct:0,why:"IGA = gouvernance et administration des identités : provisioning, gestion des accès, revues, audit/conformité."},
+    {id:'m1l5q2',type:'qcm',q:"La « revue des accès » (recertification) en IGA consiste à…",opts:["Re-valider périodiquement que chacun a bien les droits nécessaires","Réinitialiser tous les mots de passe","Supprimer les comptes inactifs uniquement","Chiffrer l'annuaire"],correct:0,why:"La recertification périodique (campagnes, attestation) vérifie que les droits restent justifiés et révoque les excès."},
+    {id:'m1l5q3',type:'qcm',q:"Le RGPD impose notamment…",opts:["Droit d'accès, droit à l'oubli, minimisation des données","Le MFA obligatoire sur les infrastructures critiques","La séparation des tâches pour les entreprises cotées","La protection des données de cartes bancaires"],correct:0,why:"RGPD (données personnelles, UE) : droit d'accès, droit à l'oubli, minimisation des données."},
+    {id:'m1l5q4',type:'qcm',q:"Quelle réglementation impose le MFA et l'audit des accès pour les infrastructures critiques (UE) ?",opts:["NIS2","RGPD","SOX","PCI-DSS"],correct:0,why:"NIS2 cible les infrastructures critiques de l'UE et impose notamment MFA et audit des accès."},
+    {id:'m1l5q5',type:'qcm',q:"Dans la norme ISO 27001, le contrôle d'accès et la revue des droits relèvent de…",opts:["La section A.9","La section A.5","La section A.18","La section A.12"],correct:0,why:"ISO 27001 traite le contrôle d'accès et la revue des droits dans l'annexe A.9."},
+    {id:'m1l5q6',type:'qcm',q:"La loi SOX (entreprises cotées, US) met l'accent sur…",opts:["La séparation des tâches (SoD) et l'audit des accès","La minimisation des données personnelles","La sécurité des cartes bancaires","Le MFA des infrastructures critiques"],correct:0,why:"SOX cible les entreprises cotées américaines : SoD et audit des accès pour la fiabilité financière."},
+    {id:'m1l5q7',type:'qcm',q:"PCI-DSS concerne principalement…",opts:["Les données de cartes bancaires (moindre privilège, authentification forte)","Les données de santé","Les infrastructures critiques de l'UE","Les marchés publics"],correct:0,why:"PCI-DSS encadre les données de cartes bancaires : moindre privilège et authentification forte."},
+    {id:'m1l5q8',type:'qcm',q:"L'IAM 4.0 (2020+) se caractérise par…",opts:["Zero Trust, IA, identités décentralisées (DID), authentification continue","Les annuaires locaux et l'authentification simple","La centralisation par LDAP et SAML uniquement","Le cloud et les identités hybrides sans Zero Trust"],correct:0,why:"IAM 4.0 : Zero Trust, IA, décentralisation (DID), continuous auth. (1.0 = annuaires locaux ; 2.0 = SSO/fédération ; 3.0 = cloud/hybride.)"},
+    {id:'m1l5q9',type:'qcm',q:"Dans un workflow de provisioning IGA, le flux typique est…",opts:["Système RH → Moteur IGA → Workflows → Systèmes cibles","Systèmes cibles → IGA → RH","Annuaire → Utilisateur → RH","SIEM → IGA → RH"],correct:0,why:"Le système RH déclenche le moteur IGA, qui exécute des workflows vers les systèmes cibles (provisioning automatique)."},
+  ]},
+
+]},
+
+/* ============================ MODULE 2 ============================ */
+{ id:'m2', name:'Implémentation technique', sub:'AuthN, Kerberos, fédération, cloud', col:'var(--z2)', levels:[
+
+  { id:'m2l1', name:'AuthN / AuthZ, facteurs & MFA', icon:'🪪', q:[
+    {id:'m2l1q1',type:'qcm',q:"Quelle est la différence entre authentification (AuthN) et autorisation (AuthZ) ?",opts:["AuthN prouve QUI vous êtes ; AuthZ décide ce que vous AVEZ LE DROIT de faire","AuthN décide les droits ; AuthZ prouve l'identité","Ce sont deux noms du même processus","AuthN concerne le réseau, AuthZ le stockage"],correct:0,why:"AuthN = vérifier l'identité ; AuthZ = vérifier les droits une fois l'identité prouvée."},
+    {id:'m2l1q2',type:'qcm',q:"Les trois grandes catégories de facteurs d'authentification sont…",opts:["Connaissance (savoir), possession (avoir), inhérence (être)","Mot de passe, code PIN, question secrète","Login, badge, e-mail","Local, distant, cloud"],correct:0,why:"Facteurs : ce que l'on SAIT (mot de passe), ce que l'on A (token, téléphone), ce que l'on EST (biométrie)."},
+    {id:'m2l1q3',type:'qcm',q:"Le MFA (authentification multifacteur) consiste à…",opts:["Combiner au moins 2 facteurs de catégories différentes","Demander deux mots de passe","Utiliser un mot de passe très long","Se connecter depuis deux appareils"],correct:0,why:"Le MFA combine ≥2 facteurs de catégories DIFFÉRENTES (ex : mot de passe + téléphone). Deux mots de passe = un seul facteur."},
+    {id:'m2l1q4',type:'qcm',q:"Dans la hiérarchie de robustesse du MFA, quelle méthode est la PLUS forte ?",opts:["FIDO2 / clé de sécurité matérielle","Authenticator avec number matching","TOTP (code à 6 chiffres)","SMS"],correct:0,why:"FIDO2 (clé matérielle) est le sommet : résistant au phishing. Puis Authenticator+number matching > TOTP > Push > SMS > questions."},
+    {id:'m2l1q5',type:'qcm',q:"Parmi ces méthodes MFA, laquelle est la plus FAIBLE ?",opts:["Le code par SMS","FIDO2","TOTP","Authenticator avec number matching"],correct:0,why:"Le SMS est le plus faible (SIM swapping, interception). FIDO2 est le plus fort."},
+    {id:'m2l1q6',type:'qcm',q:"Pourquoi FIDO2 résiste-t-il au phishing ?",opts:["L'authentification est liée cryptographiquement au domaine légitime (origin binding)","Le code change toutes les 30 secondes","Il envoie une notification push","Il utilise un mot de passe plus long"],correct:0,why:"FIDO2 lie la preuve au domaine d'origine : un site de phishing ne peut pas réutiliser l'authentification."},
+    {id:'m2l1q7',type:'qcm',q:"L'intérêt du « number matching » par rapport à une simple notification push est…",opts:["Empêcher la validation accidentelle/par fatigue (MFA fatigue)","Accélérer la connexion","Supprimer le besoin de mot de passe","Fonctionner hors-ligne"],correct:0,why:"Le number matching oblige à recopier un chiffre affiché, contrant les attaques par 'MFA fatigue' (spam de push)."},
+    {id:'m2l1q8',type:'qcm',q:"Un code TOTP (Google Authenticator, etc.) appartient à quelle catégorie de facteur ?",opts:["Possession (ce que l'on a)","Connaissance (ce que l'on sait)","Inhérence (ce que l'on est)","Localisation"],correct:0,why:"Le TOTP est généré par un appareil que l'on possède : c'est un facteur de possession."},
+  ]},
+
+  { id:'m2l2', name:'Kerberos', icon:'🎟️', q:[
+    {id:'m2l2q1',type:'qcm',q:"Kerberos est, par défaut, le protocole d'authentification de…",opts:["Active Directory (depuis Windows 2000)","LDAP","RADIUS","TLS"],correct:0,why:"Développé au MIT, Kerberos est l'authentification par défaut d'Active Directory depuis Windows 2000."},
+    {id:'m2l2q2',type:'qcm',q:"Dans Kerberos, le rôle de tiers de confiance est tenu par…",opts:["Le KDC (Key Distribution Center), porté par le contrôleur de domaine","Le client lui-même","Le serveur de fichiers","Une autorité de certification"],correct:0,why:"Le KDC (sur le contrôleur de domaine) est le tiers de confiance : client et serveur lui font confiance."},
+    {id:'m2l2q3',type:'vf',q:"Avec Kerberos, le mot de passe transite chiffré sur le réseau à chaque connexion.",correct:1,why:"Faux : le mot de passe ne transite JAMAIS sur le réseau, même chiffré. Des tickets prouvent l'identité à sa place."},
+    {id:'m2l2q4',type:'qcm',q:"Dans l'analogie du parc d'attractions, le TGT correspond à…",opts:["Le bracelet de la journée (obtenu à l'entrée)","Le ticket d'une attraction précise","La carte d'identité montrée à l'entrée","Le plan du parc"],correct:0,why:"TGT (Ticket Granting Ticket) = bracelet journée ; le Service Ticket = ticket d'une attraction précise."},
+    {id:'m2l2q5',type:'qcm',q:"Le « Service Ticket » sert à…",opts:["Accéder à un service précis après présentation du TGT","S'authentifier initialement auprès du KDC","Stocker le mot de passe","Chiffrer le disque"],correct:0,why:"Avec son TGT, le client demande au KDC un Service Ticket pour accéder à un service donné."},
+    {id:'m2l2q6',type:'qcm',q:"Le système de tickets de Kerberos permet de…",opts:["Prouver l'identité sans jamais révéler le secret","Stocker les mots de passe en clair sur le serveur","Échanger des clés publiques","Remplacer le chiffrement TLS"],correct:0,why:"Des tickets chiffrés prouvent l'identité sans transmettre le mot de passe."},
+    {id:'m2l2q7',type:'qcm',q:"Comparé à NTLM, Kerberos apporte notamment…",opts:["Une authentification mutuelle et des tickets à durée limitée","Le fonctionnement sans contrôleur de domaine","Un hash réutilisable","L'absence de tiers de confiance"],correct:0,why:"Kerberos : authentification mutuelle, tickets limités dans le temps, résistance au relais, délégation contrôlable."},
+    {id:'m2l2q8',type:'vf',q:"Kerberos offre une authentification mutuelle (le serveur prouve aussi son identité au client).",correct:0,why:"Vrai : contrairement à NTLM, Kerberos authentifie les deux parties (mutuelle)."},
+  ]},
+
+  { id:'m2l3', name:'krbtgt, Golden Ticket & NTLM', icon:'👑', q:[
+    {id:'m2l3q1',type:'qcm',q:"Le compte krbtgt est crucial parce que…",opts:["Son hash chiffre TOUS les TGT du domaine","Il sert à se connecter en tant qu'administrateur","Il stocke les mots de passe des utilisateurs","Il gère le DNS du domaine"],correct:0,why:"Le hash de krbtgt chiffre tous les TGT : qui le possède peut forger n'importe quel ticket (= roi du domaine)."},
+    {id:'m2l3q2',type:'vf',q:"Le compte krbtgt est un compte désactivé, sans login interactif.",correct:0,why:"Vrai : krbtgt est créé automatiquement avec le domaine et reste désactivé (pas de connexion)."},
+    {id:'m2l3q3',type:'qcm',q:"Qu'est-ce qu'un Golden Ticket ?",opts:["Un TGT forgé avec le hash krbtgt, donnant un accès total et persistant","Un certificat racine compromis","Un mot de passe administrateur par défaut","Un ticket de support privilégié"],correct:0,why:"Avec le hash krbtgt, l'attaquant forge des TGT valides pour n'importe quel utilisateur → Domain Admin, persistant."},
+    {id:'m2l3q4',type:'qcm',q:"Quelle est la remédiation correcte après compromission du krbtgt ?",opts:["Changer le mot de passe de krbtgt DEUX fois","Le changer une seule fois","Supprimer le compte krbtgt","Redémarrer le contrôleur de domaine"],correct:0,why:"Il faut changer le mot de passe de krbtgt deux fois (à cause de l'historique des clés) pour invalider les Golden Tickets."},
+    {id:'m2l3q5',type:'qcm',q:"Pourquoi un Golden Ticket est-il particulièrement dangereux ?",opts:["Durée quasi illimitée, indétectable, résiste aux changements de MDP utilisateurs","Il expire au bout de 10 minutes","Il ne fonctionne que sur un seul poste","Il nécessite le mot de passe en clair de chaque cible"],correct:0,why:"Il peut être valide des années, paraît parfaitement légitime, et survit aux changements de mots de passe des utilisateurs."},
+    {id:'m2l3q6',type:'qcm',q:"L'attaque « Pass-the-Hash » est une faiblesse caractéristique de…",opts:["NTLM (le hash est réutilisable)","Kerberos","FIDO2","SAML"],correct:0,why:"NTLM permet de réutiliser le hash directement (Pass-the-Hash) ; Kerberos y résiste mieux grâce aux tickets."},
+    {id:'m2l3q7',type:'qcm',q:"Le « NTLM Relay » consiste à…",opts:["Rejouer/transférer une authentification vers un autre serveur","Casser le hash hors-ligne","Forger un TGT","Voler un certificat"],correct:0,why:"NTLM Relay rejoue l'authentification de la victime vers un autre serveur (NTLM ne résiste pas au relais)."},
+    {id:'m2l3q8',type:'vf',q:"Contrairement à Kerberos, NTLM peut fonctionner sans contrôleur de domaine (authentification locale).",correct:0,why:"Vrai : NTLM fonctionne en local sans DC, alors que Kerberos nécessite un KDC."},
+  ]},
+
+  { id:'m2l4', name:'SSO & fédération', icon:'🔗', q:[
+    {id:'m2l4q1',type:'qcm',q:"Le principe du SSO (Single Sign-On) est…",opts:["Une seule authentification donne accès à plusieurs applications","Un mot de passe différent par application","L'absence totale d'authentification","Le chiffrement des disques"],correct:0,why:"SSO : l'utilisateur s'authentifie une fois et accède ensuite à plusieurs services sans se ré-identifier."},
+    {id:'m2l4q2',type:'qcm',q:"Quel est le principal RISQUE du SSO, et sa parade ?",opts:["Compromettre le compte = accès à TOUT → MFA obligatoire sur l'IdP","Trop de mots de passe → coffre-fort","Lenteur → cache local","Pas d'audit → désactiver les logs"],correct:0,why:"Avec le SSO, compromettre le compte unique ouvre tout : d'où l'exigence de MFA fort sur l'IdP."},
+    {id:'m2l4q3',type:'qcm',q:"Dans une fédération, le rôle de l'Identity Provider (IdP) est de…",opts:["Gérer les identités, authentifier et émettre des assertions","Fournir le service métier sans gérer d'identité","Stocker les fichiers des utilisateurs","Délivrer des certificats X.509"],correct:0,why:"L'IdP (ex : Azure AD, Okta, AD FS) crée les comptes, authentifie et émet des assertions de confiance."},
+    {id:'m2l4q4',type:'qcm',q:"Le Service Provider (SP) dans une fédération…",opts:["Fait confiance à l'IdP et n'a PAS de mot de passe de l'utilisateur","Stocke les mots de passe des utilisateurs","Authentifie lui-même les utilisateurs","Émet les assertions"],correct:0,why:"Le SP (ex : Salesforce, Office 365) délègue l'authentification à l'IdP et autorise selon l'assertion reçue."},
+    {id:'m2l4q5',type:'qcm',q:"Le protocole SAML 2.0 est typiquement…",opts:["Basé sur XML, orienté entreprise (enterprise)","Basé sur JSON, orienté API","Un protocole de chiffrement de disque","Un annuaire d'identités"],correct:0,why:"SAML 2.0 utilise XML et domine les usages d'entreprise (fédération web classique)."},
+    {id:'m2l4q6',type:'qcm',q:"OAuth 2.0 est avant tout un protocole d'…",opts:["Autorisation (délégation d'accès aux API, en JSON)","Authentification forte","Chiffrement symétrique","Provisioning de comptes"],correct:0,why:"OAuth 2.0 gère l'AUTORISATION (accès délégué aux API via tokens), pas l'authentification en soi."},
+    {id:'m2l4q7',type:'qcm',q:"Quelle est la relation entre OpenID Connect (OIDC) et OAuth 2.0 ?",opts:["OIDC = OAuth 2.0 + authentification (ajout d'un ID Token JWT)","OIDC remplace totalement OAuth","OAuth = OIDC + chiffrement","Ils n'ont aucun rapport"],correct:0,why:"OIDC ajoute à OAuth 2.0 une couche d'authentification : l'ID Token (JWT) qui décrit l'identité de l'utilisateur."},
+    {id:'m2l4q8',type:'vf',q:"OAuth 2.0 seul est un protocole d'authentification de l'utilisateur.",correct:1,why:"Faux : OAuth 2.0 fait de l'autorisation. C'est OIDC (OAuth + ID Token) qui apporte l'authentification."},
+    {id:'m2l4q9',type:'qcm',q:"L'ID Token d'OpenID Connect est techniquement…",opts:["Un JWT contenant des claims d'identité (iss, sub, email, exp…)","Un certificat X.509","Un cookie de session opaque","Une clé symétrique"],correct:0,why:"L'ID Token est un JWT signé portant des claims comme iss, sub, email et exp."},
+  ]},
+
+  { id:'m2l5', name:'SCIM, Conditional Access, PAM, IDaaS', icon:'☁️', q:[
+    {id:'m2l5q1',type:'qcm',q:"À quoi sert le protocole SCIM ?",opts:["Automatiser le provisioning/déprovisioning des comptes entre systèmes","Authentifier les utilisateurs","Chiffrer les communications","Émettre des certificats"],correct:0,why:"SCIM (System for Cross-domain Identity Management) synchronise et provisionne automatiquement les comptes."},
+    {id:'m2l5q2',type:'qcm',q:"L'accès conditionnel (Conditional Access) est un pilier du Zero Trust car il…",opts:["Décide de l'accès selon le contexte (appareil, localisation, risque)","Stocke les mots de passe","Remplace le pare-feu","Chiffre les disques"],correct:0,why:"L'accès conditionnel évalue le contexte (conformité de l'appareil, localisation, niveau de risque) à chaque connexion."},
+    {id:'m2l5q3',type:'qcm',q:"Le PAM (Privileged Access Management) couvre notamment…",opts:["Coffre-fort de mots de passe, accès JIT, enregistrement de session (recording)","La création des comptes standards","Le chiffrement TLS","L'émission de certificats publics"],correct:0,why:"PAM gère les comptes à privilèges : vault de secrets, élévation juste-à-temps, et enregistrement des sessions."},
+    {id:'m2l5q4',type:'qcm',q:"Quel composant du PAM stocke et fait tourner les secrets des comptes à privilèges ?",opts:["Le coffre-fort (vault)","Le SIEM","L'IdP","Le KDC"],correct:0,why:"Le vault PAM centralise, sécurise et fait la rotation des mots de passe/secrets privilégiés."},
+    {id:'m2l5q5',type:'qcm',q:"L'IDaaS (Identity as a Service) désigne…",opts:["L'IAM fourni en service cloud (plus d'infrastructure à gérer)","Un annuaire LDAP local","Un pare-feu applicatif","Un protocole de chiffrement"],correct:0,why:"IDaaS = IAM livré en SaaS : haute disponibilité, mises à jour automatiques, MFA intégré, nombreux connecteurs."},
+    {id:'m2l5q6',type:'qcm',q:"Lesquels sont des solutions IDaaS majeures ?",opts:["Microsoft Entra ID, Okta, AWS IAM Identity Center, Google Cloud Identity","Wireshark, Nmap, Metasploit","SHA-256, AES, RSA","SELinux, AppArmor"],correct:0,why:"Entra ID, Okta, AWS IAM Identity Center et Google Cloud Identity sont des fournisseurs IDaaS de référence."},
+    {id:'m2l5q7',type:'qcm',q:"L'enregistrement de session (session recording) du PAM sert surtout à…",opts:["Tracer et auditer ce que font les comptes à privilèges","Accélérer les connexions","Chiffrer les e-mails","Synchroniser les comptes"],correct:0,why:"Le recording capture les sessions privilégiées pour l'audit, l'investigation et la dissuasion."},
+    {id:'m2l5q8',type:'qcm',q:"Quelle distinction est correcte ?",opts:["SCIM = provisionner les comptes ; SAML/OIDC = authentifier","SCIM = authentifier ; SAML = provisionner","SCIM et SAML font tous deux du chiffrement","SCIM délivre des certificats"],correct:0,why:"SCIM gère le cycle de vie des comptes (provisioning) ; SAML/OIDC gèrent l'authentification fédérée."},
+  ]},
+
+]},
+
+/* ============================ MODULE 3 ============================ */
+{ id:'m3', name:'Risques & attaques', sub:'Menaces identité, AD, défenses', col:'var(--z3)', levels:[
+
+  { id:'m3l1', name:'Vol d\'identifiants', icon:'🎣', q:[
+    {id:'m3l1q1',type:'qcm',q:"Quel est le vecteur d'attaque n°1 sur l'identité ?",opts:["Le phishing","Le credential stuffing","Le Kerberoasting","Le DCSync"],correct:0,why:"Le phishing reste le vecteur d'entrée n°1 pour voler des identifiants."},
+    {id:'m3l1q2',type:'qcm',q:"Le « credential stuffing » consiste à…",opts:["Rejouer des couples identifiant/mot de passe volés ailleurs (réutilisation)","Tester un mot de passe commun sur de nombreux comptes","Forger un ticket Kerberos","Injecter du LDAP"],correct:0,why:"Credential stuffing : on rejoue en masse des identifiants déjà fuités, en pariant sur la réutilisation des mots de passe."},
+    {id:'m3l1q3',type:'qcm',q:"Le « password spraying » consiste à…",opts:["Tester quelques mots de passe communs sur BEAUCOUP de comptes","Rejouer des mots de passe volés sur un même compte","Casser un hash hors-ligne","Voler un cookie de session"],correct:0,why:"Password spraying : peu de mots de passe courants essayés largement, pour éviter le verrouillage de comptes."},
+    {id:'m3l1q4',type:'qcm',q:"Quelle est la différence entre credential stuffing et password spraying ?",opts:["Stuffing = identifiants déjà volés ; spraying = mots de passe communs sur de nombreux comptes","Aucune, ce sont des synonymes","Stuffing vise Kerberos ; spraying vise LDAP","Stuffing est hors-ligne ; spraying est sur certificat"],correct:0,why:"Stuffing rejoue des couples déjà fuités ; spraying teste un petit nombre de mots de passe communs en largeur."},
+    {id:'m3l1q5',type:'qcm',q:"Un « infostealer » (ex : RedLine) est un malware qui…",opts:["Vole identifiants, cookies et secrets sur la machine de la victime","Chiffre les fichiers contre rançon","Forge des certificats","Redirige le trafic réseau"],correct:0,why:"Les infostealers exfiltrent identifiants, cookies de session et autres secrets stockés sur le poste."},
+    {id:'m3l1q6',type:'qcm',q:"Quelle défense est la plus efficace contre le credential stuffing ?",opts:["Le MFA (le mot de passe volé ne suffit plus)","Un mot de passe plus long","Désactiver les logs","Changer le port d'écoute"],correct:0,why:"Avec le MFA, un mot de passe réutilisé/volé ne suffit pas pour se connecter."},
+    {id:'m3l1q7',type:'qcm',q:"Le phishing « ciblé » sur une personne précise s'appelle…",opts:["Spear phishing","Smishing","Credential stuffing","Watering hole"],correct:0,why:"Le spear phishing vise une personne ou une organisation précise avec un message personnalisé."},
+    {id:'m3l1q8',type:'vf',q:"Un infostealer comme RedLine peut récupérer des cookies de session permettant de contourner le MFA.",correct:0,why:"Vrai : voler un cookie de session valide peut permettre de réutiliser une session déjà authentifiée (contournement du MFA)."},
+  ]},
+
+  { id:'m3l2', name:'Pass-the-Hash & NTLM', icon:'🔓', q:[
+    {id:'m3l2q1',type:'qcm',q:"L'attaque Pass-the-Hash (PtH) permet de…",opts:["S'authentifier sans connaître le mot de passe en clair","Casser un certificat","Déchiffrer du TLS","Forger un certificat racine"],correct:0,why:"PtH réutilise directement le hash NTLM pour s'authentifier, sans jamais connaître le mot de passe en clair."},
+    {id:'m3l2q2',type:'qcm',q:"Avec quel outil et depuis quel composant les hashes NTLM sont-ils typiquement extraits ?",opts:["Mimikatz, depuis la mémoire du processus LSASS","Wireshark, depuis le trafic réseau","OpenSSL, depuis le disque","Nmap, depuis les ports ouverts"],correct:0,why:"Mimikatz extrait les hashes NTLM stockés en mémoire dans le processus LSASS."},
+    {id:'m3l2q3',type:'qcm',q:"Dans Pass-the-Hash, que fait l'attaquant du hash récupéré ?",opts:["Il le « passe » directement à un autre serveur, sans le casser","Il le casse obligatoirement hors-ligne d'abord","Il le publie sur Internet","Il le convertit en certificat"],correct:0,why:"Le hash est rejoué tel quel pour s'authentifier : pas besoin de retrouver le mot de passe en clair."},
+    {id:'m3l2q4',type:'qcm',q:"Quelles défenses contrent efficacement Pass-the-Hash ?",opts:["Credential Guard, Protected Users, LAPS, Tiering, désactivation de NTLM","Un antivirus signature uniquement","Changer le DNS","Augmenter la RAM"],correct:0,why:"Credential Guard, Protected Users, LAPS et le Tiering, plus l'abandon de NTLM, réduisent fortement le risque de PtH."},
+    {id:'m3l2q5',type:'qcm',q:"À quoi sert LAPS (Local Administrator Password Solution) ?",opts:["Donner un mot de passe administrateur local UNIQUE et tournant par machine","Centraliser les certificats","Chiffrer les e-mails","Gérer les tickets Kerberos"],correct:0,why:"LAPS attribue à chaque machine un mot de passe admin local unique et renouvelé, empêchant la réutilisation latérale."},
+    {id:'m3l2q6',type:'qcm',q:"Credential Guard (Windows 10/11) protège en…",opts:["Isolant les secrets d'authentification de la mémoire accessible (virtualisation)","Chiffrant le disque dur","Bloquant les ports USB","Filtrant les e-mails"],correct:0,why:"Credential Guard isole les secrets via la sécurité basée sur la virtualisation, les soustrayant à Mimikatz."},
+    {id:'m3l2q7',type:'vf',q:"Désactiver NTLM (quand c'est possible) réduit la surface d'attaque Pass-the-Hash / NTLM Relay.",correct:0,why:"Vrai : NTLM est la racine de PtH et du relais ; le désactiver supprime ces vecteurs."},
+    {id:'m3l2q8',type:'qcm',q:"Quelle commande Mimikatz illustre l'extraction des secrets ?",code:"mimikatz # sekurlsa::logonpasswords",opts:["sekurlsa::logonpasswords","openssl x509 -in cert.pem","nmap -sV 10.0.0.1","kinit user@DOMAIN"],correct:0,why:"sekurlsa::logonpasswords liste les identifiants/hashes présents en mémoire (LSASS)."},
+  ]},
+
+  { id:'m3l3', name:'Kerberoasting, Silver/Golden & DCSync', icon:'🔥', q:[
+    {id:'m3l3q1',type:'qcm',q:"Le Kerberoasting cible…",opts:["Les comptes de service possédant un SPN","Le compte krbtgt directement","Les certificats X.509","Les cookies de session"],correct:0,why:"Tout utilisateur authentifié peut demander un Service Ticket pour un SPN ; le ticket, chiffré avec le hash du compte de service, est cassable hors-ligne."},
+    {id:'m3l3q2',type:'qcm',q:"Pourquoi le Service Ticket obtenu en Kerberoasting est-il exploitable ?",opts:["Il est chiffré avec le hash du mot de passe du compte de service → crackable hors-ligne","Il contient le mot de passe en clair","Il est signé par la CA racine","Il donne directement les droits Domain Admin"],correct:0,why:"Le ticket est chiffré avec le hash du compte de service : l'attaquant le casse hors-ligne (hashcat/john) si le mot de passe est faible."},
+    {id:'m3l3q3',type:'qcm',q:"Quelle est la meilleure défense contre le Kerberoasting ?",opts:["Mots de passe ≥ 25 caractères pour les comptes de service, ou gMSA","Désactiver Kerberos","Bloquer le port 88 en interne","Changer le SID du domaine"],correct:0,why:"Des mots de passe longs (≥25) ou des comptes gérés (gMSA, mots de passe gérés automatiquement) rendent le crack hors-ligne impraticable."},
+    {id:'m3l3q4',type:'qcm',q:"L'AS-REP Roasting exploite des comptes…",opts:["Sans pré-authentification Kerberos requise","Avec un SPN défini","Membres des Domain Admins","Désactivés"],correct:0,why:"Si la pré-authentification n'est pas exigée, l'attaquant obtient un AS-REP chiffré avec le hash du compte, cassable hors-ligne."},
+    {id:'m3l3q5',type:'qcm',q:"Qu'est-ce qu'un Silver Ticket ?",opts:["Un Service Ticket forgé avec le hash NTLM d'un compte de service (accès au service ciblé)","Un TGT forgé avec le hash krbtgt","Un certificat racine volé","Un cookie de session rejoué"],correct:0,why:"Le Silver Ticket forge un TGS pour un service précis avec le hash du compte de service — sans contact avec le KDC."},
+    {id:'m3l3q6',type:'qcm',q:"En quoi le Silver Ticket diffère-t-il du Golden Ticket ?",opts:["Il utilise le hash du compte de service (pas krbtgt), est limité au service, et plus furtif","Il dure plus longtemps","Il donne un accès plus large","Il nécessite le KDC"],correct:0,why:"Silver = hash du compte de service, portée limitée au service, pas de contact KDC → plus furtif (pas de log côté DC)."},
+    {id:'m3l3q7',type:'qcm',q:"L'attaque DCSync consiste à…",opts:["Se faire passer pour un DC et demander la réplication des secrets (hashes)","Synchroniser l'heure des DC","Sauvegarder Active Directory","Mettre à jour les certificats"],correct:0,why:"DCSync imite un contrôleur de domaine et demande la réplication des secrets, récupérant les hashes — dont celui de krbtgt."},
+    {id:'m3l3q8',type:'qcm',q:"Quels privilèges sont nécessaires pour un DCSync ?",opts:["Replicating Directory Changes (+ All)","Domain Users standard","Lecture LDAP anonyme","Accès physique au serveur"],correct:0,why:"DCSync requiert les droits de réplication (Replicating Directory Changes / Changes All), souvent via un compte délégué."},
+    {id:'m3l3q9',type:'qcm',q:"Quels outils servent à casser les tickets/hashes hors-ligne ?",opts:["hashcat ou John the Ripper","Wireshark ou tcpdump","OpenSSL ou GPG","Nmap ou Masscan"],correct:0,why:"hashcat et John the Ripper cassent hors-ligne les hashes/tickets récupérés (Kerberoasting, AS-REP…)."},
+  ]},
+
+  { id:'m3l4', name:'Attaques protocoles & Kill Chain', icon:'⛓️', q:[
+    {id:'m3l4q1',type:'qcm',q:"La LDAP injection consiste à…",opts:["Injecter des filtres LDAP malveillants dans une requête","Forger un ticket Kerberos","Voler un cookie OAuth","Casser un hash hors-ligne"],correct:0,why:"On insère des caractères de filtre LDAP pour contourner l'authentification ou faire fuiter des informations de l'annuaire."},
+    {id:'m3l4q2',type:'qcm',q:"Le SAML Signature Wrapping vise à…",opts:["Manipuler l'XML pour faire valider une signature sur des données différentes","Casser la clé privée de la CA","Rejouer un mot de passe","Saturer le serveur"],correct:0,why:"On insère des éléments <Assertion> non signés tout en gardant une signature valide ailleurs → usurpation dans la fédération SAML."},
+    {id:'m3l4q3',type:'qcm',q:"L'OAuth Token Hijacking exploite souvent…",opts:["Un open redirect, du XSS ou un vol de cookie (redirect_uri)","Une faille du protocole Kerberos","Un certificat expiré","Un mot de passe par défaut"],correct:0,why:"Le détournement de token OAuth passe par open redirect, XSS ou vol de cookie, donnant accès aux API au nom de la victime."},
+    {id:'m3l4q4',type:'qcm',q:"Combien d'étapes compte la Cyber Kill Chain (Lockheed Martin) ?",opts:["7","5","14","3"],correct:0,why:"La Cyber Kill Chain comporte 7 étapes, de la Reconnaissance aux Actions sur objectifs."},
+    {id:'m3l4q5',type:'qcm',q:"Quelle est la première étape de la Cyber Kill Chain ?",opts:["Reconnaissance","Exploitation","Command & Control","Actions on objectives"],correct:0,why:"L'ordre : Reconnaissance → Weaponization → Delivery → Exploitation → Installation → C2 → Actions."},
+    {id:'m3l4q6',type:'qcm',q:"Pourquoi bloquer l'attaque tôt dans la Kill Chain ?",opts:["C'est environ 10× moins coûteux qu'aux dernières étapes","C'est obligatoire légalement","Cela évite tout audit","Les dernières étapes sont inoffensives"],correct:0,why:"Stopper l'attaque en Reconnaissance/Delivery coûte ~10× moins cher que d'intervenir après compromission."},
+    {id:'m3l4q7',type:'qcm',q:"Pass-the-Hash, Kerberoasting et DCSync interviennent surtout à quelle étape de la Kill Chain ?",opts:["Actions / Lateral Movement (mouvement latéral)","Reconnaissance","Weaponization","Delivery"],correct:0,why:"Ces techniques servent au mouvement latéral et aux actions finales, une fois un premier pied gagné."},
+    {id:'m3l4q8',type:'qcm',q:"Dans la Kill Chain, « C2 » désigne…",opts:["Command & Control (canal de pilotage de l'attaquant)","Cyber Counter-attack","Credential Capture","Certificate Chain"],correct:0,why:"C2 = Command & Control : le canal (HTTPS, DNS…) par lequel l'attaquant pilote les machines compromises."},
+    {id:'m3l4q9',type:'qcm',q:"L'étape « Weaponization » consiste à…",opts:["Préparer l'arme/charge (ex : construire le mail de phishing ciblé)","Exfiltrer les données","Installer la persistance","Scanner le réseau"],correct:0,why:"Weaponization = fabriquer l'outil offensif (charge malveillante, mail piégé) avant de le livrer (Delivery)."},
+  ]},
+
+  { id:'m3l5', name:'MITRE, IoC & défenses', icon:'🛰️', q:[
+    {id:'m3l5q1',type:'qcm',q:"MITRE ATT&CK est organisé autour de…",opts:["14 tactiques (taxonomie opérationnelle des techniques)","7 étapes linéaires","5 piliers","3 niveaux de criticité"],correct:0,why:"ATT&CK décrit 14 tactiques (objectifs adverses) et les techniques associées : une taxonomie opérationnelle."},
+    {id:'m3l5q2',type:'qcm',q:"En quoi MITRE ATT&CK diffère-t-il de la Cyber Kill Chain ?",opts:["ATT&CK est une matrice de techniques (non strictement linéaire) ; la Kill Chain est une séquence d'étapes","ATT&CK a 7 étapes ; la Kill Chain en a 14","Ils sont identiques","ATT&CK est un outil de chiffrement"],correct:0,why:"La Kill Chain est séquentielle (7 étapes) ; ATT&CK est une matrice détaillée de tactiques/techniques, plus granulaire."},
+    {id:'m3l5q3',type:'qcm',q:"L'« impossible travel » est un IoC qui détecte…",opts:["Deux connexions depuis des lieux trop éloignés en trop peu de temps","Un mot de passe trop court","Un certificat expiré","Un disque plein"],correct:0,why:"Impossible travel : un même compte se connecte depuis des localisations géographiquement incompatibles → vol probable."},
+    {id:'m3l5q4',type:'qcm',q:"Lequel est un Indicateur de Compromission (IoC) lié aux privilèges ?",opts:["L'ajout soudain d'un compte aux Domain Admins","Un pic de trafic web","Une mise à jour Windows","Un redémarrage planifié"],correct:0,why:"Une élévation inattendue (ajout aux Domain Admins, nouveaux comptes admin) est un IoC fort côté privilèges."},
+    {id:'m3l5q5',type:'qcm',q:"Des « TGS-REQ massifs » sont un IoC évoquant…",opts:["Du Kerberoasting","Du phishing","Une injection LDAP","Un MITM TLS"],correct:0,why:"Une rafale de demandes de Service Tickets (TGS-REQ) trahit une énumération de SPN typique du Kerberoasting."},
+    {id:'m3l5q6',type:'qcm',q:"Quel ensemble de défenses est cité comme socle contre les attaques d'identité AD ?",opts:["Tiering + PAW + Protected Users + LAPS + MFA + Credential Guard","Antivirus + pare-feu uniquement","VPN + proxy uniquement","Sauvegardes + RAID"],correct:0,why:"Le socle : modèle de Tiering, PAW, Protected Users, LAPS, MFA et Credential Guard."},
+    {id:'m3l5q7',type:'qcm',q:"Une PAW (Privileged Access Workstation) est…",opts:["Un poste dédié et durci pour les tâches d'administration","Un pare-feu applicatif","Un coffre-fort de certificats","Un serveur de logs"],correct:0,why:"La PAW est un poste isolé et durci réservé à l'administration, pour ne pas exposer les comptes privilégiés."},
+    {id:'m3l5q8',type:'qcm',q:"L'UEBA (User and Entity Behavior Analytics) sert à…",opts:["Détecter les comportements anormaux d'utilisateurs/entités","Chiffrer les données","Émettre des certificats","Provisionner des comptes"],correct:0,why:"L'UEBA établit des profils de comportement et alerte sur les écarts (connexions inhabituelles, élévations…)."},
+    {id:'m3l5q9',type:'qcm',q:"Le modèle de « Tiering » (Tier 0/1/2) vise à…",opts:["Cloisonner les niveaux d'administration pour limiter le mouvement latéral","Classer les certificats","Trier les e-mails","Hiérarchiser les sauvegardes"],correct:0,why:"Le Tiering sépare les niveaux (Tier 0 = contrôleurs de domaine, etc.) pour qu'une compromission ne se propage pas vers le haut."},
+    {id:'m3l5q10',type:'qcm',q:"Le trio « gagnant » de détection cité est…",opts:["IoC + UEBA + SIEM","VPN + proxy + DNS","AES + RSA + SHA","DAC + MAC + RBAC"],correct:0,why:"La synthèse du module retient IoC + UEBA + SIEM comme combinaison de détection efficace."},
+  ]},
+
+]},
+
+/* ============================ MODULE 4 ============================ */
+{ id:'m4', name:'Crypto & certificats', sub:'Chiffrement, hash, PKI, X.509', col:'var(--z4)', levels:[
+
+  { id:'m4l1', name:'Services & symétrique vs asymétrique', icon:'🎯', q:[
+    {id:'m4l1q1',type:'qcm',q:"Quels sont les 4 services de sécurité (CIA + N) ?",opts:["Confidentialité, Intégrité, Authenticité, Non-répudiation","Confidentialité, Intégrité, Accès, Notification","Chiffrement, Identification, Audit, Niveau","Confidentialité, Identité, Autorisation, Niveau"],correct:0,why:"CIA + N : Confidentialité, Intégrité, Authenticité, Non-répudiation."},
+    {id:'m4l1q2',type:'qcm',q:"Quel service garantit que « seul le destinataire peut lire » ?",opts:["La confidentialité (chiffrement)","L'intégrité (hachage)","L'authenticité (signature)","La non-répudiation"],correct:0,why:"La confidentialité s'obtient par le chiffrement (AES, RSA…) : seul le destinataire déchiffre."},
+    {id:'m4l1q3',type:'qcm',q:"Quel mécanisme assure l'intégrité d'un message ?",opts:["Le hachage (SHA-256)","Le chiffrement symétrique","L'horodatage seul","La compression"],correct:0,why:"L'intégrité (le message n'a pas été modifié) se vérifie via une fonction de hachage comme SHA-256."},
+    {id:'m4l1q4',type:'qcm',q:"L'authenticité (l'expéditeur est bien celui qu'il prétend) repose sur…",opts:["La signature numérique","Le simple chiffrement AES","Un mot de passe","La compression"],correct:0,why:"La signature numérique prouve l'authenticité (et contribue à l'intégrité)."},
+    {id:'m4l1q5',type:'qcm',q:"La non-répudiation s'obtient typiquement par…",opts:["Signature numérique + horodatage","Chiffrement symétrique seul","Un pare-feu","Un VPN"],correct:0,why:"Signer (avec la clé privée) + horodater empêche l'expéditeur de nier avoir émis le message."},
+    {id:'m4l1q6',type:'qcm',q:"En cryptographie symétrique…",opts:["Une seule clé partagée sert à chiffrer ET déchiffrer ; c'est très rapide","Deux clés (publique/privée) sont utilisées","Aucune clé n'est nécessaire","On utilise uniquement un hash"],correct:0,why:"Symétrique = une clé secrète unique, partagée ; rapide (AES-NI) mais distribution de la clé délicate."},
+    {id:'m4l1q7',type:'qcm',q:"La cryptographie asymétrique se caractérise par…",opts:["Deux clés liées (publique + privée), mais ~1000× plus lente que le symétrique","Une clé unique partagée","L'absence de clé privée","Une vitesse supérieure au symétrique"],correct:0,why:"Asymétrique = paire publique/privée ; pratique pour la distribution, mais bien plus lente (~1000×)."},
+    {id:'m4l1q8',type:'qcm',q:"Quel algorithme est symétrique ?",opts:["AES","RSA","ECDSA","Ed25519"],correct:0,why:"AES (et ChaCha20) sont symétriques ; RSA, ECDSA, Ed25519 sont asymétriques."},
+    {id:'m4l1q9',type:'qcm',q:"Le principal défi de la cryptographie symétrique est…",opts:["La distribution de la clé sur un canal sûr","La lenteur du chiffrement","La taille énorme des clés","L'impossibilité de chiffrer de gros volumes"],correct:0,why:"Le point faible du symétrique est la distribution de la clé partagée — ce que résout l'échange asymétrique (Diffie-Hellman)."},
+  ]},
+
+  { id:'m4l2', name:'Hachage & signature', icon:'#️⃣', q:[
+    {id:'m4l2q1',type:'qcm',q:"Une fonction de hachage cryptographique…",opts:["Transforme une donnée de taille quelconque en une empreinte de taille fixe","Chiffre puis déchiffre avec la même clé","Échange une clé secrète","Signe avec la clé privée"],correct:0,why:"Le hachage produit une empreinte de longueur fixe à partir d'une entrée de taille arbitraire."},
+    {id:'m4l2q2',type:'qcm',q:"Quelles sont les 4 propriétés attendues d'une fonction de hachage ?",opts:["Déterminisme, rapidité, résistance à la préimage, résistance aux collisions","Réversibilité, lenteur, unicité, compression","Symétrie, asymétrie, signature, horodatage","Confidentialité, intégrité, authenticité, non-répudiation"],correct:0,why:"Déterministe, rapide à calculer, résistante à la préimage (on ne remonte pas à l'entrée) et aux collisions (deux entrées ≠ même empreinte)."},
+    {id:'m4l2q3',type:'qcm',q:"Quels algorithmes de hachage sont aujourd'hui considérés comme CASSÉS ?",opts:["MD5 et SHA-1","SHA-256 et SHA-3","SHA-256 seul","bcrypt et Argon2"],correct:0,why:"MD5 et SHA-1 sont cassés (collisions) et interdits ; on utilise SHA-256 ou supérieur."},
+    {id:'m4l2q4',type:'qcm',q:"Quel algorithme de hachage est recommandé aujourd'hui ?",opts:["SHA-256","MD5","SHA-1","CRC32"],correct:0,why:"SHA-256 (famille SHA-2) est sûr et recommandé ; MD5/SHA-1 sont à proscrire."},
+    {id:'m4l2q5',type:'vf',q:"Une fonction de hachage cryptographique est réversible : on peut retrouver l'entrée à partir de l'empreinte.",correct:1,why:"Faux : le hachage est à sens unique. La résistance à la préimage empêche de remonter à l'entrée."},
+    {id:'m4l2q6',type:'qcm',q:"Pour SIGNER puis VÉRIFIER un message, on utilise…",opts:["La clé privée pour signer, la clé publique pour vérifier","La clé publique pour signer, la clé privée pour vérifier","La même clé symétrique des deux côtés","Un simple hash sans clé"],correct:0,why:"On signe avec sa clé privée (que l'on garde) et tout le monde vérifie avec la clé publique correspondante."},
+    {id:'m4l2q7',type:'qcm',q:"La signature numérique apporte surtout…",opts:["Authenticité, intégrité et non-répudiation","La confidentialité du message","Un échange de clé sécurisé","La compression des données"],correct:0,why:"Hash + signature = authenticité + intégrité + non-répudiation (mais PAS la confidentialité, qui vient du chiffrement)."},
+    {id:'m4l2q8',type:'qcm',q:"Pour stocker un mot de passe de façon sûre, on utilise…",opts:["Un hachage avec sel (hash + sel)","Un chiffrement réversible AES","Un stockage en clair protégé par pare-feu","Une signature RSA"],correct:0,why:"On stocke un hash salé du mot de passe : irréversible, et le sel empêche les attaques par tables précalculées."},
+  ]},
+
+  { id:'m4l3', name:'Diffie-Hellman, PFS & hybride', icon:'🤝', q:[
+    {id:'m4l3q1',type:'qcm',q:"L'échange Diffie-Hellman permet à deux parties de…",opts:["Établir un secret commun sur un canal non sûr, sans le transmettre","Signer un document","Chiffrer un gros fichier rapidement","Vérifier un certificat"],correct:0,why:"Diffie-Hellman (1976) permet de dériver un secret partagé sur un canal public sans jamais transmettre ce secret."},
+    {id:'m4l3q2',type:'qcm',q:"En quelle année Diffie & Hellman publient-ils leur méthode d'échange de clés ?",opts:["1976","1991","2001","1965"],correct:0,why:"Diffie-Hellman date de 1976 — fondateur de la cryptographie à clé publique."},
+    {id:'m4l3q3',type:'qcm',q:"Quelle variante de Diffie-Hellman apporte la Perfect Forward Secrecy ?",opts:["Les versions éphémères (DHE / ECDHE)","Le DH statique classique","RSA en mode chiffrement","AES-GCM"],correct:0,why:"Les versions éphémères (DHE/ECDHE) génèrent des clés à usage unique → PFS : compromettre une clé long terme ne révèle pas les sessions passées."},
+    {id:'m4l3q4',type:'qcm',q:"Que signifie « Perfect Forward Secrecy » (PFS) ?",opts:["La compromission d'une clé long terme ne révèle pas les sessions passées","Le chiffrement est incassable","Les clés ne changent jamais","La signature est éternelle"],correct:0,why:"PFS garantit que chaque session a un secret éphémère : voler la clé privée du serveur ne déchiffre pas le trafic antérieur."},
+    {id:'m4l3q5',type:'qcm',q:"Dans TLS, la cryptographie hybride combine typiquement…",opts:["ECDHE (échange) + RSA/ECDSA (signature) + AES-GCM (canal)","Uniquement RSA","Uniquement AES","MD5 + SHA-1"],correct:0,why:"TLS hybride : ECDHE pour l'échange de clé, RSA/ECDSA pour la signature/authentification, AES-GCM pour chiffrer le flux."},
+    {id:'m4l3q6',type:'qcm',q:"Pourquoi utilise-t-on la cryptographie HYBRIDE en pratique ?",opts:["L'asymétrique gère l'échange/l'auth, le symétrique chiffre le gros volume (rapide)","Pour doubler la longueur des clés","Parce que le symétrique seul est plus sûr","Pour éviter toute signature"],correct:0,why:"On profite des forces de chacun : asymétrique pour échanger/authentifier, symétrique (rapide) pour chiffrer les données."},
+    {id:'m4l3q7',type:'qcm',q:"X25519 est…",opts:["Un échange de clés ECDH (Curve25519), standard de TLS 1.3","Un algorithme de hachage","Un format de certificat","Un mode de chiffrement par bloc"],correct:0,why:"X25519 est l'échange ECDH basé sur Curve25519, largement utilisé dans TLS 1.3."},
+    {id:'m4l3q8',type:'qcm',q:"ChaCha20 est…",opts:["Un algorithme de chiffrement symétrique (alternative à AES)","Un algorithme asymétrique","Une fonction de hachage","Un protocole d'échange de clés"],correct:0,why:"ChaCha20 est un chiffrement symétrique de flux, alternative performante à AES (notamment sur mobile)."},
+  ]},
+
+  { id:'m4l4', name:'MITM, tiers de confiance & certificat', icon:'🕵️', q:[
+    {id:'m4l4q1',type:'qcm',q:"Dans une attaque Man-in-the-Middle sur l'échange de clés, Eve…",opts:["Intercepte les clés publiques et substitue les siennes","Casse l'algorithme AES","Vole le certificat racine","Sature le serveur de requêtes"],correct:0,why:"Eve s'intercale et remplace les clés publiques échangées : elle peut alors lire et modifier tout le trafic."},
+    {id:'m4l4q2',type:'qcm',q:"Quelles sont les conséquences d'un MITM réussi ?",opts:["Lecture totale des échanges, modification silencieuse, usurpation d'identité","Uniquement un ralentissement réseau","La perte des données locales","Le blocage des e-mails"],correct:0,why:"Un MITM permet la lecture intégrale, la modification à la volée et l'usurpation d'identité."},
+    {id:'m4l4q3',type:'qcm',q:"Quel problème ouvert le certificat résout-il ?",opts:["« À qui appartient réellement cette clé publique ? »","Comment chiffrer plus vite ?","Comment compresser les données ?","Comment stocker un mot de passe ?"],correct:0,why:"Sans preuve d'appartenance, une clé publique peut être celle d'un attaquant (MITM). Le certificat lie clé et identité de façon vérifiable."},
+    {id:'m4l4q4',type:'qcm',q:"Le tiers de confiance qui certifie l'appartenance d'une clé publique est…",opts:["L'Autorité de Certification (CA)","Le contrôleur de domaine","Le serveur DNS","Le pare-feu"],correct:0,why:"La CA (Autorité de Certification), reconnue de tous, certifie le lien clé publique ↔ identité."},
+    {id:'m4l4q5',type:'qcm',q:"Comment une CA garantit-elle l'authenticité d'un certificat ?",opts:["Elle le SIGNE avec sa propre clé privée","Elle le chiffre avec sa clé publique","Elle le hache uniquement","Elle le stocke hors-ligne"],correct:0,why:"La CA signe le certificat avec sa clé privée ; chacun vérifie cette signature avec la clé publique de la CA."},
+    {id:'m4l4q6',type:'qcm',q:"Un certificat numérique lie de façon vérifiable…",opts:["Une identité + une clé publique + des attributs, le tout signé par une CA","Une clé privée + un mot de passe","Deux clés symétriques","Un hash et un sel"],correct:0,why:"Le certificat lie identité, clé publique et attributs (validité, usage…), signés par une CA."},
+    {id:'m4l4q7',type:'qcm',q:"Dans la métaphore « certificat = carte d'identité », la clé publique correspond à…",opts:["La photo","Le sceau/hologramme","L'émetteur (la République)","Le numéro de série"],correct:0,why:"Photo = clé publique, sceau/hologramme = signature numérique, émetteur = la CA."},
+    {id:'m4l4q8',type:'qcm',q:"Quels outils sont cités comme permettant un MITM en pratique ?",opts:["Bettercap, mitmproxy, Burp Suite","hashcat, John","OpenSSL, GPG","SailPoint, Okta"],correct:0,why:"Bettercap, mitmproxy et Burp Suite servent à intercepter/manipuler le trafic (MITM), notamment sur Wi-Fi non sécurisé."},
+  ]},
+
+  { id:'m4l5', name:'Chaîne X.509, validation & cas d\'usage', icon:'✅', q:[
+    {id:'m4l5q1',type:'qcm',q:"Quel est le standard mondial des certificats numériques ?",opts:["X.509 (v3)","SHA-256","RSA-2048","SAML"],correct:0,why:"X.509 (version 3) est la norme internationale décrivant la structure des certificats."},
+    {id:'m4l5q2',type:'qcm',q:"Dans une chaîne de certification, l'ordre est…",opts:["CA racine → CA intermédiaire → certificat final","Certificat final → CA racine → intermédiaire","CA intermédiaire → racine → final","Il n'y a pas de hiérarchie"],correct:0,why:"La confiance descend : CA racine (sommet) → CA intermédiaire(s) → certificat final (serveur/utilisateur)."},
+    {id:'m4l5q3',type:'qcm',q:"Pourquoi la CA racine est-elle généralement maintenue HORS-LIGNE ?",opts:["Pour protéger sa clé privée, qui ne sert qu'à signer les intermédiaires","Parce qu'elle est plus lente en ligne","Pour économiser de la bande passante","Parce qu'elle n'est jamais utilisée"],correct:0,why:"La clé de la racine est l'actif le plus précieux : on la garde hors-ligne et elle ne signe que les CA intermédiaires."},
+    {id:'m4l5q4',type:'qcm',q:"La validation d'un certificat comporte 5 contrôles. Lesquels ?",opts:["Chaîne, dates, nom, révocation, usage","Taille, couleur, format, langue, poids","Hash, sel, clé, port, IP","Iss, sub, exp, aud, jti"],correct:0,why:"On vérifie : la chaîne de confiance, les dates de validité, le nom (CN/SAN), la révocation (CRL/OCSP) et l'usage prévu."},
+    {id:'m4l5q5',type:'qcm',q:"Quand vous visitez un site en HTTPS, le certificat sert à…",opts:["Authentifier le serveur et établir un canal chiffré","Accélérer le chargement","Compresser les images","Bloquer la publicité"],correct:0,why:"En HTTPS, le certificat prouve l'identité du serveur et permet l'établissement d'un canal TLS chiffré."},
+    {id:'m4l5q6',type:'qcm',q:"Un certificat « client » est typiquement utilisé pour…",opts:["Authentifier un utilisateur nomade sur un VPN","Signer du code","Chiffrer un disque local","Hacher un mot de passe"],correct:0,why:"Les certificats client servent par exemple à authentifier les nomades sur un VPN (auth par certificat)."},
+    {id:'m4l5q7',type:'qcm',q:"S/MIME utilise des certificats pour…",opts:["Signer et/ou chiffrer des e-mails","Établir un VPN","Valider des cartes bancaires","Gérer les rôles AD"],correct:0,why:"S/MIME emploie des certificats pour signer et chiffrer les courriels."},
+    {id:'m4l5q8',type:'qcm',q:"La « signature de code » avec certificat permet de…",opts:["Garantir l'origine et l'intégrité d'un logiciel","Chiffrer le code source","Accélérer la compilation","Masquer le code"],correct:0,why:"La signature de code prouve l'éditeur et garantit que le binaire n'a pas été altéré."},
+    {id:'m4l5q9',type:'qcm',q:"Lequel n'est PAS un cas d'usage typique des certificats ?",opts:["Le hachage des mots de passe en base","HTTPS","VPN client","S/MIME (mail signé)"],correct:0,why:"Certificats : HTTPS, VPN, S/MIME, signature de code, auth, IoT. Le hachage de mots de passe relève du hash + sel, pas des certificats."},
+  ]},
+
+]},
+
 ];
 
-const RANKS = ["Stagiaire cloud","Architecte junior","Architecte","Architecte confirmé","Architecte senior","Architecte principal","Cloud Architect — Légende"];
+const BOSS = { id:'boss', name:'Examen blanc', icon:'👑', draw:20 };
 
-const ICONS = {
- globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/>',
- shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>',
- shieldalert:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v4"/><path d="M12 16h.01"/>',
- network:'<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v3"/><path d="M5 16v-2h14v2"/>',
- users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
- zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/>',
- server:'<rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01"/><path d="M6 17h.01"/>',
- cpu:'<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2"/><path d="M15 2v2"/><path d="M9 20v2"/><path d="M15 20v2"/><path d="M2 9h2"/><path d="M2 15h2"/><path d="M20 9h2"/><path d="M20 15h2"/>',
- key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2"/><path d="M16.5 6.5 19 9"/>',
- lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
- database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>',
- gauge:'<path d="M12 14 16 8"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
- message:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/>',
- send:'<path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/>',
- inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/>',
- rotate:'<path d="M3 2v6h6"/><path d="M3.5 8a9 9 0 1 0 2.2-3.5L3 8"/>',
- puzzle:'<path d="M4 7h3a1 1 0 0 0 1-1 2 2 0 1 1 4 0 1 1 0 0 0 1 1h3v3a1 1 0 0 0 1 1 2 2 0 1 1 0 4 1 1 0 0 0-1 1v3h-3a1 1 0 0 1-1-1 2 2 0 1 0-4 0 1 1 0 0 1-1 1H4v-3a1 1 0 0 1 1-1 2 2 0 1 0 0-4 1 1 0 0 1-1-1Z"/>',
- code:'<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',
- activity:'<path d="M22 12h-4l-3 9-6-18-3 9H2"/>',
- swords:'<circle cx="12" cy="12" r="9"/><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/>',
- skull:'<circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M8 20v1.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V20"/><path d="M16 20a2 2 0 0 0 1.56-3.25 9.5 9.5 0 1 0-11.12 0A2 2 0 0 0 8 20"/><path d="M12 17v-2"/>',
- trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
- star:'<path d="M12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2Z"/>',
- heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.49 4.04 3 5.5l7 7Z"/>',
- rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="M12 15 9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2Z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
- chevronright:'<path d="m9 18 6-6-6-6"/>',
- chevronleft:'<path d="m15 18-6-6 6-6"/>',
- check:'<path d="M20 6 9 17l-5-5"/>',
- x:'<path d="M18 6 6 18"/><path d="M6 6l12 12"/>',
- play:'<path d="M6 3 20 12 6 21Z"/>',
- home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V21h14V9.8"/>'
-};
+/* ====================================================================
+   GLOSSAIRE — ST2GID (intégralité des définitions à connaître)
+   {t: terme, d: définition, m: module ('m1'..'m4')}
+   ==================================================================== */
+const GLOSSARY = [
 
-function icon(name, cls){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico '+(cls||'')+'">'+(ICONS[name]||'')+'</svg>'; }
-function starsHTML(v){ let s=''; for(let i=0;i<3;i++){ const on=i<v; s+='<svg viewBox="0 0 24 24" fill="'+(on?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico star '+(on?'star-on':'star-off')+'">'+ICONS.star+'</svg>'; } return '<span class="stars">'+s+'</span>'; }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+/* ---- Module 1 : Notions fondamentales IAM ---- */
+{t:"IAM (Identity and Access Management)",d:"Ensemble des processus et technologies qui gèrent les identités numériques et leurs droits d'accès aux ressources.",m:"m1"},
+{t:"Identité numérique",d:"Représentation d'une entité dans un système, composée d'identifiants + attributs + credentials.",m:"m1"},
+{t:"Identifiants",d:"Élément qui désigne « qui » est l'entité (username, e-mail, badge, UID).",m:"m1"},
+{t:"Attributs",d:"Caractéristiques associées à une identité (service, fonction, localisation, etc.).",m:"m1"},
+{t:"Credentials",d:"Moyens de PROUVER l'identité (mot de passe, certificat, biométrie, clé).",m:"m1"},
+{t:"Cycle de vie (JML)",d:"Gestion d'une identité de bout en bout : Joiner → Mover → Leaver (+ Suspension).",m:"m1"},
+{t:"Joiner",d:"Arrivée : création du compte et attribution des droits initiaux, au moindre privilège.",m:"m1"},
+{t:"Mover",d:"Mobilité interne : on RÉVOQUE les anciens droits AVANT d'attribuer les nouveaux.",m:"m1"},
+{t:"Leaver",d:"Départ : révocation de TOUS les accès, désactivation puis archivage du compte.",m:"m1"},
+{t:"Suspension",d:"Désactivation temporaire (congé/enquête) ; le compte est conservé pour audit.",m:"m1"},
+{t:"Privilege creep (sur-privilège)",d:"Accumulation progressive de droits, souvent due à des Movers mal gérés.",m:"m1"},
+{t:"Évolution IAM (1.0 → 4.0)",d:"1.0 annuaires locaux ; 2.0 SSO/fédération ; 3.0 cloud/hybride ; 4.0 Zero Trust, IA, décentralisé.",m:"m1"},
+{t:"4A",d:"Les 4 piliers de l'IAM : Identification → Authentification → Autorisation → Audit.",m:"m1"},
+{t:"Identification",d:"Déclaration d'identité (« qui êtes-vous ? ») : username, e-mail, badge → claim.",m:"m1"},
+{t:"Autorisation",d:"Décision sur les droits (« avez-vous le droit ? ») via RBAC/ABAC → accès OK/NOK.",m:"m1"},
+{t:"Audit",d:"Traçabilité des actions (« qu'avez-vous fait ? ») via logs et SIEM.",m:"m1"},
+{t:"DAC (Discretionary Access Control)",d:"Le propriétaire de la ressource décide des permissions. Ex : permissions NTFS.",m:"m1"},
+{t:"MAC (Mandatory Access Control)",d:"Labels de classification imposés par le système. Ex : SELinux, militaire.",m:"m1"},
+{t:"RBAC (Role-Based Access Control)",d:"Permissions attribuées via des rôles : Utilisateurs → Rôles → Permissions. Ex : groupes AD.",m:"m1"},
+{t:"ABAC (Attribute-Based Access Control)",d:"Décision selon des règles sur attributs (sujet, ressource, action, contexte).",m:"m1"},
+{t:"ReBAC (Relationship-Based Access Control)",d:"Accès fondé sur les relations. Ex : Google Drive (owner/editor/viewer).",m:"m1"},
+{t:"Moindre privilège",d:"Accorder les droits minimaux, pour la durée minimale, idéalement en JIT.",m:"m1"},
+{t:"JIT (Just-In-Time)",d:"Attribution d'un droit au moment du besoin, pour une durée limitée, puis retrait.",m:"m1"},
+{t:"SoD (Séparation des responsabilités)",d:"Aucun individu ne contrôle seul une transaction critique, pour prévenir fraude et erreurs.",m:"m1"},
+{t:"SoD statique",d:"Interdiction PERMANENTE de cumuler certains rôles.",m:"m1"},
+{t:"SoD dynamique",d:"Interdiction d'exercer des rôles conflictuels dans une MÊME transaction.",m:"m1"},
+{t:"Zero Trust",d:"Modèle « Never trust, always verify » : aucune confiance par défaut, vérification continue (5 piliers).",m:"m1"},
+{t:"Defense in Depth",d:"Empiler plusieurs couches de sécurité indépendantes pour qu'une faille unique ne compromette pas tout.",m:"m1"},
+{t:"IGA (Identity Governance & Administration)",d:"Gouvernance des identités de façon conforme et auditable : provisioning, accès, revues, audit.",m:"m1"},
+{t:"Provisioning",d:"Création/attribution automatique des comptes et droits (souvent déclenché par le SIRH).",m:"m1"},
+{t:"Recertification (revue des accès)",d:"Re-validation périodique que chaque utilisateur a bien les droits nécessaires (campagnes, attestation).",m:"m1"},
+{t:"RGPD",d:"Règlement UE sur les données personnelles : droit d'accès, droit à l'oubli, minimisation.",m:"m1"},
+{t:"NIS2",d:"Directive UE pour les infrastructures critiques : MFA obligatoire, audit des accès.",m:"m1"},
+{t:"ISO 27001",d:"Norme de sécurité de l'information ; le contrôle d'accès relève de l'annexe A.9.",m:"m1"},
+{t:"SOX",d:"Loi US (entreprises cotées) : séparation des tâches (SoD) et audit des accès.",m:"m1"},
+{t:"PCI-DSS",d:"Standard de sécurité des données de cartes bancaires : moindre privilège, authentification forte.",m:"m1"},
+{t:"DID (Decentralized Identifier)",d:"Identifiant décentralisé, caractéristique de l'IAM 4.0 (identité auto-souveraine).",m:"m1"},
+{t:"LDAP",d:"Protocole d'annuaire pour interroger/organiser les identités (base d'Active Directory).",m:"m1"},
+{t:"Active Directory (AD)",d:"Annuaire d'identités de Microsoft, utilisant Kerberos et LDAP.",m:"m1"},
+{t:"OU (Organizational Unit)",d:"Conteneur d'organisation dans un annuaire (AD) regroupant utilisateurs et objets.",m:"m1"},
 
-const state = { screen:'hq', levelIdx:0, placements:{}, selected:null, phase:'build', results:[], reveal:0, stars:{}, timer:null };
-function curLevel(){ return LEVELS[state.levelIdx]; }
-function loadStars(){ try{ const s=localStorage.getItem('cloudarch_stars'); if(s) state.stars=JSON.parse(s)||{}; }catch(e){} }
-function saveStars(){ try{ localStorage.setItem('cloudarch_stars', JSON.stringify(state.stars)); }catch(e){} }
+/* ---- Module 2 : Implémentation technique ---- */
+{t:"AuthN (Authentification)",d:"Prouver QUI vous êtes (vérification de l'identité).",m:"m2"},
+{t:"AuthZ (Autorisation)",d:"Décider ce que vous AVEZ LE DROIT de faire, une fois l'identité prouvée.",m:"m2"},
+{t:"Facteur d'authentification",d:"Catégorie de preuve : connaissance (savoir), possession (avoir), inhérence (être).",m:"m2"},
+{t:"MFA (Multi-Factor Authentication)",d:"Combiner au moins 2 facteurs de catégories DIFFÉRENTES.",m:"m2"},
+{t:"FIDO2",d:"Authentification par clé matérielle, résistante au phishing (la preuve est liée au domaine). Méthode MFA la plus forte.",m:"m2"},
+{t:"TOTP",d:"Code à usage unique basé sur le temps (app Authenticator) ; facteur de possession.",m:"m2"},
+{t:"Number matching",d:"Recopier un chiffre affiché lors d'un push, pour contrer la « MFA fatigue ».",m:"m2"},
+{t:"Kerberos",d:"Protocole d'authentification d'AD (depuis Windows 2000) : tickets chiffrés, le mot de passe ne transite jamais.",m:"m2"},
+{t:"KDC (Key Distribution Center)",d:"Tiers de confiance de Kerberos, porté par le contrôleur de domaine.",m:"m2"},
+{t:"TGT (Ticket Granting Ticket)",d:"Ticket initial (« bracelet journée ») obtenu après authentification auprès du KDC.",m:"m2"},
+{t:"Service Ticket (TGS)",d:"Ticket d'accès à un service précis, obtenu en présentant son TGT.",m:"m2"},
+{t:"krbtgt",d:"Compte (désactivé) dont le hash chiffre TOUS les TGT ; le posséder = roi du domaine.",m:"m2"},
+{t:"SPN (Service Principal Name)",d:"Identifiant d'un service dans Kerberos ; cible du Kerberoasting.",m:"m2"},
+{t:"Golden Ticket",d:"TGT forgé avec le hash krbtgt → accès total et persistant (Domain Admin). Remède : changer krbtgt 2 fois.",m:"m2"},
+{t:"NTLM",d:"Ancien protocole d'authentification Windows : pas d'auth mutuelle, hash réutilisable (Pass-the-Hash), vulnérable au relais.",m:"m2"},
+{t:"SSO (Single Sign-On)",d:"Une seule authentification donne accès à plusieurs applications ; impose le MFA sur l'IdP.",m:"m2"},
+{t:"Fédération d'identités",d:"Délégation de l'authentification entre un IdP et des SP via des assertions de confiance.",m:"m2"},
+{t:"IdP (Identity Provider)",d:"Gère les identités, authentifie et émet les assertions. Ex : Entra ID, Okta, AD FS.",m:"m2"},
+{t:"SP (Service Provider)",d:"Fournit le service, fait confiance à l'IdP et n'a PAS le mot de passe. Ex : Salesforce, Office 365.",m:"m2"},
+{t:"Assertion",d:"Jeton/message émis par l'IdP attestant de l'identité et des attributs d'un utilisateur.",m:"m2"},
+{t:"SAML 2.0",d:"Protocole de fédération basé sur XML, orienté entreprise.",m:"m2"},
+{t:"OAuth 2.0",d:"Protocole d'AUTORISATION (accès délégué aux API), en JSON. N'authentifie pas l'utilisateur à lui seul.",m:"m2"},
+{t:"OpenID Connect (OIDC)",d:"OAuth 2.0 + authentification : ajoute un ID Token (JWT) décrivant l'identité.",m:"m2"},
+{t:"ID Token",d:"JWT signé d'OIDC portant des claims d'identité (iss, sub, email, exp…).",m:"m2"},
+{t:"JWT (JSON Web Token)",d:"Jeton compact et signé (header.payload.signature) transportant des claims.",m:"m2"},
+{t:"Access Token",d:"Jeton OAuth autorisant l'accès à une API selon des scopes.",m:"m2"},
+{t:"Scope",d:"Périmètre d'autorisation demandé/accordé dans OAuth (ex : read, write).",m:"m2"},
+{t:"SCIM",d:"Protocole de provisioning : synchronise et crée/supprime automatiquement les comptes entre systèmes.",m:"m2"},
+{t:"Accès conditionnel",d:"Décision d'accès selon le contexte (appareil, localisation, risque) ; pilier du Zero Trust.",m:"m2"},
+{t:"PAM (Privileged Access Management)",d:"Gestion des comptes à privilèges : coffre-fort (vault), accès JIT, enregistrement de session.",m:"m2"},
+{t:"Vault (coffre-fort)",d:"Composant PAM qui stocke et fait tourner les secrets des comptes à privilèges.",m:"m2"},
+{t:"IDaaS (Identity as a Service)",d:"IAM fourni en service cloud (HA, MAJ auto, MFA intégré). Ex : Entra ID, Okta.",m:"m2"},
+{t:"gMSA",d:"Compte de service managé : mot de passe long, complexe et tourné automatiquement (anti-Kerberoasting).",m:"m2"},
 
-function renderHQ(){
-  const total = Object.values(state.stars).reduce((a,b)=>a+b,0);
-  const maxStars = LEVELS.length*3;
-  const rank = RANKS[Math.min(RANKS.length-1, Math.floor((total/maxStars)*RANKS.length))];
-  const starSvg = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico star-on">'+ICONS.star+'</svg>';
-  let h = '<div class="card hero">';
-  h += '<div class="eyebrow rose">'+icon('swords')+' poste de commandement</div>';
-  h += '<h1 class="h1">CLOUD<span class="teal">ARCHITECT</span></h1>';
-  h += '<p class="muted hero-sub">'+`Monte l'infrastructure, puis encaisse les vagues d'attaques. Chaque menace bloquée est une décision d'architecture du cours. Décroche les 3 étoiles sur chaque mission.`+'</p>';
-  h += '<div class="hero-stats"><div class="stat">'+icon('trophy','amber-ico')+'<span class="mono">'+esc(rank)+'</span></div>';
-  h += '<div class="stat mono">'+starSvg+' '+total+'/'+maxStars+'</div></div></div>';
-  h += '<div class="levels">';
-  LEVELS.forEach((lv,i)=>{ const earned = state.stars[i]||0;
-    h += '<button class="level-row" data-act="play" data-level="'+i+'">';
-    h += '<div class="level-num mono">'+(i+1)+'</div>';
-    h += '<div class="level-mid"><div class="eyebrow">'+esc(lv.theme)+'</div><div class="level-title">'+esc(lv.title)+'</div>'+starsHTML(earned)+'</div>';
-    h += '<div class="level-go">'+(earned===0?icon('play','teal-ico'):icon('rotate'))+'</div></button>';
-  });
-  h += '</div>';
-  h += '<p class="hq-tip mono">'+`Astuce : certaines cartes sont des pièges (clé en dur, bucket public…). À toi de les éviter.`+'</p>';
-  return h;
+/* ---- Module 3 : Risques & attaques ---- */
+{t:"Phishing",d:"Hameçonnage pour voler des identifiants ; vecteur d'attaque n°1.",m:"m3"},
+{t:"Spear phishing",d:"Phishing ciblé sur une personne/organisation précise, avec un message personnalisé.",m:"m3"},
+{t:"Credential stuffing",d:"Rejouer en masse des couples identifiant/mot de passe déjà fuités (pari sur la réutilisation).",m:"m3"},
+{t:"Password spraying",d:"Tester quelques mots de passe communs sur BEAUCOUP de comptes, pour éviter le verrouillage.",m:"m3"},
+{t:"Infostealer",d:"Malware (ex : RedLine) qui vole identifiants, cookies et secrets sur le poste de la victime.",m:"m3"},
+{t:"Mimikatz",d:"Outil offensif extrayant les hashes/secrets d'authentification depuis la mémoire (LSASS).",m:"m3"},
+{t:"LSASS",d:"Processus Windows gérant les secrets d'authentification en mémoire ; cible de Mimikatz.",m:"m3"},
+{t:"Pass-the-Hash (PtH)",d:"S'authentifier en rejouant directement un hash NTLM, sans connaître le mot de passe en clair.",m:"m3"},
+{t:"Pass-the-Ticket",d:"Réutiliser un ticket Kerberos volé (TGT/TGS) pour s'authentifier.",m:"m3"},
+{t:"Kerberoasting",d:"Demander un Service Ticket pour un SPN puis casser hors-ligne le hash du compte de service.",m:"m3"},
+{t:"AS-REP Roasting",d:"Exploiter les comptes sans pré-authentification Kerberos pour casser leur hash hors-ligne.",m:"m3"},
+{t:"Silver Ticket",d:"Service Ticket forgé avec le hash d'un compte de service : accès limité au service, furtif (pas de KDC).",m:"m3"},
+{t:"DCSync",d:"Se faire passer pour un DC et demander la réplication des secrets (récupère les hashes, dont krbtgt).",m:"m3"},
+{t:"LDAP injection",d:"Injecter des filtres LDAP malveillants pour contourner l'authentification ou faire fuiter l'annuaire.",m:"m3"},
+{t:"SAML Signature Wrapping",d:"Manipuler l'XML pour faire valider une signature sur des données différentes (usurpation en fédération).",m:"m3"},
+{t:"OAuth Token Hijacking",d:"Détourner un token OAuth (open redirect, XSS, vol de cookie) pour accéder aux API au nom de la victime.",m:"m3"},
+{t:"Cyber Kill Chain",d:"Modèle en 7 étapes d'une attaque : Reconnaissance, Weaponization, Delivery, Exploitation, Installation, C2, Actions.",m:"m3"},
+{t:"C2 (Command & Control)",d:"Canal (HTTPS, DNS…) par lequel l'attaquant pilote les machines compromises.",m:"m3"},
+{t:"MITRE ATT&CK",d:"Matrice de 14 tactiques et des techniques associées ; taxonomie opérationnelle des comportements adverses.",m:"m3"},
+{t:"IoC (Indicateur de Compromission)",d:"Signe qu'une attaque est en cours (impossible travel, ajout aux Domain Admins, TGS-REQ massifs…).",m:"m3"},
+{t:"Impossible travel",d:"IoC : connexions d'un même compte depuis des lieux géographiquement incompatibles en peu de temps.",m:"m3"},
+{t:"Tiering",d:"Cloisonner les niveaux d'administration (Tier 0/1/2) pour limiter le mouvement latéral.",m:"m3"},
+{t:"PAW (Privileged Access Workstation)",d:"Poste dédié et durci, réservé aux tâches d'administration.",m:"m3"},
+{t:"Protected Users",d:"Groupe AD renforçant la protection des comptes sensibles (limite NTLM, cache des secrets).",m:"m3"},
+{t:"LAPS",d:"Attribue à chaque machine un mot de passe administrateur local UNIQUE et renouvelé.",m:"m3"},
+{t:"Credential Guard",d:"Isole les secrets d'authentification via la virtualisation (Windows 10/11), les soustrayant à Mimikatz.",m:"m3"},
+{t:"UEBA",d:"Analyse comportementale des utilisateurs/entités pour détecter les anomalies.",m:"m3"},
+{t:"SIEM",d:"Plateforme de collecte et corrélation des logs de sécurité pour la détection et l'audit.",m:"m3"},
+{t:"EDR",d:"Solution de détection et réponse sur les postes/serveurs (endpoints).",m:"m3"},
+{t:"BloodHound",d:"Outil cartographiant les chemins d'attaque et d'élévation de privilèges dans Active Directory.",m:"m3"},
+{t:"hashcat / John the Ripper",d:"Outils de cassage hors-ligne de hashes et de tickets (Kerberoasting, AS-REP…).",m:"m3"},
+{t:"Impacket",d:"Boîte à outils Python d'attaques réseau/AD (GetUserSPNs, GetNPUsers, secretsdump…).",m:"m3"},
+
+/* ---- Module 4 : Crypto & certificats ---- */
+{t:"Confidentialité",d:"Seul le destinataire peut lire → obtenue par le chiffrement (AES, RSA).",m:"m4"},
+{t:"Intégrité",d:"Le message n'a pas été modifié → vérifiée par le hachage (SHA-256).",m:"m4"},
+{t:"Authenticité",d:"L'expéditeur est bien celui qu'il prétend → garantie par la signature numérique.",m:"m4"},
+{t:"Non-répudiation",d:"L'expéditeur ne peut nier avoir émis le message → signature + horodatage.",m:"m4"},
+{t:"Cryptographie symétrique",d:"Une seule clé partagée chiffre ET déchiffre ; très rapide, mais distribution de clé délicate.",m:"m4"},
+{t:"Cryptographie asymétrique",d:"Paire de clés liées (publique + privée) ; pratique pour la distribution, ~1000× plus lente.",m:"m4"},
+{t:"AES",d:"Chiffrement symétrique de référence (128–256 bits), très rapide.",m:"m4"},
+{t:"ChaCha20",d:"Chiffrement symétrique de flux, alternative performante à AES (notamment sur mobile).",m:"m4"},
+{t:"RSA",d:"Algorithme asymétrique (clés 2048–4096 bits) pour signature et échange de clés.",m:"m4"},
+{t:"ECC",d:"Cryptographie sur courbes elliptiques : sécurité équivalente à RSA avec des clés bien plus courtes.",m:"m4"},
+{t:"Ed25519",d:"Algorithme de signature asymétrique moderne, rapide et sûr (courbes elliptiques).",m:"m4"},
+{t:"Clé publique",d:"Clé distribuée librement ; chiffre les messages et vérifie les signatures.",m:"m4"},
+{t:"Clé privée",d:"Clé gardée secrète, jamais transmise ; déchiffre et signe.",m:"m4"},
+{t:"Fonction de hachage",d:"Transforme une donnée de taille quelconque en une empreinte de taille fixe, à sens unique.",m:"m4"},
+{t:"Résistance à la préimage",d:"Impossible (en pratique) de retrouver l'entrée à partir de l'empreinte.",m:"m4"},
+{t:"Résistance aux collisions",d:"Impossible (en pratique) de trouver deux entrées différentes avec la même empreinte.",m:"m4"},
+{t:"MD5 / SHA-1",d:"Fonctions de hachage CASSÉES (collisions) — interdites aujourd'hui.",m:"m4"},
+{t:"SHA-256",d:"Fonction de hachage sûre et recommandée (famille SHA-2).",m:"m4"},
+{t:"Sel (salt)",d:"Valeur aléatoire ajoutée avant de hacher un mot de passe ; contre les tables précalculées.",m:"m4"},
+{t:"Signature numérique",d:"Signer avec la clé privée, vérifier avec la clé publique → authenticité, intégrité, non-répudiation.",m:"m4"},
+{t:"Diffie-Hellman (1976)",d:"Établir un secret commun sur un canal non sûr, sans jamais transmettre ce secret.",m:"m4"},
+{t:"ECDHE",d:"Diffie-Hellman éphémère sur courbes elliptiques → assure la Perfect Forward Secrecy.",m:"m4"},
+{t:"X25519",d:"Échange de clés ECDH basé sur Curve25519, standard de TLS 1.3.",m:"m4"},
+{t:"PFS (Perfect Forward Secrecy)",d:"Compromettre une clé long terme ne révèle pas les sessions passées (clés de session éphémères).",m:"m4"},
+{t:"Cryptographie hybride",d:"Combiner asymétrique (échange + auth) et symétrique (volume). Ex TLS : ECDHE + RSA + AES-GCM.",m:"m4"},
+{t:"TLS",d:"Protocole sécurisant les communications (canal chiffré + authentification par certificat).",m:"m4"},
+{t:"AES-GCM",d:"Mode de chiffrement symétrique authentifié utilisé pour le canal TLS.",m:"m4"},
+{t:"MITM (Man-in-the-Middle)",d:"Eve s'intercale et substitue ses clés publiques : lecture, modification et usurpation possibles.",m:"m4"},
+{t:"Autorité de Certification (CA)",d:"Tiers de confiance qui certifie l'appartenance d'une clé publique en SIGNANT le certificat.",m:"m4"},
+{t:"Tiers de confiance",d:"Entité reconnue de tous (la CA) qui garantit le lien clé publique ↔ identité.",m:"m4"},
+{t:"Certificat numérique",d:"Fichier liant une identité + une clé publique + des attributs, signés par une CA.",m:"m4"},
+{t:"X.509",d:"Norme mondiale (v3) décrivant la structure d'un certificat numérique.",m:"m4"},
+{t:"Chaîne de certification",d:"Hiérarchie de confiance : CA racine → CA intermédiaire → certificat final.",m:"m4"},
+{t:"CA racine",d:"Sommet de la chaîne ; sa clé privée (très protégée) est gardée hors-ligne et ne signe que les intermédiaires.",m:"m4"},
+{t:"CSR (Certificate Signing Request)",d:"Demande de certificat (contenant la clé publique et l'identité) envoyée à une CA pour signature.",m:"m4"},
+{t:"Révocation (CRL / OCSP)",d:"Mécanisme déclarant un certificat invalide avant son expiration ; vérifié à la validation.",m:"m4"},
+{t:"Validation d'un certificat",d:"5 contrôles : chaîne de confiance, dates, nom (CN/SAN), révocation, usage prévu.",m:"m4"},
+{t:"HTTPS",d:"HTTP sur TLS : authentifie le serveur (certificat) et chiffre la communication.",m:"m4"},
+{t:"S/MIME",d:"Standard utilisant des certificats pour signer et/ou chiffrer les e-mails.",m:"m4"},
+{t:"Signature de code",d:"Certificat garantissant l'origine et l'intégrité d'un logiciel.",m:"m4"},
+{t:"OpenSSL",d:"Outil en ligne de commande pour générer clés, CSR et certificats, et bâtir une CA.",m:"m4"},
+{t:"PKI (Public Key Infrastructure)",d:"Ensemble (CA, certificats, processus) qui gère le cycle de vie des certificats et la confiance.",m:"m4"},
+
+];
+
+/* ---------- Index ---------- */
+const LEVELS = [];
+MODULES.forEach(m=>m.levels.forEach(l=>{ l.modId=m.id; l.modCol=m.col; LEVELS.push(l); }));
+const ALL_Q = [];
+MODULES.forEach(m=>m.levels.forEach(l=>l.q.forEach(q=>{ q.modId=m.id; ALL_Q.push(q); })));
+const NODES = [...LEVELS, BOSS];           // ordre de progression
+const levelById = id => LEVELS.find(l=>l.id===id);
+const modColVar = id => (MODULES.find(m=>m.id===id)||{}).col || 'var(--z1)';
+
+/* ---------- État + persistance ---------- */
+const KEY = 'cyberquete:save:v1';
+const STORE = (typeof window!=='undefined' && window.storage) ? window.storage : null;
+function defaultState(){ return {
+  xp:0, totalAnswered:0, totalCorrect:0, longestStreak:0,
+  levels:{}, q:{}, unlockedIndex:0, onboarded:false, muted:false, lastPlayed:Date.now()
+};}
+let S = defaultState();
+
+async function load(){
+  if(!STORE) return;
+  try{ const r = await STORE.get(KEY); if(r && r.value) S = Object.assign(defaultState(), JSON.parse(r.value)); }
+  catch(e){ /* clé absente ou erreur → défauts */ }
+}
+let saveTimer=null;
+function save(){
+  if(!STORE) return;
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{ try{ S.lastPlayed=Date.now(); await STORE.set(KEY, JSON.stringify(S)); }catch(e){} }, 250);
 }
 
-function renderMission(){
-  const lv = curLevel();
-  const used = Object.values(state.placements);
-  const allFilled = lv.bays.every(b=>state.placements[b.id]);
-  const wrongRevealed = state.results.slice(0,state.reveal).filter(x=>!x).length;
-  const uptime = Math.max(0, 100 - 20*wrongRevealed);
-  const upcls = uptime>=80?'hp-ok':uptime>=40?'hp-mid':'hp-low';
-  const wrongTotal = state.results.filter(x=>!x).length;
-  const finalStars = wrongTotal===0?3:wrongTotal===1?2:wrongTotal===2?1:0;
-  const showV = (i)=> state.phase==='debrief' || (state.phase==='audit' && i<state.reveal);
+/* ---------- XP / niveaux ---------- */
+function xpForLevel(n){ return 60*n + 20*n*(n-1); } // cumul pour atteindre le niveau n
+function levelFromXp(xp){ let n=1; while(xp >= xpForLevel(n+1)) n++; return n; }
+function levelProgress(xp){
+  const n=levelFromXp(xp), lo=xpForLevel(n), hi=xpForLevel(n+1);
+  return { n, into:xp-lo, span:hi-lo, lo, hi };
+}
 
-  let h = '<div class="card">';
-  h += '<div class="brief-top"><button class="iconbtn" data-act="exit" aria-label="Retour">'+icon('chevronleft')+'</button>';
-  h += '<span class="eyebrow">Mission '+(state.levelIdx+1)+' · '+esc(lv.theme)+'</span></div>';
-  h += '<h2 class="h2">'+esc(lv.title)+'</h2><p class="muted">'+esc(lv.brief)+'</p></div>';
+/* ---------- Mastery ---------- */
+function qStat(id){ return S.q[id] || (S.q[id]={seen:0,correct:0,wrong:0,mastered:false,last:null}); }
+function isMastered(id){ const s=S.q[id]; return !!(s && s.mastered); }
+function toReviewList(){
+  return ALL_Q.filter(q=>{ const s=S.q[q.id]; return s && s.seen>0 && (!s.mastered || s.last===false); });
+}
+function moduleMastery(modId){
+  const qs = ALL_Q.filter(q=>q.modId===modId);
+  const m = qs.filter(q=>isMastered(q.id)).length;
+  return { mastered:m, total:qs.length, pct: qs.length? Math.round(m/qs.length*100):0 };
+}
 
-  if(state.phase!=='build'){
-    h += '<div class="card"><div class="hp-head"><span class="lbl">'+icon('heart','heart-ico')+' UPTIME</span>';
-    h += '<span class="'+upcls+'-text">'+uptime+'%</span></div>';
-    h += '<div class="hpwrap"><div class="hpfill '+upcls+'" style="width:'+uptime+'%"></div></div>';
-    if(state.phase==='audit'){ h += '<button class="linkbtn" data-act="skip">'+`passer l'animation »`+'</button>'; }
-    h += '</div>';
+/* ---------- Audio ---------- */
+let actx=null;
+function ensureAudio(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } }
+function tone(freq,dur,type,when,gain){
+  if(S.muted||!actx) return;
+  const o=actx.createOscillator(), g=actx.createGain(); o.type=type||'sine'; o.frequency.value=freq;
+  const t=actx.currentTime+(when||0); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(gain||0.12,t+0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+0.02);
+}
+function sfxGood(){ tone(660,0.12,'triangle',0,0.13); tone(880,0.16,'triangle',0.09,0.13); }
+function sfxBad(){ tone(200,0.18,'sawtooth',0,0.10); tone(150,0.22,'sawtooth',0.1,0.10); }
+function sfxStar(i){ tone(700+i*180,0.16,'sine',i*0.12,0.14); }
+function sfxLevelUp(){ [523,659,784,1046].forEach((f,i)=>tone(f,0.2,'triangle',i*0.1,0.13)); }
+
+/* ---------- Confetti ---------- */
+function confetti(n){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const cols=['#FFC93C','#3DDC97','#FF7A7A','#46D0C8','#AB8CFB','#56CCF2'];
+  for(let i=0;i<n;i++){ const d=document.createElement('div'); d.className='confetti';
+    d.style.left=Math.random()*100+'vw'; d.style.background=cols[i%cols.length];
+    d.style.animationDuration=(1.6+Math.random()*1.4)+'s'; d.style.animationDelay=(Math.random()*0.3)+'s';
+    d.style.transform='rotate('+Math.random()*360+'deg)'; document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3400); }
+}
+
+/* ---------- Helpers DOM ---------- */
+const $ = s=>document.querySelector(s);
+const view = $('#view');
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function esc(s){ return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+/* ---------- Top bar ---------- */
+function renderTop(){
+  const p=levelProgress(S.xp);
+  $('#tbLvl').textContent=p.n;
+  $('#tbXp').textContent=p.into+' / '+p.span;
+  $('#tbXpFill').style.width=Math.max(4,Math.round(p.into/p.span*100))+'%';
+  $('#muteBtn').textContent=S.muted?'🔇':'🔊';
+}
+
+/* ---------- Tab bar ---------- */
+let currentTab='map';
+const TABS=[['map','🗺️','Aventure'],['free','🎯','Entraînement'],['review','🔁','Révision'],['stats','📈','Progrès'],['gloss','📖','Glossaire']];
+function renderTabs(){
+  const rev=toReviewList().length;
+  $('#tabbar').innerHTML = TABS.map(([id,e,l])=>{
+    const badge=(id==='review'&&rev>0)?'<span class="badge">'+(rev>99?'99+':rev)+'</span>':'';
+    return '<div class="tabwrap"><button class="tab '+(currentTab===id?'active':'')+'" data-tab="'+id+'">'
+      +'<span class="e">'+e+'</span>'+l+'</button>'+badge+'</div>';
+  }).join('');
+}
+function showTabbar(on){ document.querySelector('.tabbar').style.display=on?'flex':'none'; }
+
+/* ---------- Routing ---------- */
+function go(tab){ currentTab=tab; renderTabs(); showTabbar(true);
+  if(tab==='map') renderMap(); else if(tab==='free') renderFree();
+  else if(tab==='review') renderReview(); else if(tab==='stats') renderStats();
+  else if(tab==='gloss') renderGlossary();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ---------- Carte (signature) ---------- */
+function nodeState(idx){
+  const node=NODES[idx];
+  const rec=S.levels[node.id];
+  if(rec && rec.completed) return 'done';
+  if(idx<=S.unlockedIndex) return 'avail';
+  return 'locked';
+}
+function starStr(n){ let s=''; for(let i=0;i<3;i++) s+= i<n?'⭐':'☆'; return s; }
+
+function renderMap(){
+  let html='';
+  if(!S.onboarded){
+    html+='<div class="welcome">'+mascot('sm anim')
+      +'<div><h3>Salut, je suis Sécu&nbsp;!</h3><p>Choisis un niveau, réponds aux questions et gagne de l\'XP. '
+      +'Chaque zone se débloque quand tu finis la précédente. Tes erreurs reviennent dans l\'onglet Révision. 🔁</p></div>'
+      +'<button class="x" id="dismissW" aria-label="Fermer">✕</button></div>';
   }
+  html+='<div class="screentitle">Carte de l\'aventure</div>'
+      +'<div class="screensub">4 zones · '+LEVELS.length+' niveaux · 1 boss final</div><div class="map"><div class="nodes">';
 
-  h += '<div class="board">';
-  lv.bays.forEach((bay,i)=>{
-    const placed = state.placements[bay.id] ? CARDS[state.placements[bay.id]] : null;
-    const v = showV(i); const held = state.results[i];
-    h += '<div class="bay'+(v ? (held?' held':' breach') : '')+'"><div class="bay-body">';
-    h += '<div class="bay-head"><span class="bay-role">'+esc(bay.role)+'</span><span class="mono faint2">baie '+(i+1)+'</span></div>';
-    h += '<p class="need">'+esc(bay.need)+'</p>';
-    const slotCls = placed ? 'filled' : (state.selected && state.phase==='build' ? 'armed' : 'empty');
-    h += '<button class="slot '+slotCls+'" data-act="bay" data-bay="'+bay.id+'"'+(state.phase!=='build'?' disabled':'')+'>';
-    if(placed){ h += icon(placed.icon)+'<span class="mono">'+esc(placed.label)+'</span>'+(state.phase==='build'?'<span class="slot-x">'+icon('x')+'</span>':''); }
-    else { h += '<span class="mono">'+(state.selected&&state.phase==='build'?'placer ici →':'— vide —')+'</span>'; }
-    h += '</button></div>';
-    if(v){
-      const tic = held ? 'check' : bay.threat.icon;
-      h += '<div class="verdict '+(held?'held':'breach')+'"><div class="verdict-head">'+icon(tic)+'<span>'+esc(bay.threat.name)+' — '+(held?'tenu':'BRÈCHE')+'</span></div>';
-      if(state.phase==='debrief'){
-        const why = held ? bay.threat.held : bay.threat.breach + ' Ce qui l\u2019aurait tenue : ' + bay.threat.held;
-        h += '<p class="verdict-why">'+esc(why)+'</p>';
-      }
-      h += '</div>';
-    }
-    h += '</div>';
-  });
-  h += '</div>';
-
-  if(state.phase==='build'){
-    h += '<div class="card"><div class="mono faint palette-label">Composants — choisis-en un, puis clique une baie</div><div class="cards-grid">';
-    lv.palette.forEach(id=>{ const c=CARDS[id]; const u=used.indexOf(id)!==-1; const sel=state.selected===id;
-      h += '<button class="chip'+(u?' used':'')+(sel?' sel':'')+'" data-act="pick" data-card="'+id+'"'+(u?' disabled':'')+'>'+icon(c.icon)+'<span class="chip-txt"><span class="chip-label mono">'+esc(c.label)+'</span><span class="chip-sub">'+esc(c.sub)+'</span></span></button>';
+  let idx=0;
+  MODULES.forEach(m=>{
+    html+='<div class="zonebanner" style="border-color:'+m.col+';background:linear-gradient(90deg,'+m.col+'22,transparent);color:'+m.col+'">'
+        +'<span class="dot" style="background:'+m.col+'"></span>'+esc(m.name)
+        +'<small style="margin-left:auto;color:var(--ink-mute)">'+esc(m.sub)+'</small></div>';
+    m.levels.forEach((l,i)=>{
+      const st=nodeState(idx);
+      const side = i%2===0 ? 'off-l' : 'off-r';
+      const rec=S.levels[l.id]||{};
+      const isCurrent = st==='avail' && idx===S.unlockedIndex && !rec.completed;
+      const disc = st==='locked'
+        ? '<div class="disc">🔒</div>'
+        : '<div class="disc" style="background:linear-gradient(160deg,'+m.col+','+m.col+'cc);color:#11102a">'+l.icon+'</div>';
+      const stars = (st==='done') ? '<div class="stars">'+starStr(rec.stars||0)+'</div>' : '';
+      const pin = isCurrent ? '<div class="pin">'+mascot('').replace('<svg','<svg style="width:30px;height:30px"') +'</div>' : '';
+      html+='<div class="noderow '+side+'">'
+        +'<button class="node '+st+(isCurrent?' current':'')+'" data-node="'+idx+'" '+(st==='locked'?'aria-disabled="true"':'')+'>'
+        +(idx>0?'<span class="connector"></span>':'')
+        +pin+disc+stars
+        +'<span class="cap">'+esc(l.name)+'</span></button></div>';
+      idx++;
     });
-    h += '</div></div>';
-    h += '<div class="deploy-row"><button class="btn btn-primary" data-act="deploy"'+(allFilled?'':' disabled')+'>'+icon('rocket')+'<span>'+`Déployer et lancer l'audit`+'</span></button>';
-    if(!allFilled){ h += '<span class="mono faint2">'+Object.keys(state.placements).length+'/'+lv.bays.length+' baies remplies</span>'; }
-    h += '</div>';
-  }
+  });
+  // Boss
+  const bst=nodeState(idx);
+  html+='<button class="bossnode '+bst+'" data-node="'+idx+'">'
+      +'<div class="disc">'+(bst==='locked'?'🔒':'👑')+'</div>'
+      +'<span class="cap">Examen blanc</span>'
+      +'<span class="sub">'+(bst==='locked'?('Termine les '+LEVELS.length+' niveaux'):(BOSS.draw+' questions mélangées · sans indice'))+'</span></button>';
+  html+='</div></div>';
+  view.innerHTML=html;
 
-  if(state.phase==='audit'){ h += '<div class="audit-line mono">'+icon('swords','rose-ico')+' Audit en cours…</div>'; }
+  const dw=$('#dismissW'); if(dw) dw.onclick=()=>{ S.onboarded=true; save(); renderMap(); };
+  view.querySelectorAll('[data-node]').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.node, st=nodeState(i);
+    if(st==='locked'){ shakeEl(b); sfxBad(); return; }
+    startLevel(NODES[i], i===NODES.length-1?'boss':'adventure');
+  });
+}
+function shakeEl(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
 
-  if(state.phase==='debrief'){
-    h += '<div class="card debrief"><div class="debrief-stars">'+starsHTML(finalStars)+'</div>';
-    h += '<div class="mono '+upcls+'-text">Uptime final : '+uptime+'% · '+(wrongTotal===0?'aucune brèche':wrongTotal+' brèche'+(wrongTotal>1?'s':''))+'</div>';
-    const msg = finalStars===3 ? `Architecture sans faille. Tu as su pourquoi chaque composant tient sa menace — exactement le réflexe attendu à l'exam.` : `Relis les brèches ci-dessus : chacune est une justification d'archi à connaître. Recommence pour viser le sans-faute.`;
-    h += '<p class="muted debrief-msg">'+msg+'</p>';
-    h += '<div class="debrief-actions"><button class="btn btn-ghost" data-act="reset">'+icon('rotate')+' Rejouer</button>';
-    h += state.levelIdx<LEVELS.length-1
-      ? '<button class="btn btn-primary" data-act="next"><span>Mission suivante</span>'+icon('chevronright')+'</button>'
-      : '<button class="btn btn-primary" data-act="exit">'+icon('home')+' Retour au QG</button>';
-    h += '</div></div>';
-  }
-  return h;
+/* ---------- Entraînement libre ---------- */
+function renderFree(){
+  let html='<div class="screentitle">Entraînement libre</div><div class="screensub">Tous les niveaux ouverts — pas de blocage, ton XP compte quand même</div>';
+  MODULES.forEach(m=>{
+    html+='<div class="modgroup"><div class="modhead"><span class="dot" style="background:'+m.col+'"></span>'+esc(m.name)+'</div>';
+    m.levels.forEach(l=>{
+      const qs=l.q, mast=qs.filter(q=>isMastered(q.id)).length, pct=Math.round(mast/qs.length*100);
+      html+='<button class="lvlcard" data-lvl="'+l.id+'">'
+        +'<div class="ic" style="background:linear-gradient(160deg,'+m.col+','+m.col+'cc);color:#11102a">'+l.icon+'</div>'
+        +'<div class="body"><div class="t">'+esc(l.name)+'</div>'
+        +'<div class="m">'+qs.length+' questions <span class="mini-mast"><i style="width:'+pct+'%;background:'+m.col+'"></i></span> '+mast+'/'+qs.length+' maîtrisées</div></div>'
+        +'<span class="chev">›</span></button>';
+    });
+    html+='</div>';
+  });
+  view.innerHTML=html;
+  view.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>startLevel(levelById(b.dataset.lvl),'free'));
 }
 
-function render(){ document.getElementById('app').innerHTML = state.screen==='hq' ? renderHQ() : renderMission(); }
-
-function startMission(i){ state.levelIdx=i; resetBuild(); state.screen='mission'; render(); }
-function resetBuild(){ clearInterval(state.timer); state.placements={}; state.selected=null; state.results=[]; state.reveal=0; state.phase='build'; }
-function pick(card){ if(Object.values(state.placements).indexOf(card)!==-1) return; state.selected = state.selected===card?null:card; render(); }
-function onBay(bay){ if(state.phase!=='build') return; if(state.placements[bay]){ delete state.placements[bay]; render(); return; } if(state.selected){ state.placements[bay]=state.selected; state.selected=null; render(); } }
-function deploy(){ const lv=curLevel(); state.results=lv.bays.map(b=>state.placements[b.id]===b.correct); state.reveal=0; state.phase='audit'; render(); startAudit(); }
-function startAudit(){ clearInterval(state.timer); state.timer=setInterval(()=>{ const n=curLevel().bays.length; if(state.reveal<n){ state.reveal++; render(); } else { clearInterval(state.timer); setTimeout(()=>{ state.phase='debrief'; recordStars(); render(); },600); } },900); }
-function skip(){ clearInterval(state.timer); state.reveal=curLevel().bays.length; render(); setTimeout(()=>{ state.phase='debrief'; recordStars(); render(); },300); }
-function recordStars(){ const w=state.results.filter(x=>!x).length; const s=w===0?3:w===1?2:w===2?1:0; state.stars[state.levelIdx]=Math.max(state.stars[state.levelIdx]||0, s); saveStars(); }
-
-function onClick(e){ const el=e.target.closest('[data-act]'); if(!el) return; const a=el.getAttribute('data-act');
-  if(a==='play') startMission(parseInt(el.getAttribute('data-level'),10));
-  else if(a==='exit'){ resetBuild(); state.screen='hq'; render(); }
-  else if(a==='pick') pick(el.getAttribute('data-card'));
-  else if(a==='bay') onBay(el.getAttribute('data-bay'));
-  else if(a==='deploy') deploy();
-  else if(a==='skip') skip();
-  else if(a==='reset'){ resetBuild(); render(); }
-  else if(a==='next'){ state.levelIdx=Math.min(LEVELS.length-1, state.levelIdx+1); resetBuild(); render(); }
+/* ---------- Révision des erreurs (cœur pédagogique) ---------- */
+function renderReview(){
+  const list=toReviewList();
+  if(list.length===0){
+    view.innerHTML='<div class="screentitle">Révision des erreurs</div>'
+      +'<div class="empty">'+mascot('lg anim')+'<h3>Rien à revoir pour l\'instant</h3>'
+      +'<p>Joue quelques niveaux d\'abord. Les questions que tu rates (ou que tu n\'as pas encore maîtrisées) apparaîtront ici pour que tu les retravailles.</p>'
+      +'<button class="cta gold" data-goto="map" style="max-width:280px;margin:0 auto">Aller à l\'aventure</button></div>';
+    view.querySelector('[data-goto]').onclick=()=>go('map'); return;
+  }
+  // répartition par module
+  const byMod={}; list.forEach(q=>{ (byMod[q.modId]=byMod[q.modId]||[]).push(q); });
+  let chips='';
+  MODULES.forEach(m=>{ const c=(byMod[m.id]||[]).length; if(c) chips+='<span style="display:inline-flex;gap:6px;align-items:center;background:var(--surface);border:1px solid var(--line);padding:6px 11px;border-radius:99px;font-size:12px;font-weight:800;margin:0 6px 8px 0"><span style="width:9px;height:9px;border-radius:50%;background:'+m.col+'"></span>'+esc(m.name)+' · '+c+'</span>'; });
+  view.innerHTML='<div class="screentitle">Révision des erreurs</div>'
+    +'<div class="screensub">'+list.length+' question'+(list.length>1?'s':'')+' à retravailler. Une question est « maîtrisée » après 2 bonnes réponses.</div>'
+    +'<div style="margin:6px 0 18px">'+chips+'</div>'
+    +mascot('lg anim')
+    +'<button class="cta green" id="startRev" style="margin-top:18px">Réviser maintenant ('+Math.min(list.length,15)+')</button>';
+  $('#startRev').onclick=()=>{
+    const sess=shuffle(list.slice()).slice(0,15);
+    startSession(sess,'review',{name:'Révision',icon:'🔁',col:'var(--mint)'});
+  };
 }
 
-loadStars();
-document.addEventListener('click', onClick);
-render();
+/* ---------- Progrès / évolution ---------- */
+function renderStats(){
+  const p=levelProgress(S.xp);
+  const acc = S.totalAnswered? Math.round(S.totalCorrect/S.totalAnswered*100):0;
+  let starsGot=0,starsMax=NODES.length*3 - 3 + 3; starsMax=LEVELS.length*3+3;
+  LEVELS.forEach(l=>{ starsGot+=(S.levels[l.id]||{}).stars||0; }); starsGot+=(S.levels.boss||{}).stars||0;
+  const ringPct=Math.round(p.into/p.span*100);
+  let html='<div class="screentitle">Tes progrès</div><div class="screensub">Ta vraie progression : ce que tu maîtrises, pas juste ce que tu as lu</div>';
+  html+='<div class="bigstat">'
+    +'<div class="ring"><svg viewBox="0 0 84 84" style="position:absolute;inset:0"><circle cx="42" cy="42" r="36" fill="none" stroke="#1b1440" stroke-width="8"/>'
+    +'<circle cx="42" cy="42" r="36" fill="none" stroke="url(#g)" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+(2*Math.PI*36)+'" stroke-dashoffset="'+(2*Math.PI*36*(1-ringPct/100))+'" transform="rotate(-90 42 42)"/>'
+    +'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DDC97"/><stop offset="1" stop-color="#46D0C8"/></linearGradient></defs></svg>'
+    +'<div style="text-align:center"><div class="lv">'+p.n+'</div><div class="lvl">Niveau</div></div></div>'
+    +'<div class="info"><div class="xpmeta"><span>Prochain niveau</span><span>'+p.into+' / '+p.span+' XP</span></div>'
+    +'<div class="xpbar"><div class="xpfill" style="width:'+Math.max(4,ringPct)+'%"></div></div>'
+    +'<div style="margin-top:8px;font-size:12px;color:var(--ink-mute);font-weight:800">XP total : '+S.xp+'</div></div></div>';
+  html+='<div class="grid2">'
+    +kpi(acc+'<small>%</small>','Précision')
+    +kpi(S.totalAnswered,'Réponses')
+    +kpi('🔥 '+S.longestStreak,'Meilleure série')
+    +kpi('⭐ '+starsGot+'<small>/'+starsMax+'</small>','Étoiles')
+    +'</div>';
+  html+='<div class="sectlab">Maîtrise par module</div>';
+  MODULES.forEach(m=>{ const mm=moduleMastery(m.id);
+    html+='<div class="mastrow"><div class="nm">'+esc(m.name)+'<small>'+mm.mastered+' / '+mm.total+' questions</small></div>'
+      +'<div class="bar"><i style="width:'+mm.pct+'%;background:'+m.col+'"></i></div>'
+      +'<div class="pct" style="color:'+m.col+'">'+mm.pct+'%</div></div>';
+  });
+  if(!STORE) html+='<div class="notebox">ℹ️ Dans cet environnement, la progression n\'est pas sauvegardée d\'une session à l\'autre. Elle reste valable tant que tu gardes cette page ouverte.</div>';
+  html+='<button class="dangerbtn" id="reset">Réinitialiser ma progression</button>';
+  view.innerHTML=html;
+  $('#reset').onclick=()=>{
+    if(confirm('Effacer toute ta progression (XP, niveaux, étoiles, erreurs) ? Action définitive.')){
+      S=defaultState(); save(); renderTop(); go('stats');
+    }
+  };
+}
+function kpi(v,l){ return '<div class="kpi"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'; }
+
+/* ---------- Glossaire ---------- */
+let glossFilter='all', glossQuery='', glossFlash=false;
+function norm(s){ return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function escA(s){ return esc(s).replace(/"/g,'&quot;'); }
+function renderGlossary(){
+  const total=GLOSSARY.length;
+  const mods=[['all','Tous','var(--ink)'],['m1','Module 1','var(--z1)'],['m2','Module 2','var(--z2)'],['m3','Module 3','var(--z3)'],['m4','Module 4','var(--z4)']];
+  let html='<div class="screentitle">Glossaire</div>'
+    +'<div class="screensub">'+total+' définitions à connaître · cherche un terme, ou révise en flashcards</div>'
+    +'<div class="gloss-tools">'
+      +'<input id="gSearch" class="gloss-search" type="search" placeholder="🔎 Rechercher (terme ou définition)…" value="'+escA(glossQuery)+'" autocomplete="off" autocapitalize="off" spellcheck="false">'
+      +'<button id="gFlash" class="gflash'+(glossFlash?' on':'')+'" aria-pressed="'+glossFlash+'">'+(glossFlash?'🃏 Flashcards : ON':'🃏 Mode flashcard')+'</button>'
+    +'</div>'
+    +'<div class="gloss-chips">'+mods.map(([id,lab,c])=>{
+        const n = id==='all'?total:GLOSSARY.filter(g=>g.m===id).length;
+        return '<button class="gchip'+(glossFilter===id?' on':'')+'" data-gf="'+id+'" style="--gc:'+c+'">'+esc(lab)+' <small>'+n+'</small></button>';
+      }).join('')+'</div>';
+  if(glossFlash) html+='<div class="gloss-hint">👆 Tape une carte pour révéler la définition — essaie de la restituer de mémoire d\'abord.</div>';
+  html+='<div class="gloss-list" id="gList">';
+  MODULES.forEach(m=>{
+    if(glossFilter!=='all' && glossFilter!==m.id) return;
+    const items=GLOSSARY.filter(g=>g.m===m.id);
+    if(!items.length) return;
+    html+='<div class="gloss-sec"><div class="gloss-secHead" style="color:'+m.col+'"><span class="dot" style="background:'+m.col+'"></span>'+esc(m.name)+' <small>'+items.length+'</small></div>';
+    items.forEach(g=>{
+      html+='<div class="gcard'+(glossFlash?' flash':'')+'" data-t="'+escA(norm(g.t+' '+g.d))+'" style="--gc:'+m.col+'">'
+        +'<div class="gt">'+esc(g.t)+'</div>'
+        +'<div class="gd">'+esc(g.d)+'</div>'
+        +(glossFlash?'<span class="greveal">Révéler</span>':'')+'</div>';
+    });
+    html+='</div>';
+  });
+  html+='</div><div class="gloss-empty" id="gEmpty" style="display:none">Aucun terme ne correspond. Essaie un autre mot-clé.</div>';
+  view.innerHTML=html;
+
+  const search=$('#gSearch');
+  search.oninput=()=>{ glossQuery=search.value; applyGlossSearch(); };
+  $('#gFlash').onclick=()=>{ glossFlash=!glossFlash; renderGlossary(); };
+  view.querySelectorAll('[data-gf]').forEach(b=>b.onclick=()=>{ glossFilter=b.dataset.gf; renderGlossary(); });
+  if(glossFlash) view.querySelectorAll('.gcard.flash').forEach(c=>c.onclick=()=>c.classList.toggle('revealed'));
+  applyGlossSearch();
+  if(glossQuery){ search.focus(); try{ search.setSelectionRange(search.value.length,search.value.length); }catch(e){} }
+}
+function applyGlossSearch(){
+  const q=norm(glossQuery.trim());
+  let any=false;
+  document.querySelectorAll('#gList .gcard').forEach(c=>{ const hit=!q||c.dataset.t.indexOf(q)>=0; c.style.display=hit?'':'none'; if(hit) any=true; });
+  document.querySelectorAll('#gList .gloss-sec').forEach(sec=>{
+    const vis=[...sec.querySelectorAll('.gcard')].some(c=>c.style.display!=='none');
+    sec.style.display=vis?'':'none';
+  });
+  const empty=$('#gEmpty'); if(empty) empty.style.display=any?'none':'block';
+}
+
+/* ---------- Moteur de quiz ---------- */
+let SES=null;
+function startLevel(level, mode){
+  const qs = (mode==='boss') ? shuffle(ALL_Q.slice()).slice(0,BOSS.draw) : shuffle(level.q.slice());
+  startSession(qs, mode, level);
+}
+function startSession(questions, mode, level){
+  SES={ questions, mode, level, i:0, mistakes:0, hearts:3, streak:0, correctCount:0,
+        prepared: questions.map(prep) };
+  showTabbar(false);
+  renderQuestion();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function prep(q){
+  if(q.type==='vf') return {q,order:[0,1]};
+  const order=[...q.opts.keys()]; shuffle(order); return {q,order};
+}
+function renderQuestion(){
+  const {prepared,i,level,mode}=SES;
+  const item=prepared[i], q=item.q;
+  const col = mode==='boss'?'var(--boss)':(mode==='review'?'var(--mint)':modColVar(q.modId));
+  const opts = (q.type==='vf')?['Vrai','Faux']:item.order.map(o=>q.opts[o]);
+  const tag = q.type==='vf'?'Vrai ou Faux':'Choix unique';
+  let h='<div class="quiz"><div class="qtop">'
+    +'<button class="back" id="qBack" aria-label="Quitter">✕</button>'
+    +'<div class="qprog"><i style="width:'+Math.round(i/SES.questions.length*100)+'%;background:linear-gradient(90deg,'+col+','+col+'aa)"></i></div>'
+    +'<div class="hearts">'+[0,1,2].map(k=>'<span class="heart'+(k>=SES.hearts?' lost':'')+'">❤️</span>').join('')+'</div></div>';
+  if(SES.streak>=2) h+='<div class="streakchip">🔥 Série de '+SES.streak+' !</div>';
+  h+='<span class="qtag" style="background:'+col+'22;color:'+col+'">'+tag+'</span>';
+  h+='<div class="qtext">'+esc(q.q)+'</div>';
+  if(q.code) h+='<div class="qcode">'+esc(q.code)+'</div>';
+  h+='<div class="opts" id="opts">';
+  opts.forEach((t,p)=>{ h+='<button class="opt" data-p="'+p+'"><span class="key">'+(q.type==='vf'?(p===0?'V':'F'):String.fromCharCode(65+p))+'</span><span>'+esc(t)+'</span></button>'; });
+  h+='</div><div id="qfoot"></div></div>';
+  view.innerHTML=h;
+  $('#qBack').onclick=quitSession;
+  $('#opts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(+b.dataset.p));
+}
+function answer(p){
+  const {prepared,i,mode}=SES; const item=prepared[i], q=item.q;
+  const orig = (q.type==='vf')?p:item.order[p];
+  const correct = orig===q.correct;
+  const correctDisplay = (q.type==='vf')?q.correct:item.order.indexOf(q.correct);
+  // verrouille
+  const btns=$('#opts').querySelectorAll('.opt');
+  btns.forEach(b=>b.disabled=true);
+  btns[p].classList.add(correct?'good':'bad');
+  if(!correct){ btns[correctDisplay].classList.add('good'); shakeEl(btns[p]); }
+  // stats question
+  const st=qStat(q.id); st.seen++; st.last=correct;
+  if(correct){ st.correct++; if(st.correct>=2) st.mastered=true; }
+  else { st.wrong++; st.mastered=false; }
+  // session + global
+  S.totalAnswered++; if(correct){ S.totalCorrect++; SES.correctCount++; SES.streak++; if(SES.streak>S.longestStreak) S.longestStreak=SES.streak; }
+  else { SES.streak=0; SES.mistakes++; if(SES.hearts>0) SES.hearts--; }
+  // XP
+  let gain = correct ? 10 + Math.min(SES.streak-1,5)*2 : 0;
+  if(correct) addXp(gain);
+  if(correct){ sfxGood(); floatXp('+'+gain+' XP'); } else sfxBad();
+  save();
+  // explication + suite
+  const foot=$('#qfoot');
+  foot.innerHTML='<div class="explain '+(correct?'ok':'no')+'">'
+    +'<div class="h">'+(correct?'✅ Bien vu !':'❌ Pas tout à fait')+'</div><p>'+esc(q.why)+'</p></div>'
+    +'<button class="cta '+(correct?'green':'gold')+'" id="next">'+(SES.i>=SES.questions.length-1?'Voir le résultat':'Continuer')+' →</button>';
+  $('#next').onclick=nextQuestion;
+  foot.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function floatXp(txt){ const d=document.createElement('div'); d.className='xppop'; d.textContent=txt; document.body.appendChild(d); setTimeout(()=>d.remove(),1000); }
+function addXp(n){ const before=levelFromXp(S.xp); S.xp+=n; const after=levelFromXp(S.xp); if(SES) SES._xpThisRun=(SES._xpThisRun||0)+n; renderTop(); if(after>before && SES){ SES._leveledTo=after; } }
+function nextQuestion(){
+  SES.i++;
+  if(SES.i>=SES.questions.length) return finishSession();
+  renderQuestion(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function quitSession(){ SES=null; go(currentTab==='map'?'map':currentTab); }
+
+function finishSession(){
+  const {mode,level,mistakes,questions}=SES;
+  const stars = mistakes===0?3:(mistakes===1?2:1);
+  const total=questions.length, right=SES.correctCount;
+  // enregistrement (aventure/boss seulement → étoiles + déblocage)
+  if(mode==='adventure'||mode==='boss'){
+    const idx=NODES.findIndex(n=>n.id===level.id);
+    const prev=S.levels[level.id]||{stars:0};
+    S.levels[level.id]={completed:true, stars:Math.max(prev.stars||0, stars), attempts:(prev.attempts||0)+1};
+    if(idx>=0 && idx+1>S.unlockedIndex && idx+1<=NODES.length-1) S.unlockedIndex=idx+1;
+    if(idx>=0 && idx===NODES.length-1) {} // boss : rien de plus
+    // bonus XP étoiles (première complétion ou amélioration)
+    if(stars> (prev.stars||0)) addXp(stars*15);
+  }
+  save();
+  showTabbar(false);
+  const lvUp=SES._leveledTo;
+  const col = mode==='boss'?'var(--boss)':(mode==='review'?'var(--mint)':(level&&level.col)|| modColVar((questions[0]||{}).modId));
+  let head = mode==='review' ? 'Révision terminée' : (mode==='boss' ? (right>=total*0.7?'Examen réussi !':'Examen blanc terminé') : 'Niveau terminé !');
+  let sub = right+' / '+total+' bonnes réponses';
+  let html='<div class="result">'+mascot('lg anim')+'<h2 style="color:'+col+'">'+head+'</h2><p class="rsub">'+sub+'</p>';
+  if(mode==='adventure'||mode==='boss'){
+    html+='<div class="rstars">'+[0,1,2].map(k=>'<span class="s" data-k="'+k+'">⭐</span>').join('')+'</div>';
+  }
+  html+='<div class="rstats">'
+    +'<div class="rstat"><div class="v" style="color:var(--mint)">'+Math.round(right/total*100)+'%</div><div class="l">Précision</div></div>'
+    +'<div class="rstat"><div class="v" style="color:var(--gold)">+'+(SES._xpThisRun||0)+'</div><div class="l">XP gagnés</div></div>'
+    +'</div>';
+  if(lvUp) html+='<div style="font-family:var(--font-d);font-weight:700;color:var(--gold);font-size:18px;margin-bottom:10px">🎉 Niveau '+lvUp+' atteint !</div>';
+  // boutons
+  const idx=NODES.findIndex(n=>n.id===(level&&level.id));
+  const hasNext=(mode==='adventure') && idx>=0 && idx+1<NODES.length && idx+1<=S.unlockedIndex;
+  if(hasNext) html+='<button class="cta green" id="rNext">Niveau suivant →</button>';
+  html+='<button class="cta '+(hasNext?'ghost':'gold')+'" id="rReplay">Rejouer</button>';
+  html+='<button class="cta ghost" id="rMap">'+(mode==='review'?'Retour':'Retour à la carte')+'</button>';
+  html+='</div>';
+  view.innerHTML=html;
+
+  // anim étoiles + son
+  const got=stars;
+  if(mode==='adventure'||mode==='boss'){
+    view.querySelectorAll('.rstars .s').forEach((s,k)=>{ if(k<got) setTimeout(()=>{ s.classList.add('on'); sfxStar(k); },300+k*260); });
+  }
+  if(got>=3||lvUp){ confetti(40); if(lvUp) sfxLevelUp(); }
+  else if(right>0) setTimeout(()=>{}, 0);
+
+  const nx=$('#rNext'); if(nx) nx.onclick=()=>{ startLevel(NODES[idx+1],'adventure'); };
+  $('#rReplay').onclick=()=>{ if(mode==='review'){ go('review'); } else startLevel(level, mode); };
+  $('#rMap').onclick=()=>{ SES=null; go(mode==='review'?'review':'map'); };
+  SES=null;
+}
+
+
+/* ---------- Boot ---------- */
+function bindGlobal(){
+  $('#muteBtn').onclick=()=>{ S.muted=!S.muted; renderTop(); save(); if(!S.muted) ensureAudio(); };
+  $('#tabbar').addEventListener('click',e=>{ const t=e.target.closest('[data-tab]'); if(t) go(t.dataset.tab); });
+  // audio au premier geste
+  window.addEventListener('pointerdown',function once(){ ensureAudio(); window.removeEventListener('pointerdown',once); });
+  // clavier dans le quiz
+  document.addEventListener('keydown',e=>{
+    if(!SES) return;
+    const foot=$('#qfoot'); const next=$('#next');
+    if((e.key==='Enter'||e.key===' ') && next){ e.preventDefault(); next.click(); return; }
+    const opts=$('#opts'); if(opts){ const map={'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3,'v':0,'f':1}; const idx=map[e.key.toLowerCase()];
+      if(idx!=null){ const b=opts.querySelectorAll('.opt')[idx]; if(b&&!b.disabled){ b.click(); } } }
+  });
+}
+
+(async function(){
+  await load();
+  renderTop(); bindGlobal(); renderTabs(); go('map');
+})();
 </script>
 </body>
 </html>
